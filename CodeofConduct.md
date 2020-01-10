@@ -1,14 +1,14 @@
 #Scope 
 This policy applies to all team members regardless of ranks.
 #Code of Conduct
-As we work in a team, all team members are expected to:
-•	Treat each other with courtesy and consider each member’s opinions respectively and thoughtfully.
-•	Provide a full contribution to the group work.
-•	Complete assigned tasks by the agreed upon due date.
-•	Communicate with each other to keep informed of updated information related to the group work.
-•	Participate in solving the problems without blaming each other. 
-•	Avoid mentioning negatively the factors such as religion, race, gender and politics.
-•	Be accountable to meet project deadlines.
+As we work in a team, all team members are expected to:<br>
+•	Treat each other with courtesy and consider each member’s opinions respectively and thoughtfully.<br>
+•	Provide a full contribution to the group work.<br>
+•	Complete assigned tasks by the agreed upon due date.<br>
+•	Communicate with each other to keep informed of updated information related to the group work.<br>
+•	Participate in solving the problems without blaming each other. <br>
+•	Avoid mentioning negatively the factors such as religion, race, gender and politics.<br>
+•	Be accountable to meet project deadlines.<br>
 #Enforcement 
 
 Policies|Penalties|
