@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b090ebf8-c64b-46da-9679-b1dbb24583d4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +19,8 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
-        <option value="Kaung Htet Kyaw &lt;40437516@live.napier.ac.uk&gt;" />
         <option value="Yee Mon Oo &lt;40437513@live.napier.ac.uk&gt;" />
+        <option value="Kaung Htet Kyaw &lt;40437516@live.napier.ac.uk&gt;" />
       </list>
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -58,9 +58,22 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="Docker" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
-  <component name="RunManager" selected="Docker.Docker Image">
+  <component name="RunManager" selected="Application.App (1)">
+    <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.napier.sem.App" />
+      <module name="CW(Group5)" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.napier.sem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="12" />
       <option name="MAIN_CLASS_NAME" value="com.napier.cw.App" />
@@ -97,6 +110,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.App (1)" />
         <item itemvalue="Docker.Docker Image" />
         <item itemvalue="Docker.Dockerfile" />
         <item itemvalue="Application.App" />
@@ -143,7 +157,7 @@
       <workItem from="1578554026729" duration="1285000" />
       <workItem from="1578558404034" duration="426000" />
       <workItem from="1578560902919" duration="4170000" />
-      <workItem from="1578630609322" duration="57000" />
+      <workItem from="1578630609322" duration="223000" />
     </task>
     <task id="LOCAL-00001" summary="Get started with GitHub">
       <created>1578554470761</created>
@@ -173,7 +187,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578578973102</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Create Mongo image, container and a new branch">
+      <created>1578630789302</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1578630789302</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,57 +205,62 @@
     <MESSAGE value="adding travis build file" />
     <MESSAGE value="adding badges to the project" />
     <MESSAGE value="updated POM file" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated POM file" />
+    <MESSAGE value="Create Mongo image, container and a new branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create Mongo image, container and a new branch" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="485" y="72" key="#App" timestamp="1578561041970">
+    <state x="485" y="72" key="#App" timestamp="1578630970796">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="485" y="72" key="#App/0.0.1536.824@0.0.1536.824" timestamp="1578561041970" />
+    <state x="485" y="72" key="#App/0.0.1536.824@0.0.1536.824" timestamp="1578630970796" />
     <state x="887" y="97" key="#Docker_Image" timestamp="1578630665487">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="887" y="97" key="#Docker_Image/0.0.1536.824@0.0.1536.824" timestamp="1578630665487" />
-    <state x="722" y="75" key="#Project_Structure" timestamp="1578561171411">
+    <state x="722" y="75" key="#Project_Structure" timestamp="1578630840732">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="722" y="75" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1578561171411" />
+    <state x="722" y="75" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1578630840732" />
     <state x="223" y="68" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578558599590">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="68" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1578558599590" />
-    <state x="970" y="302" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1578558425759">
+    <state x="970" y="302" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1578630938216">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="970" y="302" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1578558425759" />
-    <state x="787" y="12" key="CommitChangelistDialog2" timestamp="1578578971999">
+    <state x="970" y="302" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1536.824@0.0.1536.824" timestamp="1578630938216" />
+    <state x="698" y="68" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor" timestamp="1578630928291">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="787" y="12" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1578578971999" />
-    <state width="724" height="212" key="GridCell.Tab.0.bottom" timestamp="1578578898475">
+    <state x="698" y="68" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/0.0.1536.824@0.0.1536.824" timestamp="1578630928291" />
+    <state x="787" y="12" key="CommitChangelistDialog2" timestamp="1578630861192">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="724" height="212" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1578578898475" />
-    <state width="724" height="212" key="GridCell.Tab.0.center" timestamp="1578578898475">
+    <state x="787" y="12" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1578630861192" />
+    <state width="363" height="205" key="GridCell.Tab.0.bottom" timestamp="1578631005226">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="724" height="212" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1578578898475" />
-    <state width="724" height="212" key="GridCell.Tab.0.left" timestamp="1578578898474">
+    <state width="363" height="205" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1578631005226" />
+    <state width="363" height="205" key="GridCell.Tab.0.center" timestamp="1578631005226">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="724" height="212" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1578578898474" />
-    <state width="724" height="212" key="GridCell.Tab.0.right" timestamp="1578578898475">
+    <state width="363" height="205" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1578631005226" />
+    <state width="363" height="205" key="GridCell.Tab.0.left" timestamp="1578631005225">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="724" height="212" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1578578898475" />
-    <state x="555" y="58" key="SettingsEditor" timestamp="1578561222045">
+    <state width="363" height="205" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1578631005225" />
+    <state width="363" height="205" key="GridCell.Tab.0.right" timestamp="1578631005226">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="555" y="58" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1578561222045" />
-    <state x="722" y="149" key="Vcs.Push.Dialog.v2" timestamp="1578578982823">
+    <state width="363" height="205" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1578631005226" />
+    <state x="555" y="58" key="SettingsEditor" timestamp="1578630816540">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="722" y="149" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1578578982823" />
+    <state x="555" y="58" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1578630816540" />
+    <state x="722" y="149" key="Vcs.Push.Dialog.v2" timestamp="1578630866716">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="722" y="149" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1578630866716" />
     <state x="849" y="238" key="com.intellij.ide.util.TipDialog" timestamp="1578560902964">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
