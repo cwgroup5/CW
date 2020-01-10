@@ -9,6 +9,7 @@
         <module name="courseworkG5" />
         <module name="group5" />
         <module name="Coursework" />
+        <module name="CW(Group5)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
