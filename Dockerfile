@@ -1,4 +1,4 @@
 FROM openjdk:latest
-COPY ./target/classes/com /tmp/com
+COPY ./target/courseworkG5-0.1.0.1.jar /tmp
 WORKDIR /tmp
-ENTRYPOINT ["java", "com.napier.cw.App"]
+ENTRYPOINT ["java", "-jar", "courseworkG5-0.1.0.1.jar"]
