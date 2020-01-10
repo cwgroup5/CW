@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b090ebf8-c64b-46da-9679-b1dbb24583d4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/napier/cw/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/napier/cw/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +161,7 @@
       <workItem from="1578554026729" duration="1285000" />
       <workItem from="1578558404034" duration="426000" />
       <workItem from="1578560902919" duration="4170000" />
-      <workItem from="1578630609322" duration="1786000" />
+      <workItem from="1578630609322" duration="2482000" />
     </task>
     <task id="LOCAL-00001" summary="Get started with GitHub">
       <created>1578554470761</created>
@@ -219,7 +219,21 @@
       <option name="project" value="LOCAL" />
       <updated>1578631461065</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Creating a Network Bridge in Docker">
+      <created>1578632516292</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1578632516292</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Update Travis Build">
+      <created>1578632595794</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1578632595794</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,7 +248,9 @@
     <MESSAGE value="Update App.java to test MongoDB server" />
     <MESSAGE value="Linking Containers" />
     <MESSAGE value="Update Files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Files" />
+    <MESSAGE value="Creating a Network Bridge in Docker" />
+    <MESSAGE value="Update Travis Build" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Travis Build" />
   </component>
   <component name="WindowStateProjectService">
     <state x="485" y="72" key="#App" timestamp="1578630970796">
@@ -261,10 +277,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="698" y="68" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/0.0.1536.824@0.0.1536.824" timestamp="1578630928291" />
-    <state x="735" y="12" key="CommitChangelistDialog2" timestamp="1578632514335">
+    <state x="735" y="12" key="CommitChangelistDialog2" timestamp="1578632594158">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="735" y="12" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1578632514335" />
+    <state x="735" y="12" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1578632594158" />
     <state width="726" height="204" key="GridCell.Tab.0.bottom" timestamp="1578632099685">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -285,10 +301,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="555" y="58" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1578630816540" />
-    <state x="722" y="149" key="Vcs.Push.Dialog.v2" timestamp="1578632524524">
+    <state x="722" y="149" key="Vcs.Push.Dialog.v2" timestamp="1578632605614">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="722" y="149" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1578632524524" />
+    <state x="722" y="149" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1578632605614" />
     <state x="849" y="238" key="com.intellij.ide.util.TipDialog" timestamp="1578560902964">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
