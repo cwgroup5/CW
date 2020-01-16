@@ -1,0 +1,3 @@
+[submodule "db/test_db"]
+	path = db/test_db
+	url = ./db/test_db/world.sql
