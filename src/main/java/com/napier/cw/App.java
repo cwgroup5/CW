@@ -12,7 +12,7 @@ public class App
 
         // Connect to database
         a.connect();
-        // Get Employee
+        // Get City
         City cy= a.getCity(69);
 
 
@@ -32,7 +32,7 @@ public class App
                             + "WHERE ID = " + ID;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return city if valid.
             // Check one is returned
             if (rset.next())
             {
@@ -55,21 +55,7 @@ public class App
             return null;
         }
     }
-    //    public void displayEmployee(Employee emp)
-//    {
-//        if (emp != null)
-//        {
-//            System.out.println(
-//                    emp.emp_no + " "
-//                            + emp.first_name + " "
-//                            + emp.last_name + "\n"
-//                            + emp.title + "\n"
-//                            + "Salary:" + emp.salary + "\n"
-//                            + emp.dept_name + "\n"
-//                            + "Manager: " + emp.manager + "\n");
-//        }
-//    }
-//
+
 //    /**
 //     * Connection to MySQL database.
 //     */
