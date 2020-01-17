@@ -2,7 +2,7 @@
 
 |  Use Case: 1| Report of population categorized by largest to smallest in of all countries in the world, a contient and a region. |
 |:--------|:------------|
-| **Goal in Context** | As an *user*, I want *to produce a report all the countries in the world categorized by largest population to smallest*<br>|
+| **Goal in Context** | As an *user*, I want *to produce a report all countries in the world categorized by largest population to smallest* so that I can view reports of population of all countries from various easily.<br>|
 | **Scope** | The Organisation|
 | **Level** | Very High Summary |
 |**Preconditions**| We have world.sql database that contain countries, cities, continents, languages and populations.|
