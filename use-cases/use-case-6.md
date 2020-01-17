@@ -2,7 +2,7 @@
 
 |  Use Case: 3 | Report of **N** populated capital cities in different kinds of areas based on **N** provided by users.|
 |:--------|:------------|
-| **Goal in Context** | As an *user*, I want to *enter the number of population and generate reports of populated capital cities in various areas based on the inputs by largest to smallest number.*|
+| **Goal in Context** | As an *user*, I want to *enter the number of population and generate reports of populated capital cities in various areas based on the inputs by largest to smallest number so that I can discover the population of capital cities that I want to konw quickly.*|
 | **Scope** | The Organisation|
 | **Level** | Very High Summary |
 |**Preconditions**| We have world.sql database that contain lots of attributes such as countries, cities, continents, languages and populations.|
