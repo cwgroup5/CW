@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+actor User as "User"
+
+rectangle Database
+
+rectangle "Population System" {
+    usecase UC1 as "Enter the number for the top N populated cities in the world"
+    usecase UC2 as "Enter the number for the top N populated cities in a continent"
+    usecase UC3 as "Enter the number for the top N populated cities in a region"
+    usecase UC4 as "Enter the number for the top N populated cities in a country"
+    usecase UC5 as "Enter the number for the top N populated cities in a district"
+    usecase UCa as "Print Reports"
+
+    User - UC1
+    User - UC2
+    User - UC3
+    User - UC4
+    User - UC5
+
+
+    UC1 ..> UCa : include
+    UC2 ..> UCa : include
+    UC3 ..> UCa : include
+    UC4 ..> UCa : include
+    UC5 ..> UCa : include
+
+    UC1 - Database
+    UC2 - Database
+    UC3 - Database
+    UC4 - Database
+    UC5 - Database
+
+}
+
+@enduml

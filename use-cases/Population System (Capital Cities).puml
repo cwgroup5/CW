@@ -1,0 +1,29 @@
+@startuml
+left to right direction
+actor User as "User"
+
+rectangle Database
+
+rectangle "Population System" {
+    usecase UC1 as "Organise all the capital cities in the world"
+    usecase UC2 as "Organise all the capital cities in a continent"
+    usecase UC3 as "Organise all the capital cities in a region"
+    usecase UCa as "Print Reports"
+
+    User - UC1
+    User - UC2
+    User - UC3
+
+    UC1 ..> UCa : include
+    UC2 ..> UCa : include
+    UC3 ..> UCa : include
+
+    UC1 - Database
+    UC2 - Database
+    UC3 - Database
+
+    note "Note: All the capital cities in different area organized by largest to smallest population" as N2
+
+}
+
+@enduml
