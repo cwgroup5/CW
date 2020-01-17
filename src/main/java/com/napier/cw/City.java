@@ -1,10 +1,21 @@
 package com.napier.cw;
 
+
 /**
  * Represents an City
  */
 public class City
 {
+    @Override
+    public String toString() {
+        return "City{" +
+                "cityid=" + cityid +
+                ", cname='" + cname + '\'' +
+                ", cccode='" + cccode + '\'' +
+                ", cd='" + cd + '\'' +
+                ", cpop=" + cpop +
+                '}';
+    }
     /**
      * City int;
      */
@@ -29,4 +40,6 @@ public class City
      * City's Population
      */
     public int cpop;
+
+
 }
