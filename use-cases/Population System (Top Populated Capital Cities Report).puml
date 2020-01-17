@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+actor User as "User"
+
+rectangle Database
+
+rectangle "Population System" {
+    usecase UC4 as "Enter number for the report of the top populated capital cities in the world"
+    usecase UC5 as "Enter number for the report of the top populated capital cities in a continent"
+    usecase UC6 as "Enter number for the report of the top populated capital cities  in a region"
+    usecase UCa as "Print Report"
+
+    User - UC4
+    User - UC5
+    User - UC6
+    UC4 ..> UCa : include
+    UC5 ..> UCa : include
+    UC6 ..> UCa : include
+    UC4 - Database
+    UC5 - Database
+    UC6 - Database
+}
+
+@enduml

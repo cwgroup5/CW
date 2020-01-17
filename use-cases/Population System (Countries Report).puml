@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+actor User as "User"
+
+rectangle Database
+
+rectangle "PopPopulation System" {
+    usecase UC4 as "Organise all countries in the world by largest to smallest population"
+    usecase UC5 as "Organise all countries in a continent by largest to smallest population"
+    usecase UC6 as "Organise all countries in a region by largest to smallest population"
+    usecase UCa as "Print Report"
+
+    User - UC4
+    User - UC5
+    User - UC6
+    UC4 ..> UCa : include
+    UC5 ..> UCa : include
+    UC6 ..> UCa : include
+    UC4 - Database
+    UC5 - Database
+    UC6 - Database
+}
+
+@enduml
