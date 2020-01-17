@@ -2,7 +2,7 @@
 
 |  Use Case: 3 | Report of **N** populated countries in the world, a continent and a region based on **N** provided by users.|
 |:--------|:------------|
-| **Goal in Context** | As an *user*, I want to *enter the number of population and generate a report based on the inputs.*|
+| **Goal in Context** | As a *user*, I want to *enter the number of population in different kind of areas and generate a report based on the inputs.* so that I can easily search the population from vairous areas. |
 | **Scope** | The Organisation|
 | **Level** | Very High Summary |
 |**Preconditions**| We have world.sql database that contain lots of attributes such as countries, cities, continents, languages and populations.|
