@@ -13,13 +13,17 @@ public class App
         // Connect to database
         a.connect();
         // Get Employee
-        City cy= a.getCity(69);
-
-
+//        City cy= a.getCity(69);
+        City ct=a.getCity();
+        System.out.println(ct);
+//        // Display
+        System.out.println("----------------");
+        Country c=a.getCountry();
+        System.out.println(c);
         // Disconnect from database
         a.disconnect();
     }
-    public City getCity(int ID)
+    public City getCity()
     {
         try
         {
@@ -29,7 +33,7 @@ public class App
             String strSelect =
                     "SELECT ID, Name, CountryCode, District, Population "
                             + "FROM city "
-                            + "WHERE ID = " + ID;
+                            + "Order By Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new employee if valid.
@@ -42,11 +46,19 @@ public class App
                 city.cccode = rset.getString("District");
                 city.cpop = rset.getInt("Population");
                 System.out.println(city.cname);
+                while(rset.next()) {
+                    System.out.println(
+                            "Name -" + rset.getString("Name")
+                                    + ", District -" + rset.getString("District")
+                                    + ", Population -" + rset.getInt("Population")
+                    );
+
+                }
+                System.out.println("Finished");
                 return city;
 
             }
-            else
-                return null;
+            else return null;
         }
         catch (Exception e)
         {
@@ -55,20 +67,60 @@ public class App
             return null;
         }
     }
-    //    public void displayEmployee(Employee emp)
-//    {
-//        if (emp != null)
-//        {
-//            System.out.println(
-//                    emp.emp_no + " "
-//                            + emp.first_name + " "
-//                            + emp.last_name + "\n"
-//                            + emp.title + "\n"
-//                            + "Salary:" + emp.salary + "\n"
-//                            + emp.dept_name + "\n"
-//                            + "Manager: " + emp.manager + "\n");
-//        }
-//    }
+
+    public Country getCountry()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "Order By Population DESC";
+
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                Country country = new Country();
+                country.Code = rset.getString("Code");
+                country.Name = rset.getString("Name");
+                country.Continent = rset.getString("Continent");
+                country.Region = rset.getString("Region");
+                country.Population = rset.getInt("Population");
+                country.Captial = rset.getString("Capital");
+
+                while (rset.next()) {
+                    System.out.println(
+                            "Code -" + rset.getString("Code")
+                                    + ", Name -" + rset.getString("Name")
+                                    + ", Continent -" + rset.getString("Continent")
+                                    + ", Region -" + rset.getString("Region")
+                                    + ", Population -" + rset.getInt("Population")
+                                    + ", Capital -" + rset.getString("Capital")
+                    );
+
+                }
+                System.out.println("Finished");
+                return country;
+
+            }
+            else return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
+
+
 //
 //    /**
 //     * Connection to MySQL database.
