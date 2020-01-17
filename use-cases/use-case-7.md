@@ -2,7 +2,7 @@
 
 |  Use Case: 3 | Report of the population of people, people living in cities, and people not living in cities in different kind of areas.|
 |:--------|:------------|
-| **Goal in Context** | As an *user*, I want to *produce reports that contain the population of people, people living in cities, and people not livings in cities in different kind of areas*|
+| **Goal in Context** | As an *user*, I want to *produce reports that contain the population of people, people living in cities, and people not livings in cities in different kind of areas* so that I can access different kind of population of people including living in cities and not living in cities from vairous areas.|
 | **Scope** | The Organisation|
 | **Level** | Very High Summary |
 |**Preconditions**| We have world.sql database that contain lots of attributes such as countries, cities, continents, languages and populations.|
