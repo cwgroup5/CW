@@ -12,14 +12,16 @@ public class App
 
         // Connect to database
         a.connect();
-        // Get City
-        City cy= a.getCity(69);
 
-
+       // Display Country Profile
+        System.out.println("---------" +
+                "-------");
+        Country c=a.getCountry();
+        System.out.println(c);
         // Disconnect from database
         a.disconnect();
     }
-    public City getCity(int ID)
+    public Country getCountry()
     {
         try
         {
@@ -27,35 +29,53 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT ID, Name, CountryCode, District, Population "
-                            + "FROM city "
-                            + "WHERE ID = " + ID;
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "Order By Population DESC";
+
+
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return city if valid.
+            // Return new employee if valid.
             // Check one is returned
             if (rset.next())
             {
-                City city = new City();
-                city.cityid = rset.getInt("ID");
-                city.cname = rset.getString("Name");
-                city.cccode = rset.getString("District");
-                city.cpop = rset.getInt("Population");
-                System.out.println(city.cname);
-                return city;
+                Country country = new Country();
+                country.setCode(rset.getString("Code"));
+                country.setName(rset.getString("Name"));
+                country.setContinent(rset.getString("Continent"));
+                country.setRegion(rset.getString("Region"));
+                country.setPopulation (rset.getInt("Population"));
+                country.setCapital(rset.getString("Capital"));
+
+                while (rset.next()) {
+                    System.out.println(
+                            "Code -" + rset.getString("Code")
+                                    + ", Name -" + rset.getString("Name")
+                                    + ", Continent -" + rset.getString("Continent")
+                                    + ", Region -" + rset.getString("Region")
+                                    + ", Population -" + rset.getInt("Population")
+                                    + ", Capital -" + rset.getString("Capital")
+                    );
+
+                }
+                System.out.println("Finished");
+                return country;
 
             }
-            else
-                return null;
+            else return null;
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
+            System.out.println("Failed to get country profile");
             return null;
         }
     }
 
+
+
+    //
 //    /**
 //     * Connection to MySQL database.
 //     */
