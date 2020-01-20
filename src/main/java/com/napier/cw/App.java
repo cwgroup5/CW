@@ -1,176 +1,11 @@
 package com.napier.cw;
 
 import java.sql.*;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 //import java.util.Scanner;
 
 public class App
 {
-    public Country getCountry()
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "ORDER BY Population DESC";
-
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
-            // Check one is returned
-            if (rset.next())
-            {
-                Country country = new Country();
-                country.setCode(rset.getString("Code"));
-                country.setName(rset.getString("Name"));
-                country.setContinent(rset.getString("Continent"));
-                country.setRegion(rset.getString("Region"));
-                country.setPopulation (rset.getInt("Population"));
-                country.setCapital(rset.getString("Capital"));
-
-                while (rset.next()) {
-                    System.out.println(
-                            "Code -" + rset.getString("Code")
-                                    + ", Name -" + rset.getString("Name")
-                                    + ", Continent -" + rset.getString("Continent")
-                                    + ", Region -" + rset.getString("Region")
-                                    + ", Population -" + rset.getInt("Population")
-                                    + ", Capital -" + rset.getString("Capital")
-                    );
-
-                }
-                System.out.println("Finished");
-                return country;
-
-            }
-            else return null;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-    public Country getCountryInContinent()
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "WHERE country.Continent = 'Asia' "
-                            + "ORDER BY Population DESC";
-
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
-            // Check one is returned
-            if (rset.next())
-            {
-                Country country = new Country();
-                country.setCode(rset.getString("Code"));
-                country.setName(rset.getString("Name"));
-                country.setContinent(rset.getString("Continent"));
-                country.setRegion(rset.getString("Region"));
-                country.setPopulation (rset.getInt("Population"));
-                country.setCapital(rset.getString("Capital"));
-
-                while (rset.next()) {
-                    System.out.println(
-                            "Code -" + rset.getString("Code")
-                                    + ", Name -" + rset.getString("Name")
-                                    + ", Continent -" + rset.getString("Continent")
-                                    + ", Region -" + rset.getString("Region")
-                                    + ", Population -" + rset.getInt("Population")
-                                    + ", Capital -" + rset.getString("Capital")
-                    );
-
-                }
-                System.out.println("Finished");
-                return country;
-
-            }
-            else return null;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-    public Country getCountryInRegion()
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "WHERE country.Region = 'Middle East' "
-                            + "ORDER BY Population DESC";
-
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
-            // Check one is returned
-            if (rset.next())
-            {
-                Country country = new Country();
-                country.setCode(rset.getString("Code"));
-                country.setName(rset.getString("Name"));
-                country.setContinent(rset.getString("Continent"));
-                country.setRegion(rset.getString("Region"));
-                country.setPopulation (rset.getInt("Population"));
-                country.setCapital(rset.getString("Capital"));
-
-                while (rset.next()) {
-                    System.out.println(
-                            "Code -" + rset.getString("Code")
-                                    + ", Name -" + rset.getString("Name")
-                                    + ", Continent -" + rset.getString("Continent")
-                                    + ", Region -" + rset.getString("Region")
-                                    + ", Population -" + rset.getInt("Population")
-                                    + ", Capital -" + rset.getString("Capital")
-                    );
-
-                }
-                System.out.println("Finished");
-                return country;
-
-            }
-            else return null;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-
-    //
-//    /**
-//     * Connection to MySQL database.
-//     */
-    private Connection con = null;
-    //
-//    /**
-//     * Connect to the MySQL database.
-//     */
     public void connect()
     {
         try
@@ -227,6 +62,153 @@ public class App
             }
         }
     }
+    public ArrayList<Country> getCountry()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "ORDER BY Population DESC";
+
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (res.next())
+            {
+                Country country = new Country();
+                country.setCode(res.getString("Code"));
+                country.setName(res.getString("Name"));
+                country.setContinent(res.getString("Continent"));
+                country.setRegion(res.getString("Region"));
+                country.setPopulation (res.getInt("Population"));
+                country.setCapital(res.getString("Capital"));
+
+                countries.add(country);
+
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
+    public ArrayList<Country> getCountryInContinent()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "WHERE country.Continent = 'Asia' "
+                            + "ORDER BY Population DESC";
+
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            ArrayList<Country> countries = new ArrayList<Country>();
+            // Return new employee if valid.
+            // Check one is returned
+            while (res.next())
+            {
+                Country country = new Country();
+                country.setCode(res.getString("Code"));
+                country.setName(res.getString("Name"));
+                country.setContinent(res.getString("Continent"));
+                country.setRegion(res.getString("Region"));
+                country.setPopulation (res.getInt("Population"));
+                country.setCapital(res.getString("Capital"));
+
+                countries.add(country);
+
+            }
+            return  countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
+    public ArrayList<Country> getCountryInRegion()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "WHERE country.Region = 'Middle East' "
+                            + "ORDER BY Population DESC";
+
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            ArrayList<Country> countries = new ArrayList<Country>();
+            // Return new employee if valid.
+            // Check one is returned
+            while (res.next())
+            {
+                Country country = new Country();
+                country.setCode(res.getString("Code"));
+                country.setName(res.getString("Name"));
+                country.setContinent(res.getString("Continent"));
+                country.setRegion(res.getString("Region"));
+                country.setPopulation (res.getInt("Population"));
+                country.setCapital(res.getString("Capital"));
+                countries.add(country);
+
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
+    public void displayCountries(ArrayList<Country> countries)
+    {
+        //display in table format
+
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        String format="%1$-10s %2$-60s %3$-20s %4$-40s  %5$-15s  %6$-10s \n";
+        System.out.format(format, "Code", "Country", "Continent", "Region", "Population", "Capitals");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+        for (Country country : countries)
+        {
+            System.out.format(format,country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
+        }
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    //
+//    /**
+//     * Connection to MySQL database.
+//     */
+    private Connection con = null;
+    //
+//    /**
+//     * Connect to the MySQL database.
+//     */
+
     public static void main(String[] args)
     {
         // Create new Application
@@ -237,20 +219,14 @@ public class App
 
         // Display Country Profile
 
-        Country c=a.getCountry();
-        System.out.println(c);
+        // Extract country population information
+        ArrayList<Country> countries = a.getCountry();
+//        ArrayList<Country> countries = a.getCountryInContinent();
+//        ArrayList<Country> countries = a.getCountryInRegion();
+        a.displayCountries(countries);
 
-        System.out.println("---------" +
-                "-------");
-
-        Country ct=a.getCountryInContinent();
-        System.out.println(ct);
-
-        System.out.println("---------" +
-                "-------");
-
-        Country cr=a.getCountryInRegion();
-        System.out.println(cr);
+        // Test the size of the returned data - should be
+        System.out.println("Number of Countries :"+ countries.size());
         // Disconnect from database
         a.disconnect();
     }
