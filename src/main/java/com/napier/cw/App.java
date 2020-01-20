@@ -225,7 +225,7 @@ public class App
 //        ArrayList<Country> countries = a.getCountryInRegion();
         a.displayCountries(countries);
 
-        // Test the size of the returned data - should be
+        // display number of  countries
         System.out.println("Number of Countries :"+ countries.size());
         // Disconnect from database
         a.disconnect();
