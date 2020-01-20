@@ -109,10 +109,58 @@ public class App
             return null;
         }
     }
+    public Country getCountryInRegion()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "WHERE country.Region = 'Middle East' "
+                            + "ORDER BY Population DESC";
 
 
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                Country country = new Country();
+                country.setCode(rset.getString("Code"));
+                country.setName(rset.getString("Name"));
+                country.setContinent(rset.getString("Continent"));
+                country.setRegion(rset.getString("Region"));
+                country.setPopulation (rset.getInt("Population"));
+                country.setCapital(rset.getString("Capital"));
 
+                while (rset.next()) {
+                    System.out.println(
+                            "Code -" + rset.getString("Code")
+                                    + ", Name -" + rset.getString("Name")
+                                    + ", Continent -" + rset.getString("Continent")
+                                    + ", Region -" + rset.getString("Region")
+                                    + ", Population -" + rset.getInt("Population")
+                                    + ", Capital -" + rset.getString("Capital")
+                    );
 
+                }
+                System.out.println("Finished");
+                return country;
+
+            }
+            else return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
 
     //
 //    /**
@@ -197,6 +245,12 @@ public class App
 
         Country ct=a.getCountryInContinent();
         System.out.println(ct);
+
+        System.out.println("---------" +
+                "-------");
+
+        Country cr=a.getCountryInRegion();
+        System.out.println(cr);
         // Disconnect from database
         a.disconnect();
     }
