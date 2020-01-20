@@ -9,6 +9,18 @@ public class Country {
     /** Code Number for Country **/
     private String Code; // private = restricted access
 
+    @Override
+    public String toString() {
+        return "Country{" +
+                "Code='" + Code + '\'' +
+                ", Name='" + Name + '\'' +
+                ", Continent='" + Continent + '\'' +
+                ", Region='" + Region + '\'' +
+                ", Population=" + Population +
+                ", Capital='" + Capital + '\'' +
+                '}';
+    }
+
     // Getter
     public String getCode() {
         return Code;
