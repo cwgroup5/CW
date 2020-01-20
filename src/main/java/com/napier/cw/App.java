@@ -224,8 +224,10 @@ public class App
 //        ArrayList<Country> countries = a.getCountryInContinent();
 //        ArrayList<Country> countries = a.getCountryInRegion();
 //        a.displayCountries(countries);
+        /** Produce City Report **/
         //ArrayList<City> cities = a.getCityInContinent();
-        ArrayList<City> cities = a.getCity();
+        //ArrayList<City> cities = a.getCity();
+        ArrayList<City> cities = a.getCityInRegion();
         a.displayCities(cities);
 
         // Test the size of the returned data - should be
@@ -275,6 +277,40 @@ public class App
 //            Create string for SQL statement
             String strSelect=
                     "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE continent ='Asia' ORDER BY Population DESC ";
+//      Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<City> cities = new ArrayList<City>();
+            while (res.next())
+            {
+                City city = new City();
+                city.setCname(res.getString("Name"));
+                city.setCd(res.getString("District"));
+                city.setCpop (res.getInt("Population"));
+
+
+                cities.add(city);
+
+
+            }
+            return cities;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get City profile");
+            return null;
+
+        }
+    }
+    public ArrayList<City> getCityInRegion()
+    {
+        try {
+//            Create an SQL statement
+            Statement stmt = con.createStatement();
+//            Create string for SQL statement
+            String strSelect=
+                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE region ='Middle East' ORDER BY Population DESC ";
 //      Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
             // Return new employee if valid.
