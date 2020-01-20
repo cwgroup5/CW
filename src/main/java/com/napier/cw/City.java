@@ -8,25 +8,69 @@ public class City
     /**
      * City int;
      */
-    public int cityid;
+    private int cityid;
+    public int getCityid() {
+        return cityid;
+    }
 
+    @Override
+    public String toString() {
+        return "City{" +
+                "cityid=" + cityid +
+                ", cname='" + cname + '\'' +
+                ", cccode='" + cccode + '\'' +
+                ", cd='" + cd + '\'' +
+                ", cpop=" + cpop +
+                '}';
+    }
+
+    public void setCityid(int cityid) {
+        this.cityid = cityid;
+    }
     /**
      * City's Name
      */
-    public String cname;
+    private String cname;
+    public String getCname() {
+        return cname;
+    }
 
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
     /**
      * City's Country Code
      */
-    public String cccode;
+    private String cccode;
+    public String getCccode() {
+        return cccode;
+    }
 
+    public void setCccode(String cccode) {
+        this.cccode = cccode;
+    }
     /**
      * City's District
      */
-    public String cd;
+    private String cd;
+    public String getCd() {
+        return cd;
+    }
+
+    public void setCd(String cd) {
+        this.cd = cd;
+    }
+
+    public int getCpop() {
+        return cpop;
+    }
+
+    public void setCpop(int cpop) {
+        this.cpop = cpop;
+    }
 
     /**
      * City's Population
      */
-    public int cpop;
+    private int cpop;
 }
