@@ -13,6 +13,8 @@ public class App
         // Connect to database
         a.connect();
 
+
+
        // Display Country Profile
         System.out.println("---------" +
                 "-------");
@@ -31,7 +33,7 @@ public class App
             String strSelect =
                     "SELECT Code, Name, Continent, Region, Population, Capital "
                             + "FROM country "
-                            + "Order By Population DESC";
+                            + "ORDER BY Population DESC";
 
 
             // Execute SQL statement
@@ -72,6 +74,7 @@ public class App
             return null;
         }
     }
+
 
 
 
