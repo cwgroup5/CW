@@ -5,14 +5,6 @@ package com.napier.cw;
  */
 public class City
 {
-    /**
-     * City int;
-     */
-    private int cityid;
-    public int getCityid() {
-        return cityid;
-    }
-
     @Override
     public String toString() {
         return "City{" +
@@ -22,6 +14,13 @@ public class City
                 ", cd='" + cd + '\'' +
                 ", cpop=" + cpop +
                 '}';
+    }
+    /**
+     * City int;
+     */
+    private int cityid;
+    public int getCityid() {
+        return cityid;
     }
 
     public void setCityid(int cityid) {

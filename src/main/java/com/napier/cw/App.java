@@ -220,15 +220,101 @@ public class App
         // Display Country Profile
 
         // Extract country population information
-        ArrayList<Country> countries = a.getCountry();
+//        ArrayList<Country> countries = a.getCountry();
 //        ArrayList<Country> countries = a.getCountryInContinent();
 //        ArrayList<Country> countries = a.getCountryInRegion();
-        a.displayCountries(countries);
+//        a.displayCountries(countries);
+        //ArrayList<City> cities = a.getCityInContinent();
+        ArrayList<City> cities = a.getCity();
+        a.displayCities(cities);
 
         // Test the size of the returned data - should be
-        System.out.println("Number of Countries :"+ countries.size());
+//        System.out.println("Number of Countries :"+ countries.size());
         // Disconnect from database
         a.disconnect();
     }
+    public ArrayList<City> getCity()
+    {
+        try {
+//            Create an SQL statement
+            Statement stmt = con.createStatement();
+//            Create string for SQL statement
+            String strSelect=
+                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` ORDER BY Population DESC ";
+//      Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<City> cities = new ArrayList<City>();
+            while (res.next())
+            {
+                City city = new City();
+                city.setCname(res.getString("Name"));
+                city.setCd(res.getString("District"));
+                city.setCpop (res.getInt("Population"));
 
+
+                cities.add(city);
+
+
+            }
+            return cities;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get City profile");
+            return null;
+
+        }
+    }
+    public ArrayList<City> getCityInContinent()
+    {
+        try {
+//            Create an SQL statement
+            Statement stmt = con.createStatement();
+//            Create string for SQL statement
+            String strSelect=
+                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE continent ='Asia' ORDER BY Population DESC ";
+//      Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<City> cities = new ArrayList<City>();
+            while (res.next())
+            {
+                City city = new City();
+                city.setCname(res.getString("Name"));
+                city.setCd(res.getString("District"));
+                city.setCpop (res.getInt("Population"));
+
+
+                cities.add(city);
+
+
+            }
+            return cities;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get City profile");
+            return null;
+
+        }
+    }
+    public void displayCities(ArrayList<City> cities)
+    {
+        //display in table format
+
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+        String format="%1$-10s %2$-25s %3$-20s  \n";
+        System.out.format(format, "Name", "District", "Population");
+        System.out.println();
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+        for (City city : cities)
+        {
+            System.out.format(format,city.getCname(), city.getCd(), city.getCpop());
+            System.out.println();
+        }
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+    }
 }
