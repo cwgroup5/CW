@@ -16,41 +16,52 @@ public class App
         a.connect();
         int num = 10;
         String continent ="Asia";
-        String region ="Central Africa";
-        String country="United States";
 
+        //Get data populated cities in the world, continent, country, region and district
+        ArrayList<City> pcw  = a.getPCitiesWorld(num);
+        ArrayList<CandC> pcc  = a.getPCitiesConti(continent,num);
+
+        a.displayPCitiesWorld(pcw);
+        a.displayPCitiesConti(pcc);
         // Disconnect from database
         a.disconnect();
     }
 
-    public ArrayList<City> getCity(int num)
+    /* Functions of Extract Information from Database Section */
+
+    //Extract populated cities of the world from the database
+    public ArrayList<City> getPCitiesWorld(int num)
     {
         try
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
+
             // Create string for SQL statement
-            String strSelect = "SELECT Name, CountryCode, District, Population FROM city ORDER BY Population DESC LIMIT "+num;
+            String strSelect = "SELECT Name, CountryCode, District, Population "
+                                +"FROM city ORDER BY Population DESC LIMIT "+num;
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            ArrayList<City> cty = new ArrayList<City>();
+            //ArrayList Creation
+            ArrayList<City> apcw = new ArrayList<City>();
 
-            // Return city if valid.
-            // Check one is returned
+            //Extract the info from the current record in the ResultSet
             while (rset.next())
             {
                 City city = new City();
+
+                //Using getInt for integer data, getString for string data
                 city.setCname(rset.getString(1));
                 city.setCccode(rset.getString(2));
                 city.setCd(rset.getString(3));
                 city.setCpop(rset.getInt(4 ));
-                cty.add(city);
 
-
+                //Add the data to the apcw array
+                apcw.add(city);
             }
-            return cty;
+            return apcw;
 
         }
         catch (Exception e)
@@ -62,24 +73,95 @@ public class App
         return null;
     }
 
-    public void printCity(ArrayList<City> cty)
+    //Extract populated cities of a continent from the database
+    public ArrayList<CandC> getPCitiesConti(String continent, int num)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = "SELECT city.Name, country.Name, country.Continent, "
+                    +"city.District, city.Population FROM city,"
+                    +"country WHERE city.CountryCode = country.Code"
+                    +"AND country.Continent='"+continent+"' ORDER BY city.Population DESC LIMIT "+num;
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<CandC> apcc = new ArrayList<CandC>();
+
+            // Return city if valid.
+            // Check one is returned
+            while (rset.next())
+            {
+
+                //Create an City and Country Object
+                CandC cc = new CandC ();
+                cc.setCityname(rset.getString(1));
+                cc.setCountryname(rset.getString(2));
+                cc.setDistrict(rset.getString(3));
+                cc.setContinent(rset.getString(4));
+                cc.setPopulation(rset.getInt(5));
+                apcc.add(cc);
+
+            }
+            return apcc;
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee details");
+
+        }
+        return null;
+    }
+
+
+    /* =======================================  ===========  =========== */
+    /* Functions of Generate Report Section */
+    /* Note - Populations of cities are organized by largest to smallest */
+
+    //Display the number of populated cities in the world by *N* given by user
+    public void displayPCitiesWorld(ArrayList<City> pcw)
     {
         int count=0;
         // Print header
         System.out.println(String.format("%-10s %-30s %-20s %-20s %-20s", "Number","Cities", "Countries", "District", "Population"));
-        // Loop over all employees in the list
-        for (City city : cty)
+        // Loop over all city information in the list
+        for (City PCW : pcw)
         {
             count++;
-            String emp_string =
+            String pcw_string =
                     String.format("%-10s %-20s %-20s %-20s %-20s",
-                            count,city.getCname(), city.getCccode(), city.getCd(), city.getCpop());
-            System.out.println(emp_string);
+                            count,PCW.getCname(), PCW.getCccode(), PCW.getCd(), PCW.getCpop());
+            System.out.println(pcw_string);
+        }
+    }
+
+    //Display the populated Cities in a continent by *N* given by user
+    public void displayPCitiesConti(ArrayList<CandC> pcc)
+    {
+        int count=0;
+        // Print header
+        System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s %-20s", "Number","Cities","Countries", "Continent", "District","Population"));
+        // Loop over all city information in the list
+        for (CandC PCC : pcc)
+        {
+            count++;
+            String pcc_string =
+                    String.format("%-20s %-20s %-20s %-20s %-20s %-20s",
+                            count,PCC.getCityname(),PCC.getCountryname(),PCC.getContinent(),
+                            PCC.getDistrict(),PCC.getPopulation());
+            System.out.println(pcc_string);
         }
     }
 
     //Create object for MySQL database
     private Connection con = null;
+
+    /* Database Connection and Disconnection Section */
 
     //Connect to MySQL database
     public void connect()
