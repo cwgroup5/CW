@@ -20,18 +20,20 @@ public class App
         String country="United States";
         String district="New York";
 
-        //Get data populated cities in the world, continent, country, region and district
+        //Get data populated cities in the world, continent, region, country and district
         ArrayList<City>  pcw    = a.getPCitiesWorld(num);
         ArrayList<CandC> pcc    = a.getPCitiesConti(continent,num);
         ArrayList<City>  pcr    = a.getPCitiesR(region, num);
         ArrayList<City>  pccun  = a.getPCitiesCoun(country,num);
+        ArrayList<City>  pcd    = a.getPCitiesDis(district,num);
 
         //Call all display functions
         a.displayPCitiesWorld(pcw);
         a.displayPCitiesConti(pcc,continent);
         a.displayPCitiesR(pcr,region);
         a.displayPCitiesCoun(pccun,country);
-        
+        a.displayPCitiesDis(pcd,district);
+
         // Disconnect from database
         a.disconnect();
     }
@@ -225,6 +227,48 @@ public class App
         return null;
     }
 
+    //Extract all populated cities of a district from the database
+    public ArrayList<City> getPCitiesDis(String district, int num)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement for *N* populated cities in a district
+            String strSelect ="SELECT Name, CountryCode, District, Population " +
+                    "FROM city WHERE District="+district;
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> apcd = new ArrayList<City>();
+
+            //Extract the info from the current record in the ResultSet
+            while (rset.next())
+            {
+                //object Creation
+                City city = new City();
+
+                //Using getInt for integer data, getString for string data
+                city.setCname(rset.getString(1));
+                city.setCccode(rset.getString(2));
+                city.setCd(rset.getString(3));
+                city.setCpop(rset.getInt(4 ));
+
+                //Add the data to the apcc arra
+                apcd.add(city);
+            }
+            return apcd;
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee details");
+
+        }
+        return null;
+    }
 
 
     /* =======================================  ===========  =========== */
@@ -305,6 +349,24 @@ public class App
             System.out.println(pccun_string);
         }
         System.out.println("\n");
+    }
+
+    //Display the populated Cities in a district by *N* given by user
+    public void displayPCitiesDis(ArrayList<City> pcd, String district)
+    {
+        int count=0;
+        // Print header
+        System.out.println("Cities in "+district+" District:");
+        System.out.println(String.format("%-20s %-40s %-20s %-20s %-20s", "Number","Cities","Countries", "District","Population"));
+        // Loop over all employees in the list
+        for (City PCD : pcd)
+        {
+            count++;
+            String pcitiesd_string =
+                    String.format("%-20s %-40s %-20s %-20s %-20s",
+                            count,PCD.getCname(),PCD.getCccode(),PCD.getCd(),PCD.getCpop());
+            System.out.println(pcitiesd_string);
+        }
     }
 
     //Create object for MySQL database
