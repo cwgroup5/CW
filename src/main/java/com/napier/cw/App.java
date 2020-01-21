@@ -1,6 +1,9 @@
 package com.napier.cw;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 
 public class App
 {
@@ -9,61 +12,76 @@ public class App
     {
         // Create new Application
         App a = new App();
-
         // Connect to database
         a.connect();
-        // Get City
-        City cy= a.getCity(69);
-
+        int num = 10;
+        String continent ="Asia";
+        String region ="Central Africa";
+        String country="United States";
 
         // Disconnect from database
         a.disconnect();
     }
-    public City getCity(int ID)
+
+    public ArrayList<City> getCity(int num)
     {
         try
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect =
-                    "SELECT ID, Name, CountryCode, District, Population "
-                            + "FROM city "
-                            + "WHERE ID = " + ID;
+            String strSelect = "SELECT Name, CountryCode, District, Population FROM city ORDER BY Population DESC LIMIT "+num;
+
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cty = new ArrayList<City>();
+
             // Return city if valid.
             // Check one is returned
-            if (rset.next())
+            while (rset.next())
             {
                 City city = new City();
-                city.cityid = rset.getInt("ID");
-                city.cname = rset.getString("Name");
-                city.cccode = rset.getString("District");
-                city.cpop = rset.getInt("Population");
-                System.out.println(city.cname);
-                return city;
+                city.setCname(rset.getString(1));
+                city.setCccode(rset.getString(2));
+                city.setCd(rset.getString(3));
+                city.setCpop(rset.getInt(4 ));
+                cty.add(city);
+
 
             }
-            else
-                return null;
+            return cty;
+
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
             System.out.println("Failed to get employee details");
-            return null;
+
+        }
+        return null;
+    }
+
+    public void printCity(ArrayList<City> cty)
+    {
+        int count=0;
+        // Print header
+        System.out.println(String.format("%-10s %-30s %-20s %-20s %-20s", "Number","Cities", "Countries", "District", "Population"));
+        // Loop over all employees in the list
+        for (City city : cty)
+        {
+            count++;
+            String emp_string =
+                    String.format("%-10s %-20s %-20s %-20s %-20s",
+                            count,city.getCname(), city.getCccode(), city.getCd(), city.getCpop());
+            System.out.println(emp_string);
         }
     }
 
-//    /**
-//     * Connection to MySQL database.
-//     */
+    //Create object for MySQL database
     private Connection con = null;
-    //
-//    /**
-//     * Connect to the MySQL database.
-//     */
+
+    //Connect to MySQL database
     public void connect()
     {
         try
@@ -102,9 +120,7 @@ public class App
         }
     }
 
-    /**
-     * Disconnect from the MySQL database.
-     */
+    //Disconnect from MySQL database
     public void disconnect()
     {
         if (con != null)
