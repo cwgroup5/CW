@@ -2,7 +2,7 @@ package com.napier.cw;
 
 import java.sql.*;
 import java.util.ArrayList;
-//import java.util.Scanner;
+import java.util.Scanner;
 
 public class App
 {
@@ -62,6 +62,16 @@ public class App
             }
         }
     }
+//    public void input()
+//    {
+//        Scanner input = new Scanner(System.in);
+//
+//        System.out.println("Enter Number of Countries:");
+//        int noOfCountries = input.nextInt();
+//        System.out.println("NoOfCountries =" +noOfCountries);
+//    }
+
+
     public ArrayList<Country> getCountry()
     {
         try
@@ -102,6 +112,55 @@ public class App
             return null;
         }
     }
+
+    public ArrayList<Country> getCountryByUser(int no)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "ORDER BY Population DESC LIMIT " +no;
+
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (res.next())
+            {
+                Country country = new Country();
+                country.setCode(res.getString("Code"));
+                country.setName(res.getString("Name"));
+                country.setContinent(res.getString("Continent"));
+                country.setRegion(res.getString("Region"));
+                country.setPopulation (res.getInt("Population"));
+                country.setCapital(res.getString("Capital"));
+
+                countries.add(country);
+
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
+//    public void sampleMethod(Scanner sc){
+//        StringBuffer sb = new StringBuffer();
+//        System.out.println("Enter your name: ");
+//        String name = sc.next();
+//        System.out.println("Hello "+name);
+//    }
+
+//
     public ArrayList<Country> getCountryInContinent()
     {
         try
@@ -183,6 +242,8 @@ public class App
             return null;
         }
     }
+
+
     public void displayCountries(ArrayList<Country> countries)
     {
         //display in table format
@@ -203,6 +264,8 @@ public class App
 //    /**
 //     * Connection to MySQL database.
 //     */
+
+
     private Connection con = null;
     //
 //    /**
@@ -216,13 +279,18 @@ public class App
 
         // Connect to database
         a.connect();
+        int no = 10;
+
 
         // Display Country Profile
 
         // Extract country population information
-        ArrayList<Country> countries = a.getCountry();
+//        ArrayList<Country> countries = a.getCountry();
 //        ArrayList<Country> countries = a.getCountryInContinent();
 //        ArrayList<Country> countries = a.getCountryInRegion();
+
+        ArrayList<Country> countries = a.getCountryByUser(no);
+
         a.displayCountries(countries);
 
         // display number of  countries
