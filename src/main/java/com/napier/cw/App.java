@@ -15,6 +15,7 @@ public class App
         }
         catch (ClassNotFoundException e)
         {
+            // Message if SQL driver cannot be loaded
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
@@ -62,14 +63,7 @@ public class App
             }
         }
     }
-//    public void input()
-//    {
-//        Scanner input = new Scanner(System.in);
-//
-//        System.out.println("Enter Number of Countries:");
-//        int noOfCountries = input.nextInt();
-//        System.out.println("NoOfCountries =" +noOfCountries);
-//    }
+
 
 
     public ArrayList<Country> getCountry()
@@ -87,7 +81,7 @@ public class App
 
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return new country if valid.
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
             while (res.next())
@@ -128,7 +122,7 @@ public class App
 
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return new country if valid.
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
             while (res.next())
@@ -154,14 +148,6 @@ public class App
         }
     }
 
-//    public void sampleMethod(Scanner sc){
-//        StringBuffer sb = new StringBuffer();
-//        System.out.println("Enter your name: ");
-//        String name = sc.next();
-//        System.out.println("Hello "+name);
-//    }
-
-//
     public ArrayList<Country> getCountryInContinent()
     {
         try
@@ -179,7 +165,7 @@ public class App
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
             ArrayList<Country> countries = new ArrayList<Country>();
-            // Return new employee if valid.
+            // Return new country if valid.
             // Check one is returned
             while (res.next())
             {
@@ -218,7 +204,7 @@ public class App
 
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return new country if valid.
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
             while (res.next())
@@ -230,7 +216,6 @@ public class App
                 country.setRegion(res.getString("Region"));
                 country.setPopulation (res.getInt("Population"));
                 country.setCapital(res.getString("Capital"));
-
                 countries.add(country);
 
             }
@@ -260,7 +245,7 @@ public class App
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
             ArrayList<Country> countries = new ArrayList<Country>();
-            // Return new employee if valid.
+            // Return new country if valid.
             // Check one is returned
             while (res.next())
             {
@@ -295,10 +280,9 @@ public class App
                             + "FROM country "
                             + "WHERE country.Region='"+reg+"' ORDER BY Population DESC LIMIT "+no;
 
-
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return new country if valid.
             // Check one is returned
             ArrayList<Country> countries = new ArrayList<Country>();
             while (res.next())
@@ -310,7 +294,6 @@ public class App
                 country.setRegion(res.getString("Region"));
                 country.setPopulation (res.getInt("Population"));
                 country.setCapital(res.getString("Capital"));
-
                 countries.add(country);
 
             }
@@ -341,26 +324,33 @@ public class App
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
 
-    //
-//    /**
-//     * Connection to MySQL database.
-//     */
-
-
+    /**
+     * Connection to MySQL database.
+  */
     private Connection con = null;
-    //
-//    /**
-//     * Connect to the MySQL database.
-//     */
+    /**
+     * Connect to the MySQL database.
+     */
 
     public static void main(String[] args)
     {
+        // Declare the object and initialize with
+        // predefined standard input object
+        Scanner sc = new Scanner(System.in);
+
         // Create new Application
         App a = new App();
 
         // Connect to database
         a.connect();
-        int no = 10;
+
+        System.out.println("Enter Number of Countries:");
+        int no = sc.nextInt();
+//        System.out.println("Enter Name of Region:");
+        // String input
+//        String reg = sc.nextLine();
+
+//        int no = 10;
         String cont = "Asia";
         String reg = "Middle East";
 
