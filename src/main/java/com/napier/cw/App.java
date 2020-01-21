@@ -23,11 +23,12 @@ public class App
         //Get data populated cities in the world, continent, country, region and district
         ArrayList<City>  pcw    = a.getPCitiesWorld(num);
         ArrayList<CandC> pcc    = a.getPCitiesConti(continent,num);
- 
+        ArrayList<City>  pcr    = a.getPCitiesR(region, num);
 
         //Call all display functions
         a.displayPCitiesWorld(pcw);
         a.displayPCitiesConti(pcc,continent);
+        a.displayPCitiesR(pcr,region);
 
 
         // Disconnect from database
@@ -132,6 +133,53 @@ public class App
         return null;
     }
 
+    //Extract all populated cities of a region from the database
+    public ArrayList<City> getPCitiesR(String region, int num)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement for populated cities in a region
+            String strSelect = "SELECT city.Name, city.CountryCode, "
+                    +"city.District, city.Population FROM city,country "
+                    +"WHERE city.CountryCode = country.Code "
+                    +"AND country.Region='"+region+"' ORDER BY city.Population DESC LIMIT "+num;
+
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            //ArrayList Creation
+            ArrayList<City> apcr = new ArrayList<City>();
+
+            //Extract the info from the current record in the ResultSet
+            while (rset.next())
+            {
+                //Object Creation
+                City city = new City();
+
+                //Using getInt for integer data, getString for string data
+                city.setCname(rset.getString(1));
+                city.setCccode(rset.getString(2));
+                city.setCd(rset.getString(3));
+                city.setCpop(rset.getInt(4 ));
+
+                //Add the data to the apcr array
+                apcr.add(city);
+            }
+            return apcr;
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee details");
+
+        }
+        return null;
+    }
+
 
 
     /* =======================================  ===========  =========== */
@@ -172,6 +220,25 @@ public class App
                             count,PCC.getCityname(),PCC.getCountryname(),PCC.getContinent(),
                             PCC.getDistrict(),PCC.getPopulation());
             System.out.println(pcc_string);
+        }
+        System.out.println("\n");
+    }
+
+    //Display the populated Cities in a region by *N* given by user
+    public void displayPCitiesR(ArrayList<City> pcr, String region)
+    {
+        int count=0;
+        // Print header
+        System.out.println("Cities in "+region+" Region:");
+        System.out.println(String.format("%-20s %-40s %-20s %-20s %-20s", "Number","Cities","Countries", "District","Population"));
+        // Loop over all employees in the list
+        for (City PCR : pcr)
+        {
+            count++;
+            String pcitiesR_string =
+                    String.format("%-20s %-40s %-20s %-20s %-20s",
+                            count,PCR.getCname(),PCR.getCccode(),PCR.getCd(),PCR.getCpop());
+            System.out.println(pcitiesR_string);
         }
         System.out.println("\n");
     }
