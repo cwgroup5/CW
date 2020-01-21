@@ -212,7 +212,8 @@ public class App
             // Create string for SQL statement
             String strSelect =
                     "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "+ "WHERE country.Continent='"+cont+"' ORDER BY Population DESC LIMIT "+no;
+                            + "FROM country "
+                            + "WHERE country.Continent='"+cont+"' ORDER BY Population DESC LIMIT "+no;
 
 
             // Execute SQL statement
@@ -282,6 +283,46 @@ public class App
             return null;
         }
     }
+    public ArrayList<Country> getCountryInRegionByUser(String reg,int no)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "WHERE country.Region='"+reg+"' ORDER BY Population DESC LIMIT "+no;
+
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (res.next())
+            {
+                Country country = new Country();
+                country.setCode(res.getString("Code"));
+                country.setName(res.getString("Name"));
+                country.setContinent(res.getString("Continent"));
+                country.setRegion(res.getString("Region"));
+                country.setPopulation (res.getInt("Population"));
+                country.setCapital(res.getString("Capital"));
+
+                countries.add(country);
+
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
 
 
     public void displayCountries(ArrayList<Country> countries)
@@ -321,6 +362,7 @@ public class App
         a.connect();
         int no = 10;
         String cont = "Asia";
+        String reg = "Middle East";
 
 
         // Display Country Profile
@@ -331,7 +373,8 @@ public class App
 //        ArrayList<Country> countries = a.getCountryInRegion();
 
 //        ArrayList<Country> countries = a.getCountryByUser(no);
-        ArrayList<Country> countries = a.getCountryInContinentByUser(cont,no);
+//        ArrayList<Country> countries = a.getCountryInContinentByUser(cont,no);
+        ArrayList<Country> countries = a.getCountryInRegionByUser(reg,no);
 
 
         a.displayCountries(countries);
