@@ -153,6 +153,7 @@ public class App
             return null;
         }
     }
+
 //    public void sampleMethod(Scanner sc){
 //        StringBuffer sb = new StringBuffer();
 //        System.out.println("Enter your name: ");
@@ -194,6 +195,45 @@ public class App
 
             }
             return  countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
+    public ArrayList<Country> getCountryInContinentByUser(String cont,int no)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "+ "WHERE country.Continent='"+cont+"' ORDER BY Population DESC LIMIT "+no;
+
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (res.next())
+            {
+                Country country = new Country();
+                country.setCode(res.getString("Code"));
+                country.setName(res.getString("Name"));
+                country.setContinent(res.getString("Continent"));
+                country.setRegion(res.getString("Region"));
+                country.setPopulation (res.getInt("Population"));
+                country.setCapital(res.getString("Capital"));
+
+                countries.add(country);
+
+            }
+            return countries;
         }
         catch (Exception e)
         {
@@ -280,6 +320,7 @@ public class App
         // Connect to database
         a.connect();
         int no = 10;
+        String cont = "Asia";
 
 
         // Display Country Profile
@@ -289,7 +330,9 @@ public class App
 //        ArrayList<Country> countries = a.getCountryInContinent();
 //        ArrayList<Country> countries = a.getCountryInRegion();
 
-        ArrayList<Country> countries = a.getCountryByUser(no);
+//        ArrayList<Country> countries = a.getCountryByUser(no);
+        ArrayList<Country> countries = a.getCountryInContinentByUser(cont,no);
+
 
         a.displayCountries(countries);
 
