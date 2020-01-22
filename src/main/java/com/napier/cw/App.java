@@ -338,36 +338,26 @@ public class App
 
     public static void main(String[] args) throws IOException
     {
-
-
-
         // Create new Application
         App a = new App();
 
         // Connect to database
         a.connect();
 
-//        int no = 10;
-        String cont = "Asia";
-//        String reg = "Middle East";
-
         // Declare the object and initialize with
         // predefined standard input object
-//        Scanner sc = new Scanner(System.in);
 
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter No of Countries:");
         int no=Integer.parseInt(br.readLine());
+//        System.out.println("Enter Name of Continent:");
+//        String cont = br.readLine();
         System.out.println("Enter Name of Region:");
         String reg = br.readLine();
 
-
-
-//        System.out.println("Enter Name of Region:");
-//        String reg = sc.nextLine();
-
-
-        // Display Country Profile
+        /**
+            Display Country Profile
+         **/
 
         // Extract country population information
 //        ArrayList<Country> countries = a.getCountry();
