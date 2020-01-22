@@ -85,7 +85,8 @@ public class App
             if(selection==1)
             {
                 // Create string for SQL statement for populated cities in a region
-                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` ORDER BY population DESC";
+                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name`" +
+                        " FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` ORDER BY population DESC";
             }
 
             else if(selection==2)
@@ -96,7 +97,9 @@ public class App
                 System.out.print("\n");
 
                 // Create string for SQL statement for populated cities in a region
-                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` WHERE country.Continent='"+area+"' ORDER BY  `country`.`Population`  DESC";
+                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` " +
+                        "FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` " +
+                        "WHERE country.Continent='"+area+"' ORDER BY  `country`.`Population`  DESC";
             }
             else if(selection==3)
             {
@@ -106,7 +109,9 @@ public class App
                 System.out.print("\n");
 
                 // Create string for SQL statement for populated cities in a region
-                strSelect =  "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` WHERE country.Region='"+area+"' ORDER BY population DESC";
+                strSelect =  "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name`" +
+                        " FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital`" +
+                        " WHERE country.Region='"+area+"' ORDER BY population DESC";
             }
 
             else if(selection==4)
@@ -116,7 +121,8 @@ public class App
                 System.out.print("\n");
 
                 // Create string for SQL statement for populated cities in a region
-                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` ORDER BY population DESC LIMIT " +no;
+                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` " +
+                        "FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` ORDER BY population DESC LIMIT " +no;
             }
             else if(selection==5)
             {
@@ -127,7 +133,9 @@ public class App
                 System.out.print("\n");
 
                 // Create string for SQL statement for populated cities in a region
-                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` WHERE country.Continent='"+area+"' ORDER BY  `country`.`Population`  DESC LIMIT "+no;
+                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` " +
+                        "FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` " +
+                        "WHERE country.Continent='"+area+"' ORDER BY  `country`.`Population`  DESC LIMIT "+no;
             }
             else if(selection==6)
             {
@@ -138,7 +146,9 @@ public class App
                 System.out.print("\n");
 
                 // Create string for SQL statement for populated cities in a region
-                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` WHERE country.Region='"+area+"' ORDER BY  `country`.`Population`  DESC LIMIT "+no;
+                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name`" +
+                        " FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` " +
+                        "WHERE country.Region='"+area+"' ORDER BY  `country`.`Population`  DESC LIMIT "+no;
             }
             else if(selection==7)
             {
