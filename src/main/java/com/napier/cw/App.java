@@ -2,6 +2,11 @@ package com.napier.cw;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
 //import java.util.Scanner;
 
 public class App
@@ -102,7 +107,7 @@ public class App
             return null;
         }
     }
-    public ArrayList<Country> getCountryInContinent()
+    public ArrayList<Country> getCountryInContinent(String cont)
     {
         try
         {
@@ -112,8 +117,7 @@ public class App
             String strSelect =
                     "SELECT Code, Name, Continent, Region, Population, Capital "
                             + "FROM country "
-                            + "WHERE country.Continent = 'Asia' "
-                            + "ORDER BY Population DESC";
+                            + "WHERE country.Continent='"+cont+"' ORDER BY Population DESC";
 
 
             // Execute SQL statement
@@ -209,34 +213,7 @@ public class App
 //     * Connect to the MySQL database.
 //     */
 
-    public static void main(String[] args)
-    {
-        // Create new Application
-        App a = new App();
 
-        // Connect to database
-        a.connect();
-
-        // Display Country Profile
-
-        // Extract country population information
-//        ArrayList<Country> countries = a.getCountry();
-//        ArrayList<Country> countries = a.getCountryInContinent();
-//        ArrayList<Country> countries = a.getCountryInRegion();
-//        a.displayCountries(countries);
-        /** Produce City Report **/
-        //ArrayList<City> cities = a.getCityInContinent();
-        //ArrayList<City> cities = a.getCity();
-//        ArrayList<City> cities = a.getCityInRegion();
-//        ArrayList<City> cities = a.getCityInCountry();
-        ArrayList<City> cities = a.getCityInDistrict();
-        a.displayCities(cities);
-
-        // Test the size of the returned data - should be
-//        System.out.println("Number of Countries :"+ countries.size());
-        // Disconnect from database
-        a.disconnect();
-    }
     public ArrayList<City> getCity()
     {
         try {
@@ -271,14 +248,15 @@ public class App
 
         }
     }
-    public ArrayList<City> getCityInContinent()
+    public ArrayList<City> getCityInContinent(String cont)
     {
         try {
 //            Create an SQL statement
             Statement stmt = con.createStatement();
 //            Create string for SQL statement
             String strSelect=
-                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE continent ='Asia' ORDER BY Population DESC ";
+                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.`Continent`='"+cont+"' ORDER BY `Population` DESC ";
+
 //      Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
             // Return new employee if valid.
@@ -422,5 +400,39 @@ public class App
             System.out.println();
         }
         System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+    }
+    public static void main(String[] args) throws IOException
+    {
+        // Create new Application
+        App a = new App();
+
+        // Connect to database
+        a.connect();
+// Declare the object and initialize with
+        // predefined standard input object
+
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter Name of Continent:");
+        String cont = br.readLine();
+
+        // Display Country Profile
+
+        // Extract country population information
+//        ArrayList<Country> countries = a.getCountry();
+//        ArrayList<Country> countries = a.getCountryInContinent();
+//        ArrayList<Country> countries = a.getCountryInRegion();
+//        a.displayCountries(countries);
+        /** Produce City Report **/
+        ArrayList<City> cities = a.getCityInContinent(cont);
+        //ArrayList<City> cities = a.getCity();
+//        ArrayList<City> cities = a.getCityInRegion();
+//        ArrayList<City> cities = a.getCityInCountry();
+//        ArrayList<City> cities = a.getCityInDistrict();
+        a.displayCities(cities);
+
+        // Test the size of the returned data - should be
+//        System.out.println("Number of Countries :"+ countries.size());
+        // Disconnect from database
+        a.disconnect();
     }
 }
