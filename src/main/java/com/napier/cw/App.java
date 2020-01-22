@@ -283,14 +283,14 @@ public class App
 
         }
     }
-    public ArrayList<City> getCityInRegion()
+    public ArrayList<City> getCityInRegion(String reg)
     {
         try {
 //            Create an SQL statement
             Statement stmt = con.createStatement();
 //            Create string for SQL statement
             String strSelect=
-                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE region ='Middle East' ORDER BY Population DESC ";
+                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.`Region`='"+reg+"' ORDER BY `Population` DESC ";
 //      Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
             // Return new employee if valid.
@@ -412,9 +412,10 @@ public class App
         // predefined standard input object
 
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter Name of Continent:");
-        String cont = br.readLine();
-
+//        System.out.println("Enter Name of Continent:");
+//        String cont = br.readLine();
+        System.out.println("Enter Name of Region:");
+        String reg = br.readLine();
         // Display Country Profile
 
         // Extract country population information
@@ -423,9 +424,9 @@ public class App
 //        ArrayList<Country> countries = a.getCountryInRegion();
 //        a.displayCountries(countries);
         /** Produce City Report **/
-        ArrayList<City> cities = a.getCityInContinent(cont);
+//        ArrayList<City> cities = a.getCityInContinent(cont);
         //ArrayList<City> cities = a.getCity();
-//        ArrayList<City> cities = a.getCityInRegion();
+        ArrayList<City> cities = a.getCityInRegion(reg);
 //        ArrayList<City> cities = a.getCityInCountry();
 //        ArrayList<City> cities = a.getCityInDistrict();
         a.displayCities(cities);
