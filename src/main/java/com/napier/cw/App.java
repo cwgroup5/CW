@@ -2,7 +2,6 @@ package com.napier.cw;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -10,6 +9,9 @@ import java.io.IOException;
 
 public class App
 {
+    int no=0;
+    String area=null;
+
     public void connect()
     {
         try
@@ -70,18 +72,89 @@ public class App
 
 
 
-    public ArrayList<Country> getCountry()
+    public ArrayList<Country> getCountry(int selection)
     {
         try
         {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+            String strSelect=null;
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "ORDER BY Population DESC";
+            if(selection==1)
+            {
+                // Create string for SQL statement for populated cities in a region
+                strSelect = "SELECT Code, Name, Continent, Region, Population, Capital "
+                        + "FROM country "
+                        + "ORDER BY Population DESC";
+            }
+            else if(selection==2)
+            {
 
+                System.out.print("Enter a Continent: ");
+                area =br.readLine();
+                System.out.print("\n");
+
+                // Create string for SQL statement for populated cities in a region
+                strSelect = "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "WHERE country.Continent='"+area+"' ORDER BY Population DESC";
+            }
+            else if(selection==3)
+            {
+
+                System.out.print("Enter a Region: ");
+                area =br.readLine();
+                System.out.print("\n");
+
+                // Create string for SQL statement for populated cities in a region
+                strSelect =  "SELECT Code, Name, Continent, Region, Population, Capital "
+                        + "FROM country "
+                        + "WHERE country.Region='"+area+"' ORDER BY Population DESC";
+            }
+
+            else if(selection==4)
+            {
+                System.out.print("Enter Number of Countries: ");
+                no = Integer.parseInt(br.readLine());
+                System.out.print("\n");
+
+                // Create string for SQL statement for populated cities in a region
+                strSelect = "SELECT Code, Name, Continent, Region, Population, Capital "
+                        + "FROM country "
+                        + "ORDER BY Population DESC LIMIT " +no;
+            }
+            else if(selection==5)
+            {
+                System.out.print("Enter Number of Countries: ");
+                no = Integer.parseInt(br.readLine());
+                System.out.print("Enter a Continent: ");
+                area =br.readLine();
+                System.out.print("\n");
+
+                // Create string for SQL statement for populated cities in a region
+                strSelect = "SELECT Code, Name, Continent, Region, Population, Capital "
+                            + "FROM country "
+                            + "WHERE country.Continent='"+area+"' ORDER BY Population DESC LIMIT "+no;
+            }
+            else if(selection==6)
+            {
+                System.out.print("Enter Number of Countries: ");
+                no = Integer.parseInt(br.readLine());
+                System.out.print("Enter a Region: ");
+                area =br.readLine();
+                System.out.print("\n");
+
+                // Create string for SQL statement for populated cities in a region
+                strSelect = "SELECT Code, Name, Continent, Region, Population, Capital "
+                        + "FROM country "
+                        + "WHERE country.Region='"+area+"' ORDER BY Population DESC LIMIT "+no;
+            }
+            else if(selection==7)
+            {
+               System.exit(0);
+            }
 
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
@@ -107,211 +180,14 @@ public class App
         {
             System.out.println(e.getMessage());
             System.out.println("Failed to get country profile");
-            return null;
+
         }
+        return null;
     }
-
-    public ArrayList<Country> getCountryByUser(int no)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "ORDER BY Population DESC LIMIT " +no;
-
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<Country> countries = new ArrayList<Country>();
-            while (res.next())
-            {
-                Country country = new Country();
-                country.setCode(res.getString("Code"));
-                country.setName(res.getString("Name"));
-                country.setContinent(res.getString("Continent"));
-                country.setRegion(res.getString("Region"));
-                country.setPopulation (res.getInt("Population"));
-                country.setCapital(res.getString("Capital"));
-
-                countries.add(country);
-
-            }
-            return countries;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-
-    public ArrayList<Country> getCountryInContinent(String cont)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "WHERE country.Continent='"+cont+"' ORDER BY Population DESC";
-
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            ArrayList<Country> countries = new ArrayList<Country>();
-            // Return new country if valid.
-            // Check one is returned
-            while (res.next())
-            {
-                Country country = new Country();
-                country.setCode(res.getString("Code"));
-                country.setName(res.getString("Name"));
-                country.setContinent(res.getString("Continent"));
-                country.setRegion(res.getString("Region"));
-                country.setPopulation (res.getInt("Population"));
-                country.setCapital(res.getString("Capital"));
-
-                countries.add(country);
-
-            }
-            return  countries;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-    public ArrayList<Country> getCountryInContinentByUser(String cont,int no)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "WHERE country.Continent='"+cont+"' ORDER BY Population DESC LIMIT "+no;
-
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<Country> countries = new ArrayList<Country>();
-            while (res.next())
-            {
-                Country country = new Country();
-                country.setCode(res.getString("Code"));
-                country.setName(res.getString("Name"));
-                country.setContinent(res.getString("Continent"));
-                country.setRegion(res.getString("Region"));
-                country.setPopulation (res.getInt("Population"));
-                country.setCapital(res.getString("Capital"));
-                countries.add(country);
-
-            }
-            return countries;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-    public ArrayList<Country> getCountryInRegion(String reg)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "WHERE country.Region='"+reg+"' ORDER BY Population DESC";
-
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            ArrayList<Country> countries = new ArrayList<Country>();
-            // Return new country if valid.
-            // Check one is returned
-            while (res.next())
-            {
-                Country country = new Country();
-                country.setCode(res.getString("Code"));
-                country.setName(res.getString("Name"));
-                country.setContinent(res.getString("Continent"));
-                country.setRegion(res.getString("Region"));
-                country.setPopulation (res.getInt("Population"));
-                country.setCapital(res.getString("Capital"));
-                countries.add(country);
-
-            }
-            return countries;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-    public ArrayList<Country> getCountryInRegionByUser(String reg,int no)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "WHERE country.Region='"+reg+"' ORDER BY Population DESC LIMIT "+no;
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<Country> countries = new ArrayList<Country>();
-            while (res.next())
-            {
-                Country country = new Country();
-                country.setCode(res.getString("Code"));
-                country.setName(res.getString("Name"));
-                country.setContinent(res.getString("Continent"));
-                country.setRegion(res.getString("Region"));
-                country.setPopulation (res.getInt("Population"));
-                country.setCapital(res.getString("Capital"));
-                countries.add(country);
-
-            }
-            return countries;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-
 
     public void displayCountries(ArrayList<Country> countries)
     {
+
         //display in table format
 
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -322,8 +198,12 @@ public class App
         for (Country country : countries)
         {
             System.out.format(format,country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
+
+
         }
+
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
     }
 
     /**
@@ -336,41 +216,45 @@ public class App
 
     public static void main(String[] args) throws IOException
     {
+
+        String yn;
+        int selection;
+        yn ="y";
+
         // Create new Application
+
         App a = new App();
 
         // Connect to database
         a.connect();
 
-        // Declare the object and initialize with
-        // predefined standard input object
 
-        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter No of Countries:");
-        int no=Integer.parseInt(br.readLine());
-        System.out.println("Enter Name of Continent:");
-        String cont = br.readLine();
-//        System.out.println("Enter Name of Region:");
-//        String reg = br.readLine();
+        while (yn.equals("y")) {
+            // Declare the object and initialize with
+            // predefined standard input object
+            BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+            System.out.println(""
+                    + "Enter 1 to organise all countries in the Word \n "
+                    + "Enter 2 to organise all countries in a Continent \n "
+                    + "Enter 3 to organise all countries in a Region \n "
+                    + "Enter 4 to organise top populated Countries in the World \n "
+                    + "Enter 5 to organise top populated Countries in a Continent  \n"
+                    + "Enter 6 to organise top populated Countries in a Region \n"
+                    + "Enter 7 to Exit \n  ");
 
-        /**
-            Display Country Profile
-         **/
+            System.out.print("Choose a number:");
+            selection = Integer.parseInt(br.readLine());
 
-        // Extract country population information
-//        ArrayList<Country> countries = a.getCountry();
-        ArrayList<Country> countries = a.getCountryInContinent(cont);
-//        ArrayList<Country> countries = a.getCountryInRegion();
+            ArrayList<Country> countries = a.getCountry(selection);
+            a.displayCountries(countries);
+            System.out.println("Number of Countries :"+ countries.size());
 
-//        ArrayList<Country> countries = a.getCountryByUser(no);
-//        ArrayList<Country> countries = a.getCountryInContinentByUser(cont,no);
-//        ArrayList<Country> countries = a.getCountryInRegionByUser(reg,no);
-
-
-        a.displayCountries(countries);
-
-        // display number of  countries
-        System.out.println("Number of Countries :"+ countries.size());
+            System.out.print("Do you want to continue (y/n): ");
+            yn =br.readLine();
+            if (yn.equals("n")) {
+                System.exit(0);
+            }
+        }
         // Disconnect from database
         a.disconnect();
     }
