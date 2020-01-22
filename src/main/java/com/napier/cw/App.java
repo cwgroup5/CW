@@ -101,6 +101,41 @@ public class App
         }
     }
 
+    public ArrayList<City> getCitiesInContinentByUser(String cont)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
+                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` WHERE `continent` = \"Asia\" "
+                            + "ORDER BY `country`.`Population` DESC";
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            ArrayList<City> accw = new ArrayList<City>();
+            while (res.next())
+            {
+                City cty =new City();
+                cty.setCname(res.getString(1));
+                cty.setCccode(res.getString(2));
+                cty.setCpop(res.getInt(3));
+                accw.add(cty);
+            }
+            return accw;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
+
     public void displayCCbyUser(ArrayList<City> cty)
     {
         //display in table format
@@ -139,7 +174,8 @@ public class App
 
         String cont = "Asia";
 
-        ArrayList<City> capcty = a.getCCWbyUser(cont);
+//        ArrayList<City> capcty = a.getCCWbyUser(cont);
+        ArrayList<City> capcty = a.getCitiesInContinentByUser(cont);
         a.displayCCbyUser(capcty);
 
         // display number of  countries
