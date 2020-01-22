@@ -3,6 +3,9 @@ package com.napier.cw;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class App
 {
@@ -303,21 +306,22 @@ public class App
      * Connect to the MySQL database.
      */
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
-        // Declare the object and initialize with
-        // predefined standard input object
-//        Scanner sc = new Scanner(System.in);
-
         // Create new Application
         App a = new App();
 
         // Connect to database
         a.connect();
 
-        String cont = "Asia";
-        String re = "Middle East";
-        int no = 10;
+        // Declare the object and initialize with
+        // predefined standard input object
+
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter No of Capital City:");
+        int no=Integer.parseInt(br.readLine());
+        System.out.println("Enter Name of Region:");
+        String re = br.readLine();
 
 //        ArrayList<City> capcty = a.getCCWbyUser(cont);
 //        ArrayList<City> capcty = a.getCitiesInContinent(cont);
