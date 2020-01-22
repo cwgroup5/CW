@@ -3,6 +3,10 @@ package com.napier.cw;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
 
 public class App
 {
@@ -332,15 +336,9 @@ public class App
      * Connect to the MySQL database.
      */
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
-        // Declare the object and initialize with
-        // predefined standard input object
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Number of Countries:");
-        int no = sc.nextInt();
-//        System.out.println("Enter Name of Region:");
-//        String reg = sc.nextLine();
+
 
 
         // Create new Application
@@ -351,7 +349,22 @@ public class App
 
 //        int no = 10;
         String cont = "Asia";
-        String reg = "Middle East";
+//        String reg = "Middle East";
+
+        // Declare the object and initialize with
+        // predefined standard input object
+//        Scanner sc = new Scanner(System.in);
+
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter No of Countries:");
+        int no=Integer.parseInt(br.readLine());
+        System.out.println("Enter Name of Region:");
+        String reg = br.readLine();
+
+
+
+//        System.out.println("Enter Name of Region:");
+//        String reg = sc.nextLine();
 
 
         // Display Country Profile
