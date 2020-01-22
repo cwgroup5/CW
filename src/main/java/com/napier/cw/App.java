@@ -183,6 +183,80 @@ public class App
         }
         return null;
     }
+    public ArrayList<City> getCity(int selection2)
+    {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            String strSelect=null;
+//            Create an SQL statement
+            Statement stmt = con.createStatement();
+//            Create string for SQL statement
+           if(selection2==1)
+            {
+                // Create string for SQL statement for populated cities in a region
+                strSelect = "SELECT `city`.`Name`, `country`.`Name`,`city`.`District`, `city`.`Population` " +
+                        "FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` ORDER BY Population DESC ";
+            }
+           else if (selection2==2)
+           {
+               System.out.print("Enter a Continent: ");
+               area =br.readLine();
+               System.out.print("\n");
+
+                strSelect=
+                       "SELECT `city`.`Name`,`country`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.`Continent`='"+area+"' ORDER BY `Population` DESC ";
+
+           }
+           else if (selection2==3)
+           {
+               System.out.print("Enter a Region: ");
+               area =br.readLine();
+               System.out.print("\n");
+               strSelect=
+                       "SELECT `city`.`Name`,`country`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.`Region`='"+area+"' ORDER BY `Population` DESC ";
+           }
+           else if (selection2==4)
+           {
+               System.out.print("Enter a Country: ");
+               area =br.readLine();
+               System.out.print("\n");
+
+               strSelect="SELECT `city`.`Name`,`country`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.`Name`='"+area+"' ORDER BY `Population` DESC ";
+
+           }
+           else if (selection2==5)
+           {
+               System.out.print("Enter a District: ");
+               area =br.readLine();
+               System.out.print("\n");
+
+               strSelect="SELECT `city`.`Name`, `country`.`Name`,`city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `city`.`District`='"+area+"' ORDER BY `Population` DESC ";
+
+           }
+
+//      Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<City> cities = new ArrayList<City>();
+            while (res.next())
+            {
+                City city = new City();
+                city.setCname(res.getString(1));
+                city.setCccode(res.getString(2));
+                city.setCd(res.getString(3));
+                city.setCpop (res.getInt(4));
+                cities.add(city);
+            }
+            return cities;
+
+        } catch (SQLException | IOException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get City profile");
+
+        }
+        return null;
+    }
 
     public void displayCountries(ArrayList<Country> countries)
     {
@@ -204,6 +278,22 @@ public class App
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
     }
+    public void displayCities(ArrayList<City> cities)
+    {
+        //display in table format
+
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+        String format="%1$-10s %2$-25s %3$-25s %3$-20s  \n";
+        System.out.format(format, "City","Country", "District", "Population");
+        System.out.println();
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+        for (City city : cities)
+        {
+            System.out.format(format,city.getCname(),city.getCccode(), city.getCd(), city.getCpop());
+            System.out.println();
+        }
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+    }
 
     /**
      * Connection to MySQL database.
@@ -217,7 +307,7 @@ public class App
     {
 
         String yn;
-        int selection;
+        int selection,selection2,mm;
         yn ="y";
 
         // Create new Application
@@ -227,33 +317,70 @@ public class App
         // Connect to database
         a.connect();
 
+        BufferedReader m=new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter 1 for Country Report: \n Enter 2 For City Report \n Enter 3 For Capital City Report \n");
+        mm = Integer.parseInt(m.readLine());
+        System.out.print("\n");
+        if (mm==1){
+            while (yn.equals("y")) {
+                // Declare the object and initialize with
+                // predefined standard input object
 
-        while (yn.equals("y")) {
-            // Declare the object and initialize with
-            // predefined standard input object
-            BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-            System.out.println(""
-                    + "Enter 1 to organise all countries in the Word \n "
-                    + "Enter 2 to organise all countries in a Continent \n "
-                    + "Enter 3 to organise all countries in a Region \n "
-                    + "Enter 4 to organise top populated Countries in the World \n "
-                    + "Enter 5 to organise top populated Countries in a Continent  \n"
-                    + "Enter 6 to organise top populated Countries in a Region \n"
-                    + "Enter 7 to Exit \n  ");
 
-            System.out.print("Choose a number:");
-            selection = Integer.parseInt(br.readLine());
+                BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+                System.out.println("Enter 1 to organise all countries in the Word \n "
+                        + "Enter 2 to organise all countries in a Continent \n "
+                        + "Enter 3 to organise all countries in a Region \n "
+                        + "Enter 4 to organise top populated Countries in the World \n "
+                        + "Enter 5 to organise top populated Countries in a Continent  \n"
+                        + "Enter 6 to organise top populated Countries in a Region \n"
+                        + "Enter 7 to Exit \n  ");
 
-            ArrayList<Country> countries = a.getCountry(selection);
-            a.displayCountries(countries);
-            System.out.println("Number of Countries :"+ countries.size());
+                System.out.print("Choose a number:");
+                selection = Integer.parseInt(br.readLine());
 
-            System.out.print("Do you want to continue (y/n): ");
-            yn =br.readLine();
-            if (yn.equals("n")) {
-                System.exit(0);
+                ArrayList<Country> countries = a.getCountry(selection);
+                a.displayCountries(countries);
+                System.out.println("Number of Countries :"+ countries.size());
+
+                System.out.print("Do you want to continue (y/n): ");
+                yn =br.readLine();
+                if (yn.equals("n")) {
+                    System.exit(0);
+                }
+            }
+
+        }
+        else  if (mm==2){
+            while (yn.equals("y")) {
+                // Declare the object and initialize with
+                // predefined standard input object
+
+
+                BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+                System.out.println("Enter 1 to organise all cities in the Word \n "
+                        + "Enter 2 to organise all cities in a Continent \n "
+                        + "Enter 3 to organise all cities in a Region \n "
+                        + "Enter 4 to organise all cities in a Country \n "
+                        + "Enter 5 to organise all cities in a District \n"
+                        + "Enter 7 to Exit \n  ");
+
+                System.out.print("Choose a number:");
+                selection2 = Integer.parseInt(br.readLine());
+
+                ArrayList<City> cities  = a.getCity(selection2);
+                a.displayCities(cities);
+                System.out.println("Number of Countries :"+ cities.size());
+
+                System.out.print("Do you want to continue (y/n): ");
+                yn =br.readLine();
+                if (yn.equals("n")) {
+                    System.exit(0);
+                }
             }
         }
+
+
         // Disconnect from database
         a.disconnect();
     }
