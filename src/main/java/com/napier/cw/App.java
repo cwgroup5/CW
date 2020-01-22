@@ -101,7 +101,7 @@ public class App
         }
     }
 
-    public ArrayList<City> getCitiesInContinentByUser(String cont)
+    public ArrayList<City> getCitiesInContinent(String cont)
     {
         try
         {
@@ -206,6 +206,79 @@ public class App
             return null;
         }
     }
+
+    public ArrayList<City> getCitiesInContinentByUser(String cont, int no)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
+                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` "
+                            + "WHERE country.Continent='"+cont+"' ORDER BY `country`.Population DESC LIMIT " +no;
+
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            ArrayList<City> accw = new ArrayList<City>();
+            while (res.next())
+            {
+                City cty =new City();
+                cty.setCname(res.getString(1));
+                cty.setCccode(res.getString(2));
+                cty.setCpop(res.getInt(3));
+                accw.add(cty);
+            }
+            return accw;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
+
+    public ArrayList<City> getCitiesInRegionByUser(String re, int no)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
+                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` "
+                            + "WHERE country.Region='"+re+"' ORDER BY `country`.Population DESC LIMIT " +no;
+
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            ArrayList<City> accw = new ArrayList<City>();
+            while (res.next())
+            {
+                City cty =new City();
+                cty.setCname(res.getString(1));
+                cty.setCccode(res.getString(2));
+                cty.setCpop(res.getInt(3));
+                accw.add(cty);
+            }
+            return accw;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
+
     public void displayCCbyUser(ArrayList<City> cty)
     {
         //display in table format
@@ -243,12 +316,15 @@ public class App
         a.connect();
 
         String cont = "Asia";
+        String re = "Middle East";
         int no = 10;
 
 //        ArrayList<City> capcty = a.getCCWbyUser(cont);
-//        ArrayList<City> capcty = a.getCitiesInContinentByUser(cont);
+//        ArrayList<City> capcty = a.getCitiesInContinent(cont);
 //        ArrayList<City> capcty = a.getCitiesInRegionByUser(cont);
-        ArrayList<City> capcty = a.getCityByUser(no);
+//        ArrayList<City> capcty = a.getCityByUser(no);
+//        ArrayList<City> capcty = a.getCitiesInContinentByUser(cont, no);
+        ArrayList<City> capcty = a.getCitiesInRegionByUser(re, no);
         a.displayCCbyUser(capcty);
 
         // display number of  countries
