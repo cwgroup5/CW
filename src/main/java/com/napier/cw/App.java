@@ -1,45 +1,22 @@
 package com.napier.cw;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.LinkedHashMap;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 
 public class App
 {
-
-    public static void main(String[] args)
-    {
-        // Create new Application
-        App a = new App();
-        // Connect to database
-        a.connect();
-        int num = 10;
-        String continent ="Asia";
-        String region="Central Africa";
-        String country="United States";
-        String district="New York";
-
-        //Get data populated cities in the world, continent, region, country and district
-        ArrayList<City>  pcw    = a.getPCitiesWorld(num);
-        ArrayList<CandC> pcc    = a.getPCitiesConti(continent,num);
-        ArrayList<City>  pcr    = a.getPCitiesR(region, num);
-        ArrayList<City>  pccun  = a.getPCitiesCoun(country,num);
-        ArrayList<City>  pcd    = a.getPCitiesDis(district,num);
-
-        //Call all display functions
-        a.displayPCitiesWorld(pcw);
-        a.displayPCitiesConti(pcc,continent);
-        a.displayPCitiesR(pcr,region);
-        a.displayPCitiesCoun(pccun,country);
-        a.displayPCitiesDis(pcd,district);
-
-        // Disconnect from database
-        a.disconnect();
-    }
+    int num=0;
+    String area=null;
 
     /* =============================== =======================*/
     /* Functions of Extract Information from Database Section */
+
 
     //Extract populated cities of the world from the database
     public ArrayList<City> getPCitiesWorld(int num)
@@ -86,180 +63,78 @@ public class App
     }
 
     //Extract populated cities of a continent from the database
-    public ArrayList<CandC> getPCitiesConti(String continent, int num)
+    public ArrayList<City> getPCitiesConti(int selection)
     {
         try
         {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect ="SELECT city.Name, country.Name, country.Continent, city.District, city.Population " +
-                    "FROM city,country WHERE city.CountryCode = country.Code " +
-                    "AND country.Continent='"+continent+"' ORDER BY city.Population DESC LIMIT "+num;
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Extract city information
-            ArrayList<CandC> apcc = new ArrayList<CandC>();
-
-            // Return city if valid.
-            // Check one is returned
-
-            //Extract the info from the current record in the ResultSet
-            while (rset.next())
-            {
-
-                //Create an City and Country Object
-                CandC cc = new CandC ();
-
-                //Using getInt for integer data, getString for string data
-                cc.setCityname(rset.getString(1));
-                cc.setCountryname(rset.getString(2));
-                cc.setDistrict(rset.getString(3));
-                cc.setContinent(rset.getString(4));
-                cc.setPopulation(rset.getInt(5));
-
-                //Add the data to the apcw array
-                apcc.add(cc);
-
-            }
-            return apcc;
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
-
-        }
-        return null;
-    }
-
-    //Extract all populated cities of a region from the database
-    public ArrayList<City> getPCitiesR(String region, int num)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement for populated cities in a region
-            String strSelect = "SELECT city.Name, city.CountryCode, "
-                    +"city.District, city.Population FROM city,country "
-                    +"WHERE city.CountryCode = country.Code "
-                    +"AND country.Region='"+region+"' ORDER BY city.Population DESC LIMIT "+num;
-
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.print("Enter Number: ");
+            num = Integer.parseInt(br.readLine());
+            System.out.print("\n");
 
             //ArrayList Creation
-            ArrayList<City> apcr = new ArrayList<City>();
+            ArrayList<City> apcu = new ArrayList<City>();
 
-            //Extract the info from the current record in the ResultSet
-            while (rset.next())
-            {
-                //Object Creation
-                City city = new City();
-
-                //Using getInt for integer data, getString for string data
-                city.setCname(rset.getString(1));
-                city.setCccode(rset.getString(2));
-                city.setCd(rset.getString(3));
-                city.setCpop(rset.getInt(4 ));
-
-                //Add the data to the apcr array
-                apcr.add(city);
-            }
-            return apcr;
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
-
-        }
-        return null;
-    }
-
-    //Extract all populated cities of a country from the database
-    public ArrayList<City> getPCitiesCoun(String country, int num)
-    {
-        try
-        {
+            String strSelect=null;
             // Create an SQL statement
             Statement stmt = con.createStatement();
-            // Create string for SQL statement for *N* populated cities in a country
-            String strSelect = "SELECT city.Name, city.CountryCode, "
-                    +"city.District,city.Population FROM city,country "
-                    +"WHERE city.CountryCode = country.Code "
-                    +"AND country.Name='"+country+"' ORDER BY city.Population DESC LIMIT "+num;
-
-
+            if(selection==1)
+            {
+                System.out.print("Enter a continent: ");
+                area =br.readLine();
+                // Create string for SQL statement for populated cities in a region
+                strSelect = "SELECT city.Name, city.CountryCode, "
+                        +"city.District, city.Population FROM city,country "
+                        +"WHERE city.CountryCode = country.Code "
+                        +"AND country.Continent='"+area+"' ORDER BY city.Population DESC LIMIT "+num;
+            }
+            else if(selection==2)
+            {
+                System.out.print("Enter a region: ");
+                area =br.readLine();
+                // Create string for SQL statement for populated cities in a region
+                strSelect = "SELECT city.Name, city.CountryCode, "
+                        +"city.District, city.Population FROM city,country "
+                        +"WHERE city.CountryCode = country.Code "
+                        +"AND country.Region='"+area+"' ORDER BY city.Population DESC LIMIT "+num;
+            }
+            else if(selection==3)
+            {
+                System.out.print("Enter a country: ");
+                area =br.readLine();
+                // Create string for SQL statement for *N* populated cities in a country
+                strSelect = "SELECT city.Name, city.CountryCode, "
+                        +"city.District,city.Population FROM city,country "
+                        +"WHERE city.CountryCode = country.Code "
+                        +"AND country.Name='"+area+"' ORDER BY city.Population DESC LIMIT "+num;
+            }
+            else if(selection==4)
+            {
+                System.out.print("Enter a district: ");
+                area =br.readLine();
+                // Create string for SQL statement for *N* populated cities in a district
+                strSelect ="SELECT Name, CountryCode, District, Population "
+                        +"FROM city WHERE District='"+area+"'";
+            }
+            else
+            {
+                System.out.println("Out of Index!");
+            }
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-
-            ArrayList<City> apccun = new ArrayList<City>();
-
             //Extract the info from the current record in the ResultSet
             while (rset.next())
             {
-                //Object Creation
                 City city = new City();
-
                 //Using getInt for integer data, getString for string data
                 city.setCname(rset.getString(1));
                 city.setCccode(rset.getString(2));
                 city.setCd(rset.getString(3));
                 city.setCpop(rset.getInt(4 ));
-
-                //Add the data to the apccun array
-                apccun.add(city);
+                //Add the data to the apcu array
+                apcu.add(city);
             }
-            return apccun;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
-        }
-        return null;
-    }
-
-    //Extract all populated cities of a district from the database
-    public ArrayList<City> getPCitiesDis(String district, int num)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement for *N* populated cities in a district
-            String strSelect ="SELECT Name, CountryCode, District, Population " +
-                    "FROM city WHERE District="+district;
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            ArrayList<City> apcd = new ArrayList<City>();
-
-            //Extract the info from the current record in the ResultSet
-            while (rset.next())
-            {
-                //object Creation
-                City city = new City();
-
-                //Using getInt for integer data, getString for string data
-                city.setCname(rset.getString(1));
-                city.setCccode(rset.getString(2));
-                city.setCd(rset.getString(3));
-                city.setCpop(rset.getInt(4 ));
-
-                //Add the data to the apcc arra
-                apcd.add(city);
-            }
-            return apcd;
-
+            return apcu;
         }
         catch (Exception e)
         {
@@ -269,110 +144,36 @@ public class App
         }
         return null;
     }
-
 
     /* =======================================  ===========  =========== */
     /* Functions of Generate Report Section */
 
-    //Display the number of populated cities in the world by *N* given by user
-    public void displayPCitiesWorld(ArrayList<City> pcw)
-    {
-        int count=0;
-        System.out.println("Cities in the World:");
-        // Print header
-        System.out.println(String.format("%-10s %-30s %-20s %-20s %-20s", "Number","Cities", "Countries", "District", "Population"));
-        // Loop over all city information in the list
-        for (City PCW : pcw)
-        {
-            count++;
-            String pcw_string =
-                    String.format("%-10s %-20s %-20s %-20s %-20s",
-                            count,PCW.getCname(), PCW.getCccode(), PCW.getCd(), PCW.getCpop());
-            System.out.println(pcw_string);
-        }
-        System.out.println("\n");
-    }
-
     //Display the populated Cities in a continent by *N* given by user
-    public void displayPCitiesConti(ArrayList<CandC> pcc, String continent)
+    public void displayPCitiesbyUser(ArrayList<City> pcu)
     {
         int count=0;
         // Print header
-        System.out.println("Cities in "+continent+" Continent:");
-        System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s %-20s", "Number","Cities","Countries", "Continent", "District","Population"));
+        System.out.println("Cities in "+area+" Continent:");
+        System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s", "Number","Cities","Countries", "District","Population"));
         // Loop over all city information in the list
-        for (CandC PCC : pcc)
+        for (City PCU : pcu)
         {
             count++;
-            String pcc_string =
-                    String.format("%-20s %-20s %-20s %-20s %-20s %-20s",
-                            count,PCC.getCityname(),PCC.getCountryname(),PCC.getContinent(),
-                            PCC.getDistrict(),PCC.getPopulation());
-            System.out.println(pcc_string);
+            String pcu_string =
+                    String.format("%-20s %-20s %-20s %-20s %-20s",
+                            count,PCU.getCname(),PCU.getCccode(),PCU.getCd(),PCU.getCpop());
+            System.out.println(pcu_string);
         }
-        System.out.println("\n");
+        System.out.println("Number of Populated Cities in "+area+" :"+" "+num+"\n");
     }
 
-    //Display the populated Cities in a region by *N* given by user
-    public void displayPCitiesR(ArrayList<City> pcr, String region)
-    {
-        int count=0;
-        // Print header
-        System.out.println("Cities in "+region+" Region:");
-        System.out.println(String.format("%-20s %-40s %-20s %-20s %-20s", "Number","Cities","Countries", "District","Population"));
-        // Loop over all employees in the list
-        for (City PCR : pcr)
-        {
-            count++;
-            String pcitiesR_string =
-                    String.format("%-20s %-40s %-20s %-20s %-20s",
-                            count,PCR.getCname(),PCR.getCccode(),PCR.getCd(),PCR.getCpop());
-            System.out.println(pcitiesR_string);
-        }
-        System.out.println("\n");
-    }
+//
 
-    //Display the populated Cities in a country by *N* given by user
-    public void displayPCitiesCoun(ArrayList<City> pccun, String country)
-    {
-        int count=0;
-        // Print header
-        System.out.println("Cities in "+country+" Region:");
-        System.out.println(String.format("%-20s %-40s %-20s %-20s %-20s", "Number","Cities","Countries", "District","Population"));
-        // Loop over all city in the list
-        for (City PCCUN : pccun)
-        {
-            count++;
-            String pccun_string =
-                    String.format("%-20s %-40s %-20s %-20s %-20s",
-                            count,PCCUN.getCname(),PCCUN.getCccode(),PCCUN.getCd(),PCCUN.getCpop());
-            System.out.println(pccun_string);
-        }
-        System.out.println("\n");
-    }
-
-    //Display the populated Cities in a district by *N* given by user
-    public void displayPCitiesDis(ArrayList<City> pcd, String district)
-    {
-        int count=0;
-        // Print header
-        System.out.println("Cities in "+district+" District:");
-        System.out.println(String.format("%-20s %-40s %-20s %-20s %-20s", "Number","Cities","Countries", "District","Population"));
-        // Loop over all employees in the list
-        for (City PCD : pcd)
-        {
-            count++;
-            String pcitiesd_string =
-                    String.format("%-20s %-40s %-20s %-20s %-20s",
-                            count,PCD.getCname(),PCD.getCccode(),PCD.getCd(),PCD.getCpop());
-            System.out.println(pcitiesd_string);
-        }
-    }
+    /* =======================================  ===== */
+    /* Database Connection and Disconnection Section */
 
     //Create object for MySQL database
     private Connection con = null;
-
-    /* Database Connection and Disconnection Section */
 
     //Connect to MySQL database
     public void connect()
@@ -430,4 +231,36 @@ public class App
         }
     }
 
+    public static void main(String[] args) throws IOException {
+
+        String yn;
+        int selection;
+        yn ="y";
+
+        // Create new Application
+        App a = new App();
+        // Connect to database
+        a.connect();
+
+        while (yn.equals("y")) {
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Search Populated Cities by ....");
+            System.out.println("1. A Continent \t\t 2. A Region\n3. A Country \t\t 4. A District");
+            System.out.print("Choose a number:");
+            selection = Integer.parseInt(br.readLine());
+
+            ArrayList<City> pcu    = a.getPCitiesConti(selection);
+            //Call display report functions
+            a.displayPCitiesbyUser(pcu);
+
+            System.out.print("Do you want to continue (y/n): ");
+            yn =br.readLine();
+            if (yn.equals("n")) {
+                System.exit(0);
+            }
+        }
+        // Disconnect from database
+        a.disconnect();
+    }
 }
