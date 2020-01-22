@@ -351,14 +351,14 @@ public class App
 
         }
     }
-    public ArrayList<City> getCityInDistrict()
+    public ArrayList<City> getCityInDistrict(String dist)
     {
         try {
 //            Create an SQL statement
             Statement stmt = con.createStatement();
 //            Create string for SQL statement
             String strSelect=
-                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE district ='Mandalay' ORDER BY Population DESC ";
+                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `city`.`District`='"+dist+"' ORDER BY `Population` DESC ";
 //      Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
             // Return new employee if valid.
@@ -416,8 +416,10 @@ public class App
 //        String cont = br.readLine();
 //        System.out.println("Enter Name of Region:");
 //        String reg = br.readLine();
-        System.out.println("Enter Name of Country:");
-        String ct = br.readLine();
+//        System.out.println("Enter Name of Country:");
+//        String ct = br.readLine();
+        System.out.println("Enter Name of District:");
+        String dist = br.readLine();
         // Display Country Profile
 
         // Extract country population information
@@ -429,8 +431,8 @@ public class App
 //        ArrayList<City> cities = a.getCityInContinent(cont);
         //ArrayList<City> cities = a.getCity();
 //        ArrayList<City> cities = a.getCityInRegion(reg);
-        ArrayList<City> cities = a.getCityInCountry(ct);
-//        ArrayList<City> cities = a.getCityInDistrict();
+//        ArrayList<City> cities = a.getCityInCountry(ct);
+        ArrayList<City> cities = a.getCityInDistrict(dist);
         a.displayCities(cities);
 
         // Test the size of the returned data - should be
