@@ -317,14 +317,14 @@ public class App
 
         }
     }
-    public ArrayList<City> getCityInCountry()
+    public ArrayList<City> getCityInCountry(String ct)
     {
         try {
 //            Create an SQL statement
             Statement stmt = con.createStatement();
 //            Create string for SQL statement
             String strSelect=
-                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.Name ='Malaysia' ORDER BY Population DESC ";
+                    "SELECT `city`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.`Name`='"+ct+"' ORDER BY `Population` DESC ";
 //      Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
             // Return new employee if valid.
@@ -414,8 +414,10 @@ public class App
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 //        System.out.println("Enter Name of Continent:");
 //        String cont = br.readLine();
-        System.out.println("Enter Name of Region:");
-        String reg = br.readLine();
+//        System.out.println("Enter Name of Region:");
+//        String reg = br.readLine();
+        System.out.println("Enter Name of Country:");
+        String ct = br.readLine();
         // Display Country Profile
 
         // Extract country population information
@@ -426,8 +428,8 @@ public class App
         /** Produce City Report **/
 //        ArrayList<City> cities = a.getCityInContinent(cont);
         //ArrayList<City> cities = a.getCity();
-        ArrayList<City> cities = a.getCityInRegion(reg);
-//        ArrayList<City> cities = a.getCityInCountry();
+//        ArrayList<City> cities = a.getCityInRegion(reg);
+        ArrayList<City> cities = a.getCityInCountry(ct);
 //        ArrayList<City> cities = a.getCityInDistrict();
         a.displayCities(cities);
 
