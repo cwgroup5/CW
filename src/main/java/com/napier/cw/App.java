@@ -337,18 +337,17 @@ public class App
         // Declare the object and initialize with
         // predefined standard input object
         Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Number of Countries:");
+        int no = sc.nextInt();
+//        System.out.println("Enter Name of Region:");
+//        String reg = sc.nextLine();
+
 
         // Create new Application
         App a = new App();
 
         // Connect to database
         a.connect();
-
-        System.out.println("Enter Number of Countries:");
-        int no = sc.nextInt();
-//        System.out.println("Enter Name of Region:");
-        // String input
-//        String reg = sc.nextLine();
 
 //        int no = 10;
         String cont = "Asia";
