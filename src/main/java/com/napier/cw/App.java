@@ -113,8 +113,7 @@ public class App
             // Create string for SQL statement
             String strSelect =
                     " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
-                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` WHERE `continent` = \"Asia\" "
-                            + "ORDER BY `country`.`Population` DESC";
+                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` WHERE country.Continent='"+cont+"' ORDER BY `country`.Population DESC ";
 
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
@@ -139,7 +138,7 @@ public class App
         }
     }
 
-    public ArrayList<City> getCitiesInRegionByUser(String cont)
+    public ArrayList<City> getCitiesInRegionByUser(String re)
     {
         try
         {
@@ -148,8 +147,7 @@ public class App
             // Create string for SQL statement
             String strSelect =
                     " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
-                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` WHERE `region` = \"Middle East\" "
-                            + "ORDER BY `country`.`Population` DESC";
+                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` WHERE country.Region='"+re+"' ORDER BY `country`.Population DESC ";
 
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
@@ -318,17 +316,20 @@ public class App
         // predefined standard input object
 
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter No of Capital City:");
-        int no=Integer.parseInt(br.readLine());
-        System.out.println("Enter Name of Region:");
-        String re = br.readLine();
+//        System.out.println("Enter No of Capital City:");
+//        int no=Integer.parseInt(br.readLine());
+        System.out.println("Enter Name of Continent:");
+        String cont = br.readLine();
+
+//        System.out.println("Enter Name of Region:");
+//        String re = br.readLine();
 
 //        ArrayList<City> capcty = a.getCCWbyUser(cont);
-//        ArrayList<City> capcty = a.getCitiesInContinent(cont);
+        ArrayList<City> capcty = a.getCitiesInContinent(cont);
 //        ArrayList<City> capcty = a.getCitiesInRegionByUser(cont);
 //        ArrayList<City> capcty = a.getCityByUser(no);
 //        ArrayList<City> capcty = a.getCitiesInContinentByUser(cont, no);
-        ArrayList<City> capcty = a.getCitiesInRegionByUser(re, no);
+//        ArrayList<City> capcty = a.getCitiesInRegionByUser(re, no);
         a.displayCCbyUser(capcty);
 
         // display number of  countries
