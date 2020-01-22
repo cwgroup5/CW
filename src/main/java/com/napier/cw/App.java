@@ -152,7 +152,7 @@ public class App
         }
     }
 
-    public ArrayList<Country> getCountryInContinent()
+    public ArrayList<Country> getCountryInContinent(String cont)
     {
         try
         {
@@ -162,8 +162,7 @@ public class App
             String strSelect =
                     "SELECT Code, Name, Continent, Region, Population, Capital "
                             + "FROM country "
-                            + "WHERE country.Continent = 'Asia' "
-                            + "ORDER BY Population DESC";
+                            + "WHERE country.Continent='"+cont+"' ORDER BY Population DESC";
 
 
             // Execute SQL statement
@@ -232,7 +231,7 @@ public class App
             return null;
         }
     }
-    public ArrayList<Country> getCountryInRegion()
+    public ArrayList<Country> getCountryInRegion(String reg)
     {
         try
         {
@@ -242,8 +241,7 @@ public class App
             String strSelect =
                     "SELECT Code, Name, Continent, Region, Population, Capital "
                             + "FROM country "
-                            + "WHERE country.Region = 'Middle East' "
-                            + "ORDER BY Population DESC";
+                            + "WHERE country.Region='"+reg+"' ORDER BY Population DESC";
 
 
             // Execute SQL statement
@@ -350,10 +348,10 @@ public class App
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter No of Countries:");
         int no=Integer.parseInt(br.readLine());
-//        System.out.println("Enter Name of Continent:");
-//        String cont = br.readLine();
-        System.out.println("Enter Name of Region:");
-        String reg = br.readLine();
+        System.out.println("Enter Name of Continent:");
+        String cont = br.readLine();
+//        System.out.println("Enter Name of Region:");
+//        String reg = br.readLine();
 
         /**
             Display Country Profile
@@ -361,12 +359,12 @@ public class App
 
         // Extract country population information
 //        ArrayList<Country> countries = a.getCountry();
-//        ArrayList<Country> countries = a.getCountryInContinent();
+        ArrayList<Country> countries = a.getCountryInContinent(cont);
 //        ArrayList<Country> countries = a.getCountryInRegion();
 
 //        ArrayList<Country> countries = a.getCountryByUser(no);
 //        ArrayList<Country> countries = a.getCountryInContinentByUser(cont,no);
-        ArrayList<Country> countries = a.getCountryInRegionByUser(reg,no);
+//        ArrayList<Country> countries = a.getCountryInRegionByUser(reg,no);
 
 
         a.displayCountries(countries);
