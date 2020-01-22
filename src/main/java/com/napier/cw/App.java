@@ -85,10 +85,9 @@ public class App
             if(selection==1)
             {
                 // Create string for SQL statement for populated cities in a region
-                strSelect = "SELECT Code, Name, Continent, Region, Population, Capital "
-                        + "FROM country "
-                        + "ORDER BY Population DESC";
+                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` ORDER BY population DESC";
             }
+
             else if(selection==2)
             {
 
@@ -97,9 +96,7 @@ public class App
                 System.out.print("\n");
 
                 // Create string for SQL statement for populated cities in a region
-                strSelect = "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "WHERE country.Continent='"+area+"' ORDER BY Population DESC";
+                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` WHERE country.Continent='"+area+"' ORDER BY  `country`.`Population`  DESC";
             }
             else if(selection==3)
             {
@@ -109,9 +106,7 @@ public class App
                 System.out.print("\n");
 
                 // Create string for SQL statement for populated cities in a region
-                strSelect =  "SELECT Code, Name, Continent, Region, Population, Capital "
-                        + "FROM country "
-                        + "WHERE country.Region='"+area+"' ORDER BY Population DESC";
+                strSelect =  "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` WHERE country.Region='"+area+"' ORDER BY population DESC";
             }
 
             else if(selection==4)
@@ -121,9 +116,7 @@ public class App
                 System.out.print("\n");
 
                 // Create string for SQL statement for populated cities in a region
-                strSelect = "SELECT Code, Name, Continent, Region, Population, Capital "
-                        + "FROM country "
-                        + "ORDER BY Population DESC LIMIT " +no;
+                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` ORDER BY population DESC LIMIT " +no;
             }
             else if(selection==5)
             {
@@ -134,9 +127,7 @@ public class App
                 System.out.print("\n");
 
                 // Create string for SQL statement for populated cities in a region
-                strSelect = "SELECT Code, Name, Continent, Region, Population, Capital "
-                            + "FROM country "
-                            + "WHERE country.Continent='"+area+"' ORDER BY Population DESC LIMIT "+no;
+                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` WHERE country.Continent='"+area+"' ORDER BY  `country`.`Population`  DESC LIMIT "+no;
             }
             else if(selection==6)
             {
@@ -147,9 +138,7 @@ public class App
                 System.out.print("\n");
 
                 // Create string for SQL statement for populated cities in a region
-                strSelect = "SELECT Code, Name, Continent, Region, Population, Capital "
-                        + "FROM country "
-                        + "WHERE country.Region='"+area+"' ORDER BY Population DESC LIMIT "+no;
+                strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name` FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` WHERE country.Region='"+area+"' ORDER BY  `country`.`Population`  DESC LIMIT "+no;
             }
             else if(selection==7)
             {
@@ -164,12 +153,12 @@ public class App
             while (res.next())
             {
                 Country country = new Country();
-                country.setCode(res.getString("Code"));
-                country.setName(res.getString("Name"));
-                country.setContinent(res.getString("Continent"));
-                country.setRegion(res.getString("Region"));
-                country.setPopulation (res.getInt("Population"));
-                country.setCapital(res.getString("Capital"));
+                country.setCode(res.getString(1));
+                country.setName(res.getString(2));
+                country.setContinent(res.getString(3));
+                country.setRegion(res.getString(4));
+                country.setPopulation (res.getInt(5));
+                country.setCapital(res.getString(6));
 
                 countries.add(country);
 
@@ -192,7 +181,7 @@ public class App
 
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         String format="%1$-10s %2$-60s %3$-20s %4$-40s  %5$-15s  %6$-10s \n";
-        System.out.format(format, "Code", "Country", "Continent", "Region", "Population", "Capitals");
+        System.out.format(format, "Code", "Country", "Continent", "Region", "Population", "Capital");
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         for (Country country : countries)
