@@ -171,6 +171,41 @@ public class App
         }
     }
 
+    public ArrayList<City> getCityByUser(int no)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
+                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` "
+                            + "ORDER BY `country`.`Population` DESC LIMIT " +no;
+
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            ArrayList<City> accw = new ArrayList<City>();
+            while (res.next())
+            {
+                City cty =new City();
+                cty.setCname(res.getString(1));
+                cty.setCccode(res.getString(2));
+                cty.setCpop(res.getInt(3));
+                accw.add(cty);
+            }
+            return accw;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country profile");
+            return null;
+        }
+    }
     public void displayCCbyUser(ArrayList<City> cty)
     {
         //display in table format
@@ -208,10 +243,12 @@ public class App
         a.connect();
 
         String cont = "Asia";
+        int no = 10;
 
 //        ArrayList<City> capcty = a.getCCWbyUser(cont);
 //        ArrayList<City> capcty = a.getCitiesInContinentByUser(cont);
-        ArrayList<City> capcty = a.getCitiesInRegionByUser(cont);
+//        ArrayList<City> capcty = a.getCitiesInRegionByUser(cont);
+        ArrayList<City> capcty = a.getCityByUser(no);
         a.displayCCbyUser(capcty);
 
         // display number of  countries
