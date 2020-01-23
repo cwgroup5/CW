@@ -9,6 +9,130 @@ import java.io.IOException;
 
 public class App
 {
+    int num;
+    String area;
+
+    public ArrayList<City> getCCWbyUser(int selection)
+    {
+        try
+        {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.print("Enter Number: ");
+            num = Integer.parseInt(br.readLine());
+            System.out.print("\n");
+
+            //ArrayList Creation
+            ArrayList<City> apcc = new ArrayList<City>();
+
+            String strSelect=null;
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            if(selection==1)
+            {
+                System.out.println("All Capital Cities in the World");
+                // Create string for SQL statement
+                strSelect = " SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        + "ORDER BY country.Population DESC";
+
+            }
+            else if(selection==2)
+            {
+                System.out.print("Enter a Continent: ");
+                area =br.readLine();
+                System.out.print("\n");
+
+                // Create string for SQL statement
+                strSelect =" SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        + "WHERE country.Continent='"+area+"' ORDER BY country.Population DESC ";
+            }
+            else if(selection==3)
+            {
+                System.out.print("Enter a Region: ");
+                area =br.readLine();
+                System.out.print("\n");
+
+                // Create string for SQL statement
+                strSelect =" SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        + "WHERE country.Region='"+area+"' ORDER BY country.Population DESC ";
+            }
+            else if(selection==4)
+            {
+                // Create string for SQL statement
+                strSelect = " SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        + "ORDER BY country.Population DESC";
+            }
+            else if(selection==5)
+            {
+                System.out.print("Enter a Number: ");
+                num =Integer.parseInt(br.readLine());
+                System.out.print("Enter a continent: ");
+                area =br.readLine();
+
+                // Create string for SQL statement for populated capital cities in a region
+                strSelect = " SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        +"WHERE country.Continent='"+area+"' ORDER BY country.Population DESC LIMIT"+num;
+            }
+            else if(selection==6)
+            {
+                System.out.print("Enter Number: ");
+                num = Integer.parseInt(br.readLine());
+                System.out.print("Enter a region: ");
+                area =br.readLine();
+                // Create string for SQL statement for populated capital cities in a region
+                strSelect =  " SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        + "WHERE country.Region='"+area+"' ORDER BY country.Population DESC LIMIT "+num;
+
+            }
+            else
+            {
+                System.out.println("Out of Index!");
+            }
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            //Extract the info from the current record in the ResultSet
+            while (rset.next())
+            {
+                City city = new City();
+                //Using getInt for integer data, getString for string data
+                city.setCname(rset.getString(1));
+                city.setCccode(rset.getString(2));
+                city.setCd(rset.getString(3));
+                city.setCpop(rset.getInt(4 ));
+                //Add the data to the apcu array
+                apcc.add(city);
+            }
+            return apcc;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee details");
+
+        }
+        return null;
+    }
+    public void displayPCCbyUser(ArrayList<City> cty)
+    {
+        //display in table format
+
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        String format="%1$-25s %2$-60s %3$-20s \n ";
+        System.out.format(format, "Name", "Country", "Population");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+        for (City CTY : cty)
+        {
+            System.out.format(format,CTY.getCname(),CTY.getCccode(),CTY.getCpop());
+        }
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    }
     public void connect()
     {
         try
@@ -67,235 +191,6 @@ public class App
         }
     }
 
-    public ArrayList<City> getCCWbyUser(String cont)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
-                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` "
-                            + "ORDER BY `country`.`Population` DESC";
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<City> accw = new ArrayList<City>();
-            while (res.next())
-            {
-                City cty =new City();
-                cty.setCname(res.getString(1));
-                cty.setCccode(res.getString(2));
-                cty.setCpop(res.getInt(3));
-                accw.add(cty);
-
-
-            }
-            return accw;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-
-    public ArrayList<City> getCitiesInContinent(String cont)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
-                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` WHERE country.Continent='"+cont+"' ORDER BY `country`.Population DESC ";
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<City> accw = new ArrayList<City>();
-            while (res.next())
-            {
-                City cty =new City();
-                cty.setCname(res.getString(1));
-                cty.setCccode(res.getString(2));
-                cty.setCpop(res.getInt(3));
-                accw.add(cty);
-            }
-            return accw;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-
-    public ArrayList<City> getCitiesInRegionByUser(String re)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
-                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` WHERE country.Region='"+re+"' ORDER BY `country`.Population DESC ";
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<City> accw = new ArrayList<City>();
-            while (res.next())
-            {
-                City cty =new City();
-                cty.setCname(res.getString(1));
-                cty.setCccode(res.getString(2));
-                cty.setCpop(res.getInt(3));
-                accw.add(cty);
-            }
-            return accw;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-
-    public ArrayList<City> getCityByUser(int no)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
-                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` "
-                            + "ORDER BY `country`.`Population` DESC LIMIT " +no;
-
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<City> accw = new ArrayList<City>();
-            while (res.next())
-            {
-                City cty =new City();
-                cty.setCname(res.getString(1));
-                cty.setCccode(res.getString(2));
-                cty.setCpop(res.getInt(3));
-                accw.add(cty);
-            }
-            return accw;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-
-    public ArrayList<City> getCitiesInContinentByUser(String cont, int no)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
-                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` "
-                            + "WHERE country.Continent='"+cont+"' ORDER BY `country`.Population DESC LIMIT " +no;
-
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<City> accw = new ArrayList<City>();
-            while (res.next())
-            {
-                City cty =new City();
-                cty.setCname(res.getString(1));
-                cty.setCccode(res.getString(2));
-                cty.setCpop(res.getInt(3));
-                accw.add(cty);
-            }
-            return accw;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-
-    public ArrayList<City> getCitiesInRegionByUser(String re, int no)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    " SELECT `city`.`Name`, `country`.`Name`, `country`.`Population` FROM `city` "
-                            + "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` "
-                            + "WHERE country.Region='"+re+"' ORDER BY `country`.Population DESC LIMIT " +no;
-
-
-            // Execute SQL statement
-            ResultSet res = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<City> accw = new ArrayList<City>();
-            while (res.next())
-            {
-                City cty =new City();
-                cty.setCname(res.getString(1));
-                cty.setCccode(res.getString(2));
-                cty.setCpop(res.getInt(3));
-                accw.add(cty);
-            }
-            return accw;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country profile");
-            return null;
-        }
-    }
-
-    public void displayCCbyUser(ArrayList<City> cty)
-    {
-        //display in table format
-
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-        String format="%1$-25s %2$-60s %3$-20s \n ";
-        System.out.format(format, "Name", "Country", "Population");
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-        for (City CTY : cty)
-        {
-            System.out.format(format,CTY.getCname(),CTY.getCccode(),CTY.getCpop());
-        }
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-    }
-
     /**
      * Connection to MySQL database.
   */
@@ -312,28 +207,10 @@ public class App
         // Connect to database
         a.connect();
 
-        // Declare the object and initialize with
-        // predefined standard input object
+        ArrayList<City> pcc    = a.getCCWbyUser(selection);
+        //Call display report functions
+        a.displayPCCbyUser(pcc);
 
-        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-//        System.out.println("Enter No of Capital City:");
-//        int no=Integer.parseInt(br.readLine());
-        System.out.println("Enter Name of Continent:");
-        String cont = br.readLine();
-
-//        System.out.println("Enter Name of Region:");
-//        String re = br.readLine();
-
-//        ArrayList<City> capcty = a.getCCWbyUser(cont);
-        ArrayList<City> capcty = a.getCitiesInContinent(cont);
-//        ArrayList<City> capcty = a.getCitiesInRegionByUser(cont);
-//        ArrayList<City> capcty = a.getCityByUser(no);
-//        ArrayList<City> capcty = a.getCitiesInContinentByUser(cont, no);
-//        ArrayList<City> capcty = a.getCitiesInRegionByUser(re, no);
-        a.displayCCbyUser(capcty);
-
-        // display number of  countries
-        System.out.println("Number of Capital Cities :"+ capcty.size());
         // Disconnect from database
         a.disconnect();
     }
