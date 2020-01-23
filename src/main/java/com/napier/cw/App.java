@@ -184,7 +184,62 @@ public class App {
 
                 strSelect = "SELECT `city`.`Name`, `country`.`Name`,`city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `city`.`District`='" + area + "' ORDER BY `Population` DESC ";
 
-            } else if (selection == 6) {
+            }
+            else if(selection==6)
+            {
+                System.out.print("Enter Number of Cities: ");
+                no = Integer.parseInt(br.readLine());
+                // Create string for SQL statement
+                strSelect = "SELECT city.Name, country.Name, city.District, city.Population FROM city, country WHERE city.CountryCode = country.Code ORDER BY Population DESC LIMIT "+no;
+            }
+            else if(selection==7)
+            {
+                System.out.print("Enter Number of Cities: ");
+                no = Integer.parseInt(br.readLine());
+                System.out.print("Enter a continent: ");
+                area =br.readLine();
+                // Create string for SQL statement for populated cities in a region
+                strSelect = "SELECT city.Name, country.Name, "
+                        +"city.District, city.Population FROM city,country "
+                        +"WHERE city.CountryCode = country.Code "
+                        +"AND country.Continent='"+area+"' ORDER BY city.Population DESC LIMIT "+no;
+            }
+            else if(selection==8)
+            {
+                System.out.print("Enter Number of Cities: ");
+                no = Integer.parseInt(br.readLine());
+                System.out.print("Enter a region: ");
+                area =br.readLine();
+                // Create string for SQL statement for populated cities in a region
+                strSelect = "SELECT city.Name, country.Name, "
+                        +"city.District, city.Population FROM city,country "
+                        +"WHERE city.CountryCode = country.Code "
+                        +"AND country.Region='"+area+"' ORDER BY city.Population DESC LIMIT "+no;
+            }
+            else if(selection==9)
+            {
+                System.out.print("Enter Number of Cities: ");
+                no = Integer.parseInt(br.readLine());
+                System.out.print("Enter a country: ");
+                area =br.readLine();
+                // Create string for SQL statement for *N* populated cities in a country
+                strSelect = "SELECT city.Name, country.Name, "
+                        +"city.District,city.Population FROM city,country "
+                        +"WHERE city.CountryCode = country.Code "
+                        +"AND country.Name='"+area+"' ORDER BY city.Population DESC LIMIT "+no;
+            }
+            else if(selection==10)
+            {
+                System.out.print("Enter Number of Cities: ");
+                no = Integer.parseInt(br.readLine());
+                System.out.print("Enter a district: ");
+                area =br.readLine();
+                // Create string for SQL statement for *N* populated cities in a district
+                strSelect ="SELECT city.Name, country.Name, city.District, city.Population "
+                        +"FROM city,country WHERE city.CountryCode = country.Code AND District='"+area+"' ORDER BY city.Population DESC LIMIT "+no;
+            }
+
+            else if (selection == 11) {
                 System.exit(0);
             }
 
@@ -312,6 +367,8 @@ public class App {
         return null;
     }
 
+
+
     public void displayCountries(ArrayList<Country> countries) {
 
         //display in table format
@@ -436,12 +493,17 @@ public class App {
 
 
                         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                        System.out.print("1.) All cities in the Word \n");
-                        System.out.print("2.) All cities in a Continent\n");
-                        System.out.print("3.) All cities in a Region\n");
-                        System.out.print("4.) All cities in a Country \n");
-                        System.out.print("5.) All cities in a District\n");
-                        System.out.print("6.) Exit\n");
+                        System.out.print("1.)  All cities in the Word \n");
+                        System.out.print("2.)  All cities in a Continent\n");
+                        System.out.print("3.)  All cities in a Region\n");
+                        System.out.print("4.)  All cities in a Country \n");
+                        System.out.print("5.)  All cities in a District\n");
+                        System.out.print("6.)  Top populated cities in the world \n");
+                        System.out.print("7.)  Top populated cities in a Continent\n");
+                        System.out.print("8.)  Top populated cities in a Region\n");
+                        System.out.print("9.)  Top populated cities in a Country \n");
+                        System.out.print("10.) Top populated cities in a District\n");
+                        System.out.print("11.) Exit\n");
                         System.out.print("\nEnter Your Sub-menu Choice: ");
 
                         selection = Integer.parseInt(br.readLine());
