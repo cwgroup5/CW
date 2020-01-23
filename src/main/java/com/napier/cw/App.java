@@ -292,16 +292,15 @@ public class App {
 
 
                         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                        System.out.println("Enter Number \n"
-                                + "1. All countries in the Word \n "
-                                + "2. All countries in a Continent \n "
-                                + "3. All countries in a Region \n "
-                                + "4. Top populated Countries in the World \n "
-                                + "5. Top populated Countries in a Continent  \n"
-                                + "6. Top populated Countries in a Region \n"
-                                + "7. Exit \n  ");
+                        System.out.print("1.) All countries in the Word \n");
+                        System.out.print("2.) All countries in a Continent\n");
+                        System.out.print("3.) All countries in a Region\n");
+                        System.out.print("4.) Top populated Countries in the World \n");
+                        System.out.print("5.) Top populated Countries in a Continent\n");
+                        System.out.print("6.) Top populated Countries in a Region\n");
+                        System.out.print("7.) Exit\n");
+                        System.out.print("\nEnter Your Sub-menu Choice: ");
 
-                        System.out.print("Choose a number:");
                         selection = Integer.parseInt(br.readLine());
 
                         ArrayList<Country> countries = a.getCountry(selection);
@@ -313,7 +312,7 @@ public class App {
                         if (yn.equals("n")) {
                             System.exit(0);
                         }
-                        break;
+
                     }
                 case 2:
                     while (yn.equals("y")) {
@@ -322,15 +321,14 @@ public class App {
 
 
                         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                        System.out.println("Enter Number \n"
-                                + "1. All cities in the Word \n "
-                                + "2. All cities in a Continent \n "
-                                + "3. All cities in a Region \n "
-                                + "4. All cities in a Country \n "
-                                + "5. All cities in a District \n"
-                                + "6. Exit \n  ");
+                        System.out.print("1.) All cities in the Word \n");
+                        System.out.print("2.) All cities in a Continent\n");
+                        System.out.print("3.) All cities in a Region\n");
+                        System.out.print("4.) All cities in a Country \n");
+                        System.out.print("5.) All cities in a District\n");
+                        System.out.print("6.) Exit\n");
+                        System.out.print("\nEnter Your Sub-menu Choice: ");
 
-                        System.out.print("Choose a number:");
                         selection2 = Integer.parseInt(br.readLine());
 
                         ArrayList<City> cities = a.getCity(selection2);
@@ -342,8 +340,11 @@ public class App {
                         if (yn.equals("n")) {
                             System.exit(0);
                         }
-                        break;
+
+
                     }
+                case 3:
+                    System.out.println("Helllo");
 
                 case 4:
                     System.out.println("Exiting Program...");
