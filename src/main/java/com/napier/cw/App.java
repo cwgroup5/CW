@@ -233,6 +233,10 @@ public class App
                strSelect="SELECT `city`.`Name`, `country`.`Name`,`city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `city`.`District`='"+area+"' ORDER BY `Population` DESC ";
 
            }
+           else if(selection2==6)
+           {
+               System.exit(0);
+           }
 
 //      Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
@@ -363,14 +367,14 @@ public class App
                         + "Enter 3 to organise all cities in a Region \n "
                         + "Enter 4 to organise all cities in a Country \n "
                         + "Enter 5 to organise all cities in a District \n"
-                        + "Enter 7 to Exit \n  ");
+                        + "Enter 6 to Exit \n  ");
 
                 System.out.print("Choose a number:");
                 selection2 = Integer.parseInt(br.readLine());
 
                 ArrayList<City> cities  = a.getCity(selection2);
                 a.displayCities(cities);
-                System.out.println("Number of Countries :"+ cities.size());
+                System.out.println("Number of Cities :"+ cities.size());
 
                 System.out.print("Do you want to continue (y/n): ");
                 yn =br.readLine();
@@ -379,7 +383,6 @@ public class App
                 }
             }
         }
-
 
         // Disconnect from database
         a.disconnect();
