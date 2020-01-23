@@ -10,6 +10,8 @@ import java.io.IOException;
 public class App {
     int no = 0;
     String area = null;
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String strSelect = null;
 
     public void connect() {
         try {
@@ -57,9 +59,6 @@ public class App {
 
     public ArrayList<Country> getCountry(int selection) {
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-            String strSelect = null;
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
@@ -147,18 +146,17 @@ public class App {
         return null;
     }
 
-    public ArrayList<City> getCity(int selection2) {
+    public ArrayList<City> getCity(int selection) {
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String strSelect = null;
+
 //            Create an SQL statement
             Statement stmt = con.createStatement();
 //            Create string for SQL statement
-            if (selection2 == 1) {
+            if (selection == 1) {
                 // Create string for SQL statement for populated cities in a region
                 strSelect = "SELECT `city`.`Name`, `country`.`Name`,`city`.`District`, `city`.`Population` " +
                         "FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` ORDER BY Population DESC ";
-            } else if (selection2 == 2) {
+            } else if (selection == 2) {
                 System.out.print("Enter a Continent: ");
                 area = br.readLine();
                 System.out.print("\n");
@@ -166,27 +164,27 @@ public class App {
                 strSelect =
                         "SELECT `city`.`Name`,`country`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.`Continent`='" + area + "' ORDER BY `Population` DESC ";
 
-            } else if (selection2 == 3) {
+            } else if (selection == 3) {
                 System.out.print("Enter a Region: ");
                 area = br.readLine();
                 System.out.print("\n");
                 strSelect =
                         "SELECT `city`.`Name`,`country`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.`Region`='" + area + "' ORDER BY `Population` DESC ";
-            } else if (selection2 == 4) {
+            } else if (selection == 4) {
                 System.out.print("Enter a Country: ");
                 area = br.readLine();
                 System.out.print("\n");
 
                 strSelect = "SELECT `city`.`Name`,`country`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.`Name`='" + area + "' ORDER BY `Population` DESC ";
 
-            } else if (selection2 == 5) {
+            } else if (selection == 5) {
                 System.out.print("Enter a District: ");
                 area = br.readLine();
                 System.out.print("\n");
 
                 strSelect = "SELECT `city`.`Name`, `country`.`Name`,`city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `city`.`District`='" + area + "' ORDER BY `Population` DESC ";
 
-            } else if (selection2 == 6) {
+            } else if (selection == 6) {
                 System.exit(0);
             }
 
@@ -208,6 +206,107 @@ public class App {
         } catch (SQLException | IOException e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get City profile");
+
+        }
+        return null;
+    }
+    public ArrayList<City> getCapitalCity(int selection)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            if(selection == 1)
+            {
+                System.out.println("All Capital Cities in the World");
+                // Create string for SQL statement
+                strSelect = " SELECT city.Name, country.Name, country.Population \n" +
+                        "FROM `city` \n" +
+                        "LEFT JOIN `country` ON `city`.`ID` = `country`.`Capital` ORDER BY Population DESC";
+
+            }
+            else if(selection==2)
+            {
+                System.out.print("Enter a Continent: ");
+                area =br.readLine();
+                System.out.print("\n");
+
+                // Create string for SQL statement
+                strSelect =" SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        + "WHERE country.Continent='"+area+"' ORDER BY country.Population DESC ";
+            }
+            else if(selection==3)
+            {
+                System.out.print("Enter a Region: ");
+                area =br.readLine();
+                System.out.print("\n");
+
+                // Create string for SQL statement
+                strSelect =" SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        + "WHERE country.Region='"+area+"' ORDER BY country.Population DESC ";
+            }
+            else if(selection==4)
+            {
+                System.out.print("Enter a Number of Capital Cities: ");
+                no =Integer.parseInt(br.readLine());
+                // Create string for SQL statement
+                strSelect = " SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        + "ORDER BY country.Population DESC LIMIT "+no;
+            }
+            else if(selection==5)
+            {
+                System.out.print("Enter a Number of Capital Cities: ");
+                no =Integer.parseInt(br.readLine());
+                System.out.print("Enter a continent: ");
+                area =br.readLine();
+
+                // Create string for SQL statement for populated capital cities in a region
+                strSelect = " SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        +"WHERE country.Continent='"+area+"' ORDER BY country.Population DESC LIMIT "+no;
+            }
+            else if(selection==6)
+            {
+                System.out.print("Enter Number of Capital Cities:");
+                no = Integer.parseInt(br.readLine());
+                System.out.print("Enter a region: ");
+                area =br.readLine();
+                // Create string for SQL statement for populated capital cities in a region
+                strSelect =  " SELECT city.Name, country.Name, country.Population FROM city "
+                        + "LEFT JOIN country ON city.ID = country.Capital "
+                        + "WHERE country.Region='"+area+"' ORDER BY country.Population DESC LIMIT "+no;
+
+            }
+            else if (selection == 7)
+            {
+                System.exit(0);
+            }
+
+            // Execute SQL statement
+            ResultSet res = stmt.executeQuery(strSelect);
+
+            //Extract the info from the current record in the ResultSet
+            ArrayList<City> capitals = new ArrayList<City>();
+            while (res.next())
+            {
+                City capital = new City();
+                //Using getInt for integer data, getString for string data
+                capital.setCname(res.getString(1));
+                capital.setCccode(res.getString(2));
+                capital.setCpop(res.getInt(3 ));
+                //Add the data to the apcu array
+                capitals.add(capital);
+            }
+
+            return capitals;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get capital cities details");
 
         }
         return null;
@@ -247,6 +346,22 @@ public class App {
         System.out.println("------------------------------------------------------------------------------------------------------------------------------");
     }
 
+    public void displayCapitalCity(ArrayList<City> capitals)
+    {
+        //display in table format
+
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        String format="%1$-25s %2$-60s %3$-20s \n ";
+        System.out.format(format, "Name", "Country", "Population");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+        for (City capital : capitals)
+        {
+            System.out.format(format,capital.getCname(),capital.getCccode(),capital.getCpop());
+        }
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    }
+
     /**
      * Connection to MySQL database.
      */
@@ -259,7 +374,7 @@ public class App {
     public static void main(String[] args) throws IOException {
 
         String yn;
-        int selection, selection2, mm;
+        int selection;
         yn = "y";
 
         // Create new Application
@@ -329,9 +444,9 @@ public class App {
                         System.out.print("6.) Exit\n");
                         System.out.print("\nEnter Your Sub-menu Choice: ");
 
-                        selection2 = Integer.parseInt(br.readLine());
+                        selection = Integer.parseInt(br.readLine());
 
-                        ArrayList<City> cities = a.getCity(selection2);
+                        ArrayList<City> cities = a.getCity(selection);
                         a.displayCities(cities);
                         System.out.println("Number of Cities :" + cities.size());
 
@@ -341,10 +456,36 @@ public class App {
                             System.exit(0);
                         }
 
-
                     }
                 case 3:
-                    System.out.println("Helllo");
+                    while (yn.equals("y")) {
+                        // Declare the object and initialize with
+                        // predefined standard input object
+
+
+                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                        System.out.print("1.) All capital cities in the Word \n");
+                        System.out.print("2.) All capital cities in a Continent\n");
+                        System.out.print("3.) All capital cities in a Region\n");
+                        System.out.print("4.) Top populated capital cities in the World \n");
+                        System.out.print("5.) Top populated capital cities in a Continent\n");
+                        System.out.print("6.) Top populated capital cities in a Region\n");
+                        System.out.print("7.) Exit\n");
+                        System.out.print("\nEnter Your Sub-menu Choice: ");
+
+                        selection = Integer.parseInt(br.readLine());
+
+                        ArrayList<City> capitals    = a.getCapitalCity(selection);
+                        a.displayCapitalCity(capitals);
+                        System.out.println("Number of capital cities :" + capitals.size());
+
+                        System.out.print("Do you want to continue (y/n): ");
+                        yn = br.readLine();
+                        if (yn.equals("n")) {
+                            System.exit(0);
+                        }
+
+                    }
 
                 case 4:
                     System.out.println("Exiting Program...");
