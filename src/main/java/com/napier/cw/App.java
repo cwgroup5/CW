@@ -17,51 +17,6 @@ public class App
     /* =============================== =======================*/
     /* Functions of Extract Information from Database Section */
 
-
-    //Extract populated cities of the world from the database
-    public ArrayList<City> getPCitiesWorld(int num)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-
-            // Create string for SQL statement
-            String strSelect = "SELECT Name, CountryCode, District, Population "
-                                +"FROM city ORDER BY Population DESC LIMIT "+num;
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            //ArrayList Creation
-            ArrayList<City> apcw = new ArrayList<City>();
-
-            //Extract the info from the current record in the ResultSet
-            while (rset.next())
-            {
-                City city = new City();
-
-                //Using getInt for integer data, getString for string data
-                city.setCname(rset.getString(1));
-                city.setCccode(rset.getString(2));
-                city.setCd(rset.getString(3));
-                city.setCpop(rset.getInt(4 ));
-
-                //Add the data to the apcw array
-                apcw.add(city);
-            }
-            return apcw;
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
-
-        }
-        return null;
-    }
-
     //Extract populated cities of a continent from the database
     public ArrayList<City> getPCitiesConti(int selection)
     {
@@ -80,6 +35,13 @@ public class App
             Statement stmt = con.createStatement();
             if(selection==1)
             {
+                System.out.println("Populated Cities in the world...");
+                // Create string for SQL statement
+                strSelect = "SELECT Name, CountryCode, District, Population "
+                        +"FROM city ORDER BY Population DESC LIMIT "+num;
+            }
+            else if(selection==2)
+            {
                 System.out.print("Enter a continent: ");
                 area =br.readLine();
                 // Create string for SQL statement for populated cities in a region
@@ -88,7 +50,7 @@ public class App
                         +"WHERE city.CountryCode = country.Code "
                         +"AND country.Continent='"+area+"' ORDER BY city.Population DESC LIMIT "+num;
             }
-            else if(selection==2)
+            else if(selection==3)
             {
                 System.out.print("Enter a region: ");
                 area =br.readLine();
@@ -98,7 +60,7 @@ public class App
                         +"WHERE city.CountryCode = country.Code "
                         +"AND country.Region='"+area+"' ORDER BY city.Population DESC LIMIT "+num;
             }
-            else if(selection==3)
+            else if(selection==4)
             {
                 System.out.print("Enter a country: ");
                 area =br.readLine();
@@ -108,7 +70,7 @@ public class App
                         +"WHERE city.CountryCode = country.Code "
                         +"AND country.Name='"+area+"' ORDER BY city.Population DESC LIMIT "+num;
             }
-            else if(selection==4)
+            else if(selection==5)
             {
                 System.out.print("Enter a district: ");
                 area =br.readLine();
@@ -120,6 +82,7 @@ public class App
             {
                 System.out.println("Out of Index!");
             }
+
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             //Extract the info from the current record in the ResultSet
@@ -166,8 +129,6 @@ public class App
         }
         System.out.println("Number of Populated Cities in "+area+" :"+" "+num+"\n");
     }
-
-//
 
     /* =======================================  ===== */
     /* Database Connection and Disconnection Section */
@@ -242,11 +203,11 @@ public class App
         // Connect to database
         a.connect();
 
-        while (yn.equals("y")) {
-
+        while (yn.equals("y"))
+        {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Search Populated Cities by ....");
-            System.out.println("1. A Continent \t\t 2. A Region\n3. A Country \t\t 4. A District");
+            System.out.println("1. The World \t\t 2. A Continent \t\t 3. A Region \t\t 4. A Country\n 5. A District");
             System.out.print("Choose a number:");
             selection = Integer.parseInt(br.readLine());
 
