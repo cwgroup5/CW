@@ -1,5 +1,6 @@
 package com.napier.cw;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -66,6 +67,7 @@ public class App {
                 // Create string for SQL statement for populated cities in a region
                 strSelect = "SELECT Code, country.`Name`, Continent, Region, `country`.`Population`, `city`.`Name`" +
                         " FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` ORDER BY population DESC";
+
             } else if (selection == 2) {
 
                 System.out.print("Enter a Continent: ");
@@ -119,6 +121,11 @@ public class App {
             } else if (selection == 7) {
                 System.exit(0);
             }
+            else
+            {
+                System.out.println("This is not a valid Option!");
+                System.exit(0);
+            }
 
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
@@ -167,6 +174,8 @@ public class App {
             } else if (selection == 3) {
                 System.out.print("Enter a Region: ");
                 area = br.readLine();
+
+
                 System.out.print("\n");
                 strSelect =
                         "SELECT `city`.`Name`,`country`.`Name`, `city`.`District`, `city`.`Population` FROM city LEFT JOIN country ON `city`.`CountryCode` = `country`.`Code` WHERE `country`.`Region`='" + area + "' ORDER BY `Population` DESC ";
@@ -242,10 +251,15 @@ public class App {
             else if (selection == 11) {
                 System.exit(0);
             }
+            else
+            {
+                System.out.println("This is not a valid Option!");
+                System.exit(0);
+            }
 
 //      Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return new city if valid.
             // Check one is returned
             ArrayList<City> cities = new ArrayList<City>();
             while (res.next()) {
@@ -339,6 +353,11 @@ public class App {
             {
                 System.exit(0);
             }
+            else
+            {
+                System.out.println("This is not a valid Option!");
+                System.exit(0);
+            }
 
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
@@ -352,7 +371,7 @@ public class App {
                 capital.setCname(res.getString(1));
                 capital.setCccode(res.getString(2));
                 capital.setCpop(res.getInt(3 ));
-                //Add the data to the apcu array
+                //Add the data to the capital array
                 capitals.add(capital);
             }
 
@@ -367,8 +386,6 @@ public class App {
         return null;
     }
 
-
-
     public void displayCountries(ArrayList<Country> countries) {
 
         //display in table format
@@ -379,26 +396,25 @@ public class App {
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         for (Country country : countries) {
+            //display country report
             System.out.format(format, country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
-
-
         }
 
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
     }
 
     public void displayCities(ArrayList<City> cities) {
         //display in table format
 
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
-        String format = "%1$-10s %2$-25s %3$-25s %3$-20s  \n";
+        String format = "%1$-20s %2$-25s %3$-25s %4$-20s  \n";
         System.out.format(format, "City", "Country", "District", "Population");
         System.out.println();
         System.out.println("------------------------------------------------------------------------------------------------------------------------------");
         for (City city : cities) {
+            //display  city report
             System.out.format(format, city.getCname(), city.getCccode(), city.getCd(), city.getCpop());
-            System.out.println();
+
         }
         System.out.println("------------------------------------------------------------------------------------------------------------------------------");
     }
@@ -414,6 +430,7 @@ public class App {
 
         for (City capital : capitals)
         {
+            //display capital city report
             System.out.format(format,capital.getCname(),capital.getCccode(),capital.getCpop());
         }
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -435,12 +452,12 @@ public class App {
         yn = "y";
 
         // Create new Application
-
         App a = new App();
 
         // Connect to database
         a.connect();
 
+        //ask input from user
         BufferedReader m = new BufferedReader(new InputStreamReader(System.in));
 //        System.out.print("Main Menu \n Enter Number \n 1. Country Report \n 2. City Report \n 3. Capital City Report \n");
         boolean mainLoop = false;
@@ -459,11 +476,9 @@ public class App {
             switch (choice) {
 
                 case 1:
-                    while (yn.equals("y")) {
-                        // Declare the object and initialize with
-                        // predefined standard input object
-
-                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                    // display country report's menu
+                    //ask input from user
+                    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                         System.out.print("1.) All countries in the Word \n");
                         System.out.print("2.) All countries in a Continent\n");
                         System.out.print("3.) All countries in a Region\n");
@@ -482,17 +497,13 @@ public class App {
                         System.out.print("Do you want to continue (y/n): ");
                         yn = br.readLine();
                         if (yn.equals("n")) {
-                            System.exit(0);
+                            System.exit(0); //terminate program if user enter "n"
                         }
-
-                    }
-                    break;
+                        break;
                 case 2:
-                    while (yn.equals("y")) {
-                        // Declare the object and initialize with
-                        // predefined standard input object
-
-                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//                    // display city report's menu
+//                    //ask input from user
+                        BufferedReader br2 = new BufferedReader(new InputStreamReader(System.in));
                         System.out.print("1.)  All cities in the Word \n");
                         System.out.print("2.)  All cities in a Continent\n");
                         System.out.print("3.)  All cities in a Region\n");
@@ -506,26 +517,23 @@ public class App {
                         System.out.print("11.) Exit\n");
                         System.out.print("\nEnter Your Sub-menu Choice: ");
 
-                        selection = Integer.parseInt(br.readLine());
+                        selection = Integer.parseInt(br2.readLine());
 
                         ArrayList<City> cities = a.getCity(selection);
                         a.displayCities(cities);
                         System.out.println("Number of Cities :" + cities.size());
 
                         System.out.print("Do you want to continue (y/n): ");
-                        yn = br.readLine();
+                        yn = br2.readLine();
                         if (yn.equals("n")) {
-                            System.exit(0);
+                            System.exit(0); //terminate program if user enter "n"
                         }
 
-                    }
-                    break;
+                        break;
                 case 3:
-                    while (yn.equals("y")) {
-                        // Declare the object and initialize with
-                        // predefined standard input object
-
-                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//                    // display capital city report's menu
+////                    //ask input from user
+                        BufferedReader br3 = new BufferedReader(new InputStreamReader(System.in));
                         System.out.print("1.) All capital cities in the Word \n");
                         System.out.print("2.) All capital cities in a Continent\n");
                         System.out.print("3.) All capital cities in a Region\n");
@@ -535,25 +543,23 @@ public class App {
                         System.out.print("7.) Exit\n");
                         System.out.print("\nEnter Your Sub-menu Choice: ");
 
-                        selection = Integer.parseInt(br.readLine());
+                        selection = Integer.parseInt(br3.readLine());
 
                         ArrayList<City> capitals    = a.getCapitalCity(selection);
                         a.displayCapitalCity(capitals);
                         System.out.println("Number of capital cities :" + capitals.size());
 
                         System.out.print("Do you want to continue (y/n): ");
-                        yn = br.readLine();
+                        yn = br3.readLine();
                         if (yn.equals("n")) {
-                            System.exit(0);
+                            System.exit(0);//terminate program if user enter "n"
                         }
-
-                    }
-                    break;
+                        break;
 
                 case 4:
-                    System.out.println("Exiting Program...");
+                    System.out.println("Exiting Program..."); //terminate program if user enter 4
                     break;
-                default:
+                default: //if user enter other number instead of 1,2,3,4
                     System.out.println("This is not a valid Menu Option! Please Select Another");
                     break;
 
@@ -562,7 +568,5 @@ public class App {
 
             // Disconnect from database
             a.disconnect();
-
-
     }
 }
