@@ -370,7 +370,12 @@ public class App {
 
 
     public void displayCountries(ArrayList<Country> countries) {
-
+        // Check country is not null
+        if (countries == null)
+        {
+            System.out.println("No country");
+            return;
+        }
         //display in table format
 
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -379,6 +384,8 @@ public class App {
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         for (Country country : countries) {
+            if (country == null)
+                continue;
             System.out.format(format, country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
 
 
@@ -389,6 +396,11 @@ public class App {
     }
 
     public void displayCities(ArrayList<City> cities) {
+        if (cities == null)
+        {
+            System.out.println("No city");
+            return;
+        }
         //display in table format
 
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
@@ -397,6 +409,8 @@ public class App {
         System.out.println();
         System.out.println("------------------------------------------------------------------------------------------------------------------------------");
         for (City city : cities) {
+            if (city == null)
+                continue;
             System.out.format(format, city.getCname(), city.getCccode(), city.getCd(), city.getCpop());
             System.out.println();
         }
@@ -406,7 +420,11 @@ public class App {
     public void displayCapitalCity(ArrayList<City> capitals)
     {
         //display in table format
-
+        if (capitals == null)
+        {
+            System.out.println("No capital city");
+            return;
+        }
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         String format="%1$-25s %2$-60s %3$-20s \n ";
         System.out.format(format, "Name", "Country", "Population");
@@ -414,6 +432,8 @@ public class App {
 
         for (City capital : capitals)
         {
+            if (capital == null)
+                continue;
             System.out.format(format,capital.getCname(),capital.getCccode(),capital.getCpop());
         }
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
