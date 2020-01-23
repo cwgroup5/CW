@@ -461,8 +461,7 @@ public class App {
                     while (yn.equals("y")) {
                         // Declare the object and initialize with
                         // predefined standard input object
-
-
+                        
                         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                         System.out.print("1.) All countries in the Word \n");
                         System.out.print("2.) All countries in a Continent\n");
@@ -486,6 +485,7 @@ public class App {
                         }
 
                     }
+                    break;
                 case 2:
                     while (yn.equals("y")) {
                         // Declare the object and initialize with
@@ -519,6 +519,7 @@ public class App {
                         }
 
                     }
+                    break;
                 case 3:
                     while (yn.equals("y")) {
                         // Declare the object and initialize with
@@ -548,6 +549,7 @@ public class App {
                         }
 
                     }
+                    break;
 
                 case 4:
                     System.out.println("Exiting Program...");
