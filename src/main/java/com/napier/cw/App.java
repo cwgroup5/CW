@@ -404,7 +404,7 @@ public class App {
         //display in table format
 
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
-        String format = "%1$-10s %2$-25s %3$-25s %3$-20s  \n";
+        String format = "%1$-10s %2$-25s %3$-25s %4$-20s  \n";
         System.out.format(format, "City", "Country", "District", "Population");
         System.out.println();
         System.out.println("------------------------------------------------------------------------------------------------------------------------------");
@@ -412,7 +412,7 @@ public class App {
             if (city == null)
                 continue;
             System.out.format(format, city.getCname(), city.getCccode(), city.getCd(), city.getCpop());
-            System.out.println();
+
         }
         System.out.println("------------------------------------------------------------------------------------------------------------------------------");
     }

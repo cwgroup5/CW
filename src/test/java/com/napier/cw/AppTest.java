@@ -52,6 +52,7 @@ public class AppTest
 
     }
 
+
     @Test
     void displayCitiesTestNull()
     {
@@ -77,12 +78,10 @@ public class AppTest
         City city = new City();
         city.setCname("Mogok");
         city.setCccode("MYA");
-        city.setCd("POL");
-        city.setCpop(5000);
+        city.setCd("Pyin Oo Lwin");
+        city.setCpop(100000);
         cities.add(city);
         app.displayCities(cities);
-
-
     }
     @Test
     void displayCapitalCityTestNull()
