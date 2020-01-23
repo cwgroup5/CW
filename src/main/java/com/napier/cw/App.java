@@ -443,10 +443,11 @@ public class App {
 
         BufferedReader m = new BufferedReader(new InputStreamReader(System.in));
 //        System.out.print("Main Menu \n Enter Number \n 1. Country Report \n 2. City Report \n 3. Capital City Report \n");
-        boolean mainLoop = true;
+        boolean mainLoop = false;
 //        mm = Integer.parseInt(m.readLine());
         int choice;
-        while (true) {
+        do {
+
             System.out.println(" Main Menu\n");
             System.out.print("1.) Country Report \n");
             System.out.print("2.) City Report.\n");
@@ -461,7 +462,7 @@ public class App {
                     while (yn.equals("y")) {
                         // Declare the object and initialize with
                         // predefined standard input object
-                        
+
                         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                         System.out.print("1.) All countries in the Word \n");
                         System.out.print("2.) All countries in a Continent\n");
@@ -490,7 +491,6 @@ public class App {
                     while (yn.equals("y")) {
                         // Declare the object and initialize with
                         // predefined standard input object
-
 
                         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                         System.out.print("1.)  All cities in the Word \n");
@@ -525,7 +525,6 @@ public class App {
                         // Declare the object and initialize with
                         // predefined standard input object
 
-
                         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                         System.out.print("1.) All capital cities in the Word \n");
                         System.out.print("2.) All capital cities in a Continent\n");
@@ -553,17 +552,16 @@ public class App {
 
                 case 4:
                     System.out.println("Exiting Program...");
-                    System.exit(0);
                     break;
                 default:
                     System.out.println("This is not a valid Menu Option! Please Select Another");
                     break;
 
             }
+        }while (choice!=4);
 
             // Disconnect from database
             a.disconnect();
-        }
 
 
     }
