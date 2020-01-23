@@ -322,7 +322,7 @@ public class App
         a.connect();
 
         BufferedReader m=new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter 1 for Country Report: \n Enter 2 For City Report \n Enter 3 For Capital City Report \n");
+        System.out.print("Main Menu \n Enter Number \n 1. Country Report: \n 2. City Report \n 3. Capital City Report \n");
         mm = Integer.parseInt(m.readLine());
         System.out.print("\n");
         if (mm==1){
@@ -332,13 +332,14 @@ public class App
 
 
                 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-                System.out.println("Enter 1 to organise all countries in the Word \n "
-                        + "Enter 2 to organise all countries in a Continent \n "
-                        + "Enter 3 to organise all countries in a Region \n "
-                        + "Enter 4 to organise top populated Countries in the World \n "
-                        + "Enter 5 to organise top populated Countries in a Continent  \n"
-                        + "Enter 6 to organise top populated Countries in a Region \n"
-                        + "Enter 7 to Exit \n  ");
+                System.out.println("Enter Number \n"
+                        + "1. All countries in the Word \n "
+                        + "2. All countries in a Continent \n "
+                        + "3. All countries in a Region \n "
+                        + "4. Top populated Countries in the World \n "
+                        + "5. Top populated Countries in a Continent  \n"
+                        + "6. Top populated Countries in a Region \n"
+                        + "7. Exit \n  ");
 
                 System.out.print("Choose a number:");
                 selection = Integer.parseInt(br.readLine());
@@ -362,12 +363,13 @@ public class App
 
 
                 BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-                System.out.println("Enter 1 to organise all cities in the Word \n "
-                        + "Enter 2 to organise all cities in a Continent \n "
-                        + "Enter 3 to organise all cities in a Region \n "
-                        + "Enter 4 to organise all cities in a Country \n "
-                        + "Enter 5 to organise all cities in a District \n"
-                        + "Enter 6 to Exit \n  ");
+                System.out.println("Enter Number \n"
+                        + "1. All cities in the Word \n "
+                        + "2. All cities in a Continent \n "
+                        + "3. All cities in a Region \n "
+                        + "4. All cities in a Country \n "
+                        + "5. All cities in a District \n"
+                        + "6. Exit \n  ");
 
                 System.out.print("Choose a number:");
                 selection2 = Integer.parseInt(br.readLine());
