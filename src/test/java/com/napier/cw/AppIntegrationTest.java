@@ -28,10 +28,12 @@ public class AppIntegrationTest
         city.setCname("Seoul");
         city.setCccode("KOR");
         city.setCd("Seoul");
+        city.setCpop(3998899);
 
         assertEquals(city.getCccode(),"KOR");
         assertEquals(city.getCname(),"Seoul");
         assertEquals(city.getCd(),"Seoul");
+        assertEquals(city.getCpop(),3998899);
         cities.add(city);
         app.displayCities(cities);
 
