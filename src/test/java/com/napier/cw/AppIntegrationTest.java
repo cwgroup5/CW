@@ -24,9 +24,14 @@ public class AppIntegrationTest
     {
         ArrayList<City> cities = new ArrayList<>();
        City city= new City();
-        assertEquals("KOR","KOR");
-        assertEquals("Seoul","Seoul");
-        assertEquals("Seoul","Seoul");
+
+        city.setCname("Seoul");
+        city.setCccode("KOR");
+        city.setCd("Seoul");
+
+        assertEquals(city.getCccode(),"KOR");
+        assertEquals(city.getCname(),"Seoul");
+        assertEquals(city.getCd(),"Seoul");
         cities.add(city);
         app.displayCities(cities);
 
