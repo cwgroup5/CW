@@ -29,8 +29,7 @@ public class AppIntegrationTest
         city.setCccode("KOR");
         city.setCd("Seoul");
         city.setCpop(3998899);
-        app.getCity(2);
-        
+
         assertEquals(city.getCccode(),"KOR");
         assertEquals(city.getCname(),"Seoul");
         assertEquals(city.getCd(),"Seoul");
