@@ -22,20 +22,23 @@ public class AppIntegrationTest
     @Test
     void testDisplayCities()
     {
-        ArrayList<City> cities = new ArrayList<>();
+//        ArrayList<City> cities = new ArrayList<>();
        City city= new City();
 
         city.setCname("Seoul");
         city.setCccode("KOR");
         city.setCd("Seoul");
         city.setCpop(3998899);
-
+        app.getCity(2);
+        
         assertEquals(city.getCccode(),"KOR");
         assertEquals(city.getCname(),"Seoul");
         assertEquals(city.getCd(),"Seoul");
         assertEquals(city.getCpop(),3998899);
-        cities.add(city);
-        app.displayCities(cities);
+
+//        cities.add(city);
+
+
 
     }
 }
