@@ -370,6 +370,7 @@ public class App {
             ArrayList<City> capitals = new ArrayList<City>();
             while (res.next())
             {
+
                 City capital = new City();
                 //Using getInt for integer data, getString for string data
                 capital.setCname(res.getString(1));
@@ -400,11 +401,7 @@ public class App {
             String area="";
             // Create an SQL statement
             Statement stmt = con.createStatement();
-            if(name.equals("Country"))
-            {
-                name= "Name";
-            }
-            System.out.println(name);
+
             strSelect="SELECT DISTINCT "+name+" FROM `country` ORDER BY '"+name+"' ASC";
             ResultSet rset = stmt.executeQuery(strSelect);
 
@@ -443,79 +440,66 @@ public class App {
 
         }
     }
-//    public long[] getPopulation(int selection)
-//    {
-//        try
-//        {
-//            // Create an SQL statement
-//            Statement stmt = con.createStatement();
-//            if(selection == 1)
-//            {
-//                // Create string for SQL statement
-//                strSelect = " SELECT SUM(Population) FROM country";
-//
-//            }
-//            else if(selection==2)
-//            {
-//                System.out.print("Enter a Continent: ");
-//                area =br.readLine();
-//                System.out.print("\n");
-//
-//                // Create string for SQL statement
-//                strSelect =" SELECT SUM(Population) FROM country WHERE Continent='"+area;
-//            }
-//            else if(selection==3)
-//            {
-//                System.out.print("Enter a Region: ");
-//                area =br.readLine();
-//                System.out.print("\n");
-//
-//                // Create string for SQL statement
-//                strSelect =" SELECT SUM(Population) FROM country WHERE Region='"+area;
-//            }
-//            else if(selection==4)
-//            {
-//                System.out.print("Enter a Country: ");
-//                area =br.readLine();
-//                // Create string for SQL statement
-//                strSelect =" SELECT SUM(Population) FROM country WHERE Name='"+area;
-//            }
-//            else if (selection == 6)
-//            {
-//                System.exit(0);
-//            }
-//            else
-//            {
-//                System.out.println("This is not a valid Option!");
-//                System.exit(0);
-//            }
-//
-//            // Execute SQL statement
-//            ResultSet res = stmt.executeQuery(strSelect);
-//
-//            //Extract the info from the current record in the ResultSet
-//            long population;
-//            if (!res.next())
-//                return null;
-//            else {
-//                population = res.getLong("SUM(Population)");
-//            }
-//            long[] result = new long[3];
-//            result[0] = population;
-//            return result;
-//        }
-//        catch (Exception e)
-//        {
-//            System.out.println(e.getMessage());
-//            System.out.println("Failed to get capital cities details");
-//
-//        }
-//        return null;
-//
-//    }
+    public  void getPopulationInformation(String pinfo)
+    {
+        try
+        {
+            ArrayList<String> popInfo = new ArrayList<String>();
 
+            String strSelect=null;
+            String strSelect2=null;
+            String area="";
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            if(pinfo.equals("World"))
+            {
+                strSelect="SELECT sum(country.Population) FROM country";
+                ResultSet res = stmt.executeQuery(strSelect);
+                while (res.next())
+                {
+                    long pop=res.getLong(1);
+                    System.out.format("%1$-20s %2$-25s \n","World Population",pop);
+                }
 
+            }
+            else{
+                strSelect="SELECT DISTINCT "+pinfo+" FROM city LEFT JOIN country ON city.CountryCode = country.Code";
 
+                ResultSet res1 = stmt.executeQuery(strSelect);
+
+                System.out.println(String.format("%1$-20s %2$-25s \n","Area","Population"));
+
+                while(res1.next())
+                {
+                    String  info =res1.getString(1);
+                    popInfo.add(info);
+                }
+                for(String areainfo : popInfo)
+                {
+                    Statement stmt2 = con.createStatement();
+                    strSelect2 = "SELECT sum(country.Population) " +
+                            "FROM city LEFT JOIN country ON city.CountryCode = country.Code WHERE "+pinfo+"='"+areainfo+"'";
+
+                    ResultSet res2 = stmt2.executeQuery(strSelect2);
+
+                    //Extract the info from the current record in the ResultSet
+
+                    while (res2.next())
+                    {
+                        long pop=res2.getLong(1);
+                        System.out.format("%1$-20s %2$-25s \n",areainfo,pop);
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population of the people");
+
+        }
+    }
 
     public void displayCountries(ArrayList<Country> countries) {
 
@@ -604,7 +588,8 @@ public class App {
             System.out.print("2.) City Report.\n");
             System.out.print("3.) Capital City Report.\n");
             System.out.print("4.) Population of the People.\n");
-            System.out.print("5.) Exit\n");
+            System.out.print("5.) Population.\n");
+            System.out.print("6.) Exit\n");
             System.out.print("\nEnter Your Menu Choice: ");
 
             choice = Integer.parseInt(m.readLine());
@@ -696,8 +681,10 @@ public class App {
                         System.out.print("1.) The population of people in each Continent \n");
                         System.out.print("2.) The population of people in each region\n");
                         System.out.print("3.) The population of people in each country\n");
+                        System.out.print("\nEnter Your Sub-menu Choice: ");
                         //                        condition=br4.readLine();
                         int condition= Integer.parseInt(br4.readLine());
+
                         switch (condition){
                             case 1:
                                 a.getPopulationofthePeople("Continent");
@@ -706,23 +693,58 @@ public class App {
                                 a.getPopulationofthePeople("Region");
                                 break;
                             case 3:
-                                a.getPopulationofthePeople("Country");
+                                a.getPopulationofthePeople("Name");
                                 break;
                             default: //if user enter other number instead of 1,2,3,4,5
                                 System.out.println("This is not a valid Menu Option! Please Select Another");
                                 break;
                         }
-
                         break;
-
                 case 5:
-                        System.out.println("Exiting Program..."); //terminate program if user enter 4
+                        BufferedReader br5 = new BufferedReader(new InputStreamReader(System.in));
+                        System.out.print("1.) The population of the world \n");
+                        System.out.print("2.) The population of a continent\n");
+                        System.out.print("3.) The population of a region\n");
+                        System.out.print("4.) The population of a country\n");
+                        System.out.print("5.) The population of a district\n");
+                        System.out.print("6.) The population of a city\n");
+                        System.out.print("\nEnter Your Sub-menu Choice: ");
+                        //                        condition=br4.readLine();
+                        int popInfo= Integer.parseInt(br5.readLine());
+
+                        switch (popInfo){
+                            case 1:
+                                a.getPopulationInformation("World");
+                                break;
+                            case 2:
+                                a.getPopulationInformation("Continent");
+                                break;
+                            case 3:
+                                a.getPopulationInformation("Region");
+                                break;
+                            case 4:
+                                a.getPopulationInformation("country.Name");
+                                break;
+                            case 5:
+                                a.getPopulationInformation("District");
+                                break;
+                            case 6:
+                                a.getPopulationInformation("city.Name");
+                                break;
+                            default: //if user enter other number instead of 1,2,3,4,5
+                                System.out.println("This is not a valid Menu Option! Please Select Another");
+                                break;
+                        }
                         break;
-                default: //if user enter other number instead of 1,2,3,4,5
-                        System.out.println("This is not a valid Menu Option! Please Select Another");
-                        break;
-            }
-        }while (choice!=5);
+
+                    case 6:
+                            System.out.println("Exiting Program..."); //terminate program if user enter 4
+                            break;
+                    default: //if user enter other number instead of 1,2,3,4,5
+                            System.out.println("This is not a valid Menu Option! Please Select Another");
+                            break;
+                }
+        }while (choice!=6);
 
             // Disconnect from database
             a.disconnect();
