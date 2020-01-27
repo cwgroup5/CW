@@ -582,7 +582,7 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
-        String yn,condi;
+        String yn,condition;
         int selection;
         yn = "y";
 
@@ -692,10 +692,28 @@ public class App {
                         break;
 
                 case 4:
-                        BufferedReader br4 = new BufferedReader(new InputStreamReader(System.in));
-                        System.out.print("Enter Continent or Region or Country: ");
-                        condi=br4.readLine();
-                        a.getPopulationofthePeople(condi);
+
+                            BufferedReader br4 = new BufferedReader(new InputStreamReader(System.in));
+                            System.out.print("1.) The population of people in each Continent \n");
+                            System.out.print("2.) The population of people in each region\n");
+                            System.out.print("3.) The population of people in each country\n");
+    //                        condition=br4.readLine();
+                            int cond= Integer.parseInt(br4.readLine());
+                            switch (cond){
+                                case 1:
+                                    a.getPopulationofthePeople("Continent");
+                                    break;
+                                case 2:
+                                    a.getPopulationofthePeople("Region");
+                                    break;
+                                case 3:
+                                    a.getPopulationofthePeople("Country");
+                                    break;
+                                default: //if user enter other number instead of 1,2,3,4,5
+                                    System.out.println("This is not a valid Menu Option! Please Select Another");
+                                    break;
+                            }
+
                         break;
 
                 case 5:
@@ -704,7 +722,6 @@ public class App {
                 default: //if user enter other number instead of 1,2,3,4,5
                         System.out.println("This is not a valid Menu Option! Please Select Another");
                         break;
-
             }
         }while (choice!=5);
 
