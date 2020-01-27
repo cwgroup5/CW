@@ -67,9 +67,6 @@ public class App {
                 // Create string for SQL statement for populated cities in a region
                 strSelect = "SELECT Code, country.`Name`, Continent, Region, `country`.`Population`, `city`.`Name`" +
                         " FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` ORDER BY population DESC";
-                
-
-
 
             } else if (selection == 2) {
 
@@ -121,6 +118,7 @@ public class App {
                 strSelect = "SELECT Code, `country`.`Name`, Continent, Region, `country`.`Population`, `city`.`Name`" +
                         " FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` " +
                         "WHERE country.Region='" + area + "' ORDER BY  `country`.`Population`  DESC LIMIT " + no;
+
             } else if (selection == 7) {
                 System.exit(0);
             }
@@ -143,10 +141,7 @@ public class App {
                 country.setRegion(res.getString(4));
                 country.setPopulation(res.getInt(5));
                 country.setCapital(res.getString(6));
-                country.setTotalPopulation(res.getInt(7));
                 countries.add(country);
-
-
             }
             return countries;
         } catch (Exception e) {
@@ -513,7 +508,6 @@ public class App {
         for (Country country : countries) {
             //display country report
             System.out.format(format, country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
-            System.out.format("The population of the world: ", country.getTotalPopulation());
 
         }
 
@@ -598,7 +592,7 @@ public class App {
                 case 1:
                     // display country report's menu
                     //ask input from user
-                    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                         System.out.print("1.) All countries in the Word \n");
                         System.out.print("2.) All countries in a Continent\n");
                         System.out.print("3.) All countries in a Region\n");
@@ -616,10 +610,10 @@ public class App {
 
                         System.out.print("Do you want to continue (y/n): ");
                         yn = br.readLine();
-                        if (yn.equals("n")) {
-                            System.exit(0); //terminate program if user enter "n"
+                        if (yn.equals("y")) {
+                            System.exit(0);
                         }
-                        break;
+                        continue;
                 case 2:
 //                    // display city report's menu
 //                    //ask input from user
