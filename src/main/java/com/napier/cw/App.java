@@ -67,6 +67,9 @@ public class App {
                 // Create string for SQL statement for populated cities in a region
                 strSelect = "SELECT Code, country.`Name`, Continent, Region, `country`.`Population`, `city`.`Name`" +
                         " FROM `country` LEFT JOIN `city` ON `city`.`ID` = `country`.`Capital` ORDER BY population DESC";
+                
+
+
 
             } else if (selection == 2) {
 
@@ -140,8 +143,9 @@ public class App {
                 country.setRegion(res.getString(4));
                 country.setPopulation(res.getInt(5));
                 country.setCapital(res.getString(6));
-
+                country.setTotalPopulation(res.getInt(7));
                 countries.add(country);
+
 
             }
             return countries;
@@ -385,6 +389,133 @@ public class App {
         }
         return null;
     }
+    public  void getPopulationofthePeople(String name)
+    {
+        try
+        {
+            ArrayList<String> conrecoun = new ArrayList<String>();
+
+            String strSelect=null;
+            String strSelect2=null;
+            String area="";
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            if(name.equals("Country"))
+            {
+                name= "Name";
+            }
+            System.out.println(name);
+            strSelect="SELECT DISTINCT "+name+" FROM `country` ORDER BY '"+name+"' ASC";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            System.out.println(String.format("%-30s %-40s %-40s %-40s",
+                    "Area","Total Population of People ","Total Population Living in Cities","Not living"));
+            while(rset.next())
+            {
+                String  a =rset.getString(1);
+                conrecoun.add(a);
+            }
+            for(String sss : conrecoun)
+            {
+                Statement stmt2 = con.createStatement();
+                strSelect2 = "SELECT sum(country.Population),sum(city.Population) " +
+                        "FROM city LEFT JOIN country ON city.CountryCode = country.Code WHERE country."+name+"='"+sss+"'";
+                ResultSet rset2 = stmt2.executeQuery(strSelect2);
+
+                //Extract the info from the current record in the ResultSet
+                while (rset2.next())
+                {
+                    long p1=rset2.getLong(1);
+                    long p2=rset2.getLong(2);
+                    long p3=p1-p2;
+                    String pcu_string =
+                            String.format("%-30s %-40s %-40s %-40s", sss,p1,p2,p3);
+                    System.out.println(pcu_string);
+                }
+            }
+
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population of the people");
+
+        }
+    }
+//    public long[] getPopulation(int selection)
+//    {
+//        try
+//        {
+//            // Create an SQL statement
+//            Statement stmt = con.createStatement();
+//            if(selection == 1)
+//            {
+//                // Create string for SQL statement
+//                strSelect = " SELECT SUM(Population) FROM country";
+//
+//            }
+//            else if(selection==2)
+//            {
+//                System.out.print("Enter a Continent: ");
+//                area =br.readLine();
+//                System.out.print("\n");
+//
+//                // Create string for SQL statement
+//                strSelect =" SELECT SUM(Population) FROM country WHERE Continent='"+area;
+//            }
+//            else if(selection==3)
+//            {
+//                System.out.print("Enter a Region: ");
+//                area =br.readLine();
+//                System.out.print("\n");
+//
+//                // Create string for SQL statement
+//                strSelect =" SELECT SUM(Population) FROM country WHERE Region='"+area;
+//            }
+//            else if(selection==4)
+//            {
+//                System.out.print("Enter a Country: ");
+//                area =br.readLine();
+//                // Create string for SQL statement
+//                strSelect =" SELECT SUM(Population) FROM country WHERE Name='"+area;
+//            }
+//            else if (selection == 6)
+//            {
+//                System.exit(0);
+//            }
+//            else
+//            {
+//                System.out.println("This is not a valid Option!");
+//                System.exit(0);
+//            }
+//
+//            // Execute SQL statement
+//            ResultSet res = stmt.executeQuery(strSelect);
+//
+//            //Extract the info from the current record in the ResultSet
+//            long population;
+//            if (!res.next())
+//                return null;
+//            else {
+//                population = res.getLong("SUM(Population)");
+//            }
+//            long[] result = new long[3];
+//            result[0] = population;
+//            return result;
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//            System.out.println("Failed to get capital cities details");
+//
+//        }
+//        return null;
+//
+//    }
+
+
+
 
     public void displayCountries(ArrayList<Country> countries) {
 
@@ -398,7 +529,10 @@ public class App {
         for (Country country : countries) {
             //display country report
             System.out.format(format, country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
+            System.out.format("The population of the world: ", country.getTotalPopulation());
+
         }
+
 
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
@@ -423,17 +557,18 @@ public class App {
     {
         //display in table format
 
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------------------------------------------");
         String format="%1$-25s %2$-60s %3$-20s \n ";
         System.out.format(format, "Name", "Country", "Population");
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------------------------");
 
         for (City capital : capitals)
         {
             //display capital city report
             System.out.format(format,capital.getCname(),capital.getCccode(),capital.getCpop());
         }
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+        System.out.println("-----------------------------------------------------------------------------------------------------------");
     }
 
     /**
@@ -447,9 +582,10 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
-        String yn;
+        String yn,condi;
         int selection;
         yn = "y";
+
 
         // Create new Application
         App a = new App();
@@ -459,9 +595,7 @@ public class App {
 
         //ask input from user
         BufferedReader m = new BufferedReader(new InputStreamReader(System.in));
-//        System.out.print("Main Menu \n Enter Number \n 1. Country Report \n 2. City Report \n 3. Capital City Report \n");
         boolean mainLoop = false;
-//        mm = Integer.parseInt(m.readLine());
         int choice;
         do {
 
@@ -469,7 +603,8 @@ public class App {
             System.out.print("1.) Country Report \n");
             System.out.print("2.) City Report.\n");
             System.out.print("3.) Capital City Report.\n");
-            System.out.print("4.) Exit\n");
+            System.out.print("4.) Population of the People.\n");
+            System.out.print("5.) Exit\n");
             System.out.print("\nEnter Your Menu Choice: ");
 
             choice = Integer.parseInt(m.readLine());
@@ -557,14 +692,21 @@ public class App {
                         break;
 
                 case 4:
-                    System.out.println("Exiting Program..."); //terminate program if user enter 4
-                    break;
-                default: //if user enter other number instead of 1,2,3,4
-                    System.out.println("This is not a valid Menu Option! Please Select Another");
-                    break;
+                        BufferedReader br4 = new BufferedReader(new InputStreamReader(System.in));
+                        System.out.print("Enter Continent or Region or Country: ");
+                        condi=br4.readLine();
+                        a.getPopulationofthePeople(condi);
+                        break;
+
+                case 5:
+                        System.out.println("Exiting Program..."); //terminate program if user enter 4
+                        break;
+                default: //if user enter other number instead of 1,2,3,4,5
+                        System.out.println("This is not a valid Menu Option! Please Select Another");
+                        break;
 
             }
-        }while (choice!=4);
+        }while (choice!=5);
 
             // Disconnect from database
             a.disconnect();

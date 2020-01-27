@@ -81,6 +81,19 @@ public class Country {
         Population = population;
     }
 
+    private  int TotalPopulation;
+
+    public int getTotalPopulation() {
+        return TotalPopulation;
+    }
+
+    public void setTotalPopulation(int totalPopulation) {
+        TotalPopulation = totalPopulation;
+    }
+
+
+
+
     /** Capital City Country **/
 
     private String Capital;// private = restricted access
