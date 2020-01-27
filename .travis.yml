@@ -28,7 +28,7 @@ jobs:
       script: mvn test -Dtest=com.napier.cw.AppIntegrationTest
 
 
+
 stages:
   - unit tests
   - integration tests
-  
