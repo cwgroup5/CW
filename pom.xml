@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.napier.test</groupId>
-    <artifactId>test</artifactId>
+    <groupId>com.napier.cw</groupId>
+    <artifactId>cw</artifactId>
     <version>0.1.0.1</version>
 
 
@@ -32,10 +32,10 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>seMethods</finalName>
+                    <finalName>Coursework</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>com.napier.sem.App</mainClass>
+                            <mainClass>com.napier.cw.App</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
