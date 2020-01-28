@@ -468,7 +468,14 @@ public class App {
         App a = new App();
 
         // Connect to database
-        a.connect("localhost:33060");
+        if (args.length < 1)
+        {
+            a.connect("localhost:3306");
+        }
+        else
+        {
+            a.connect(args[0]);
+        }
         BufferedReader m = new BufferedReader(new InputStreamReader(System.in));
 //        System.out.print("Main Menu \n Enter Number \n 1. Country Report \n 2. City Report \n 3. Capital City Report \n");
         boolean mainLoop = false;
