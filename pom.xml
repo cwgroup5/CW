@@ -32,7 +32,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>Coursework</finalName>
+                    <finalName>Coursework_for_Devops</finalName>
                     <archive>
                         <manifest>
                             <mainClass>com.napier.cw.App</mainClass>
