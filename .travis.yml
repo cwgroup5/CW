@@ -29,9 +29,7 @@ jobs:
     - stage: deploy
       install: skip
       jdk: oraclejdk11
-      script:
-        - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
-        - docker-compose up --abort-on-container-exit
+      script: echo "Deploy"
 
 stages:
   - unit tests
