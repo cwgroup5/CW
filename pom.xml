@@ -32,10 +32,10 @@
 <plugin>
     <artifactId>maven-assembly-plugin</artifactId>
     <configuration>
-        <finalName>seMethods</finalName>
+        <finalName>Coursework_for_Devops</finalName>
         <archive>
             <manifest>
-                <mainClass>com.napier.sem.App</mainClass>
+                <mainClass>com.napier.cw.App</mainClass>
             </manifest>
         </archive>
         <descriptorRefs>
