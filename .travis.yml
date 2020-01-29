@@ -31,10 +31,13 @@ jobs:
       jdk: oraclejdk11
       script:
         - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
-        
+
 
 stages:
   - unit tests
   - integration tests
   - name: deploy
     if: branch = master
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
