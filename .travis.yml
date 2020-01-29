@@ -37,7 +37,7 @@ jobs:
           - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
         before_deploy:
           # Set up git user name and tag this commit
-          - git config --local user.name "Yee Mon OO"
+          - git config --local user.name "Yee Mon Oo"
           - git config --local user.email "40437513@live.napier.ac.uk"
           # Create temporary tag from date and Git log.
           - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y-%m-%d')-$(git log --format=%h -1)}
@@ -48,7 +48,7 @@ jobs:
           # This is the token we set before
           api_key: $GITHUB_OAUTH_TOKEN
           # Copy built JAR file to release.  JAR built in $TRAVIS_BUILD_DIR/target
-          file: $TRAVIS_BUILD_DIR/target/cw-0.1.0.1.jar
+          file: $TRAVIS_BUILD_DIR/target/Coursework_for_Devops.jar
           skip_cleanup: true
 
 

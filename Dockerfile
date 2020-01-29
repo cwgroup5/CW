@@ -1,4 +1,4 @@
 FROM openjdk:latest
-COPY ./target/cw-0.1.0.1.jar /tmp
+COPY ./target/Coursework_for_Devops.jar /tmp
 WORKDIR /tmp
-ENTRYPOINT ["java", "-jar", "cw-0.1.0.1.jar", "db:3306"]
+ENTRYPOINT ["java", "-jar", "Coursework_for_Devops.jar", "db:3306"]
