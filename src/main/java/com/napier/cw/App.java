@@ -375,6 +375,88 @@ public class App {
         }
         return null;
     }
+    public  void getPopulation(String name)
+    {
+        try
+        {
+            long counpop=0;
+            long ctypop=0;
+            String area="";
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+
+
+            String strSelect="SELECT "+name+",sum(DISTINCT country.Population), sum(city.Population) FROM city,country "
+                    + "WHERE city.CountryCode=country.Code GROUP BY "+name;
+            ResultSet rset = stmt.executeQuery(strSelect);
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println(String.format("%1$-30s %2$-35s %3$-30s %4$-20s %5$-40s %6$-20s \n","Area","Total Population ","Living in Cities","Living in Cities in %","Not living in Cities","Not Living in Cities in %"));
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            while(rset.next())
+            {
+
+                area = rset.getString(1);
+                counpop = rset.getLong(2);
+                ctypop = rset.getLong(3);
+                long nlc = counpop - ctypop;
+                System.out.format("%1$-30s %2$-35s %3$-40s %4$-20s %5$-40s %6$-20s \n", area,counpop,ctypop,ctypop*100 / counpop + " %",nlc,nlc*100 / counpop +" %");
+            }
+
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population of the people");
+
+        }
+    }
+    public  void getPopulationInformation(String pinfo)
+    {
+        try
+        {
+
+            long countryPop=0;
+
+            String area="";
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+
+            if(pinfo.equals("World"))
+            {
+                strSelect="SELECT DISTINCT sum(country.Population) FROM country";
+                ResultSet res = stmt.executeQuery(strSelect);
+                while (res.next())
+                {
+                    countryPop=res.getLong(1);
+                    System.out.format("%1$-20s %2$-25s \n","World Population",countryPop);
+                }
+
+            }
+            else{
+                String strSelect="SELECT "+pinfo+",sum(DISTINCT country.Population)FROM city,country "
+                        + "WHERE city.CountryCode=country.Code GROUP BY "+pinfo;
+                ResultSet rset = stmt.executeQuery(strSelect);
+                System.out.println("-----------------------------------------------------------------------------------------------------------------");
+                System.out.println(String.format("%1$-20s %2$-25s ","Area","Total Population"));
+                System.out.println("------------------------------------------------------------------------------------------------------------------");
+                while(rset.next())
+                {
+                    area = rset.getString(1);
+                    countryPop = rset.getLong(2);
+                    System.out.format("%1$-20s %2$-25s \n",area,countryPop);
+                    System.out.println("--------------------------------------------------------------------------------------------------------------");
+                }
+            }
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population of the people");
+
+        }
+    }
 
 
 
@@ -482,117 +564,171 @@ public class App {
         int choice;
         do {
 
-            System.out.println(" Main Menu\n");
+            System.out.println("===============================================");
+            System.out.println("                 Main Menu");
+            System.out.println("===============================================");
             System.out.print("1.) Country Report \n");
             System.out.print("2.) City Report.\n");
             System.out.print("3.) Capital City Report.\n");
-            System.out.print("4.) Exit\n");
+            System.out.print("4.) Population of the People.\n");
+            System.out.print("5.) Population.\n");
+            System.out.print("6.) Exit\n");
+            System.out.println("===============================================");
             System.out.print("\nEnter Your Menu Choice: ");
 
             choice = Integer.parseInt(m.readLine());
             switch (choice) {
 
                 case 1:
-                    while (yn.equals("y")) {
-                        // Declare the object and initialize with
-                        // predefined standard input object
+                    // display country report's menu
+                    //ask input from user
+                    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                    System.out.print("1.) All countries in the Word \n");
+                    System.out.print("2.) All countries in a Continent\n");
+                    System.out.print("3.) All countries in a Region\n");
+                    System.out.print("4.) Top populated Countries in the World \n");
+                    System.out.print("5.) Top populated Countries in a Continent\n");
+                    System.out.print("6.) Top populated Countries in a Region\n");
+                    System.out.print("7.) Exit\n");
+                    System.out.print("\nEnter Your Sub-menu Choice: ");
 
-                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                        System.out.print("1.) All countries in the Word \n");
-                        System.out.print("2.) All countries in a Continent\n");
-                        System.out.print("3.) All countries in a Region\n");
-                        System.out.print("4.) Top populated Countries in the World \n");
-                        System.out.print("5.) Top populated Countries in a Continent\n");
-                        System.out.print("6.) Top populated Countries in a Region\n");
-                        System.out.print("7.) Exit\n");
-                        System.out.print("\nEnter Your Sub-menu Choice: ");
+                    selection = Integer.parseInt(br.readLine());
 
-                        selection = Integer.parseInt(br.readLine());
+                    ArrayList<Country> countries = a.getCountry(selection);
+                    a.displayCountries(countries);
+                    System.out.println("Number of Countries :" + countries.size());
 
-                        ArrayList<Country> countries = a.getCountry(selection);
-                        a.displayCountries(countries);
-                        System.out.println("Number of Countries :" + countries.size());
-
-                        System.out.print("Do you want to continue (y/n): ");
-                        yn = br.readLine();
-                        if (yn.equals("n")) {
-                            System.exit(0);
-                        }
-
+                    System.out.print("Do you want to continue (y/n): ");
+                    yn = br.readLine();
+                    if (yn.equals("n")) {
+                        System.exit(0); //terminate program if user enter "n"
                     }
+
                     break;
                 case 2:
-                    while (yn.equals("y")) {
-                        // Declare the object and initialize with
-                        // predefined standard input object
+//                    // display city report's menu
+//                    //ask input from user
+                    BufferedReader br2 = new BufferedReader(new InputStreamReader(System.in));
+                    System.out.print("1.)  All cities in the Word \n");
+                    System.out.print("2.)  All cities in a Continent\n");
+                    System.out.print("3.)  All cities in a Region\n");
+                    System.out.print("4.)  All cities in a Country \n");
+                    System.out.print("5.)  All cities in a District\n");
+                    System.out.print("6.)  Top populated cities in the world \n");
+                    System.out.print("7.)  Top populated cities in a Continent\n");
+                    System.out.print("8.)  Top populated cities in a Region\n");
+                    System.out.print("9.)  Top populated cities in a Country \n");
+                    System.out.print("10.) Top populated cities in a District\n");
+                    System.out.print("11.) Exit\n");
+                    System.out.print("\nEnter Your Sub-menu Choice: ");
 
-                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                        System.out.print("1.)  All cities in the Word \n");
-                        System.out.print("2.)  All cities in a Continent\n");
-                        System.out.print("3.)  All cities in a Region\n");
-                        System.out.print("4.)  All cities in a Country \n");
-                        System.out.print("5.)  All cities in a District\n");
-                        System.out.print("6.)  Top populated cities in the world \n");
-                        System.out.print("7.)  Top populated cities in a Continent\n");
-                        System.out.print("8.)  Top populated cities in a Region\n");
-                        System.out.print("9.)  Top populated cities in a Country \n");
-                        System.out.print("10.) Top populated cities in a District\n");
-                        System.out.print("11.) Exit\n");
-                        System.out.print("\nEnter Your Sub-menu Choice: ");
+                    selection = Integer.parseInt(br2.readLine());
 
-                        selection = Integer.parseInt(br.readLine());
+                    ArrayList<City> cities = a.getCity(selection);
+                    a.displayCities(cities);
+                    System.out.println("Number of Cities :" + cities.size());
 
-                        ArrayList<City> cities = a.getCity(selection);
-                        a.displayCities(cities);
-                        System.out.println("Number of Cities :" + cities.size());
-
-                        System.out.print("Do you want to continue (y/n): ");
-                        yn = br.readLine();
-                        if (yn.equals("n")) {
-                            System.exit(0);
-                        }
-
+                    System.out.print("Do you want to continue (y/n): ");
+                    yn = br2.readLine();
+                    if (yn.equals("n")) {
+                        System.exit(0); //terminate program if user enter "n"
                     }
+
                     break;
                 case 3:
-                    while (yn.equals("y")) {
-                        // Declare the object and initialize with
-                        // predefined standard input object
+//                    // display capital city report's menu
+////                    //ask input from user
+                    BufferedReader br3 = new BufferedReader(new InputStreamReader(System.in));
+                    System.out.print("1.) All capital cities in the Word \n");
+                    System.out.print("2.) All capital cities in a Continent\n");
+                    System.out.print("3.) All capital cities in a Region\n");
+                    System.out.print("4.) Top populated capital cities in the World \n");
+                    System.out.print("5.) Top populated capital cities in a Continent\n");
+                    System.out.print("6.) Top populated capital cities in a Region\n");
+                    System.out.print("7.) Exit\n");
+                    System.out.print("\nEnter Your Sub-menu Choice: ");
 
-                        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                        System.out.print("1.) All capital cities in the Word \n");
-                        System.out.print("2.) All capital cities in a Continent\n");
-                        System.out.print("3.) All capital cities in a Region\n");
-                        System.out.print("4.) Top populated capital cities in the World \n");
-                        System.out.print("5.) Top populated capital cities in a Continent\n");
-                        System.out.print("6.) Top populated capital cities in a Region\n");
-                        System.out.print("7.) Exit\n");
-                        System.out.print("\nEnter Your Sub-menu Choice: ");
+                    selection = Integer.parseInt(br3.readLine());
 
-                        selection = Integer.parseInt(br.readLine());
+                    ArrayList<City> capitals = a.getCapitalCity(selection);
+                    a.displayCapitalCity(capitals);
+                    System.out.println("Number of capital cities :" + capitals.size());
 
-                        ArrayList<City> capitals    = a.getCapitalCity(selection);
-                        a.displayCapitalCity(capitals);
-                        System.out.println("Number of capital cities :" + capitals.size());
-
-                        System.out.print("Do you want to continue (y/n): ");
-                        yn = br.readLine();
-                        if (yn.equals("n")) {
-                            System.exit(0);
-                        }
-
+                    System.out.print("Do you want to continue (y/n): ");
+                    yn = br3.readLine();
+                    if (yn.equals("n")) {
+                        System.exit(0);//terminate program if user enter "n"
                     }
                     break;
 
                 case 4:
-                    System.out.println("Exiting Program...");
-                    break;
-                default:
-                    System.out.println("This is not a valid Menu Option! Please Select Another");
-                    break;
+                    BufferedReader br4 = new BufferedReader(new InputStreamReader(System.in));
+                    System.out.print("1.) The population of people in each Continent \n");
+                    System.out.print("2.) The population of people in each region\n");
+                    System.out.print("3.) The population of people in each country\n");
+                    System.out.print("\nEnter Your Sub-menu Choice: ");
+                    //                        condition=br4.readLine();
+                    int condition = Integer.parseInt(br4.readLine());
 
+                    switch (condition) {
+                        case 1:
+                            a.getPopulation("Continent");
+                            break;
+                        case 2:
+                            a.getPopulation("Region");
+                            break;
+                        case 3:
+                            a.getPopulation("country.Name");
+                            break;
+                        default: //if user enter other number instead of 1,2,3,4,5
+                            System.out.println("This is not a valid Menu Option! Please Select Another");
+                            break;
+                    }
+                    break;
+                case 5:
+                    BufferedReader br5 = new BufferedReader(new InputStreamReader(System.in));
+                    System.out.print("1.) The population of the world \n");
+                    System.out.print("2.) The population of a continent\n");
+                    System.out.print("3.) The population of a region\n");
+                    System.out.print("4.) The population of a country\n");
+                    System.out.print("5.) The population of a district\n");
+                    System.out.print("6.) The population of a city\n");
+                    System.out.print("\nEnter Your Sub-menu Choice: ");
+                    //                        condition=br4.readLine();
+                    int popInfo = Integer.parseInt(br5.readLine());
+
+                    switch (popInfo) {
+                        case 1:
+                            a.getPopulationInformation("World");
+                            break;
+                        case 2:
+                            a.getPopulationInformation("Continent");
+                            break;
+                        case 3:
+                            a.getPopulationInformation("Region");
+                            break;
+                        case 4:
+                            a.getPopulationInformation("country.Name");
+                            break;
+                        case 5:
+                            a.getPopulationInformation("District");
+                            break;
+                        case 6:
+                            a.getPopulationInformation("city.Name");
+                            break;
+                        default: //if user enter other number instead of 1,2,3,4,5
+                            System.out.println("This is not a valid Menu Option! Please Select Another");
+                            break;
+                    }
+                    break;
+                case 6:
+                    System.out.println("Exiting Program..."); //terminate program if user enter 4
+                    break;
+                default: //if user enter other number instead of 1,2,3,4,5
+                    System.out.println("This is not a valid Menu Option! Please Select Another");
+                    continue;
             }
-        }while (choice!=4);
+        }while (choice!=6);
 
         // Disconnect from database
         a.disconnect();
