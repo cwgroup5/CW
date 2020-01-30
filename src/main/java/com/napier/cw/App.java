@@ -424,52 +424,35 @@ public class App {
     {
         try
         {
-            ArrayList<String> popInfo = new ArrayList<String>();
 
-            String strSelect=null;
-            String strSelect2=null;
+            long countryPop=0;
+
             String area="";
             // Create an SQL statement
             Statement stmt = con.createStatement();
+
             if(pinfo.equals("World"))
             {
-                strSelect="SELECT sum(country.Population) FROM country";
+                strSelect="SELECT DISTINCT sum(country.Population) FROM country";
                 ResultSet res = stmt.executeQuery(strSelect);
                 while (res.next())
                 {
-                    long pop=res.getLong(1);
-                    System.out.format("%1$-20s %2$-25s \n","World Population",pop);
+                    countryPop=res.getLong(1);
+                    System.out.format("%1$-20s %2$-25s \n","World Population",countryPop);
                 }
 
             }
             else{
-                strSelect="SELECT DISTINCT "+pinfo+" FROM city LEFT JOIN country ON city.CountryCode = country.Code";
-
-                ResultSet res1 = stmt.executeQuery(strSelect);
-
-                System.out.println(String.format("%1$-20s %2$-25s \n","Area","Population"));
-
-                while(res1.next())
+                String strSelect="SELECT "+pinfo+",sum(DISTINCT country.Population), sum(city.Population) FROM city,country "
+                        + "WHERE city.CountryCode=country.Code GROUP BY "+pinfo;
+                ResultSet rset = stmt.executeQuery(strSelect);
+                System.out.println(String.format("%1$-20s %2$-25s ",
+                        "Area","Total Population of People"));
+                while(rset.next())
                 {
-                    String  info =res1.getString(1);
-                    popInfo.add(info);
-                }
-
-                for(String areainfo : popInfo)
-                {
-                    Statement stmt2 = con.createStatement();
-                    strSelect2 = "SELECT sum(country.Population) " +
-                            "FROM city LEFT JOIN country ON city.CountryCode = country.Code WHERE "+pinfo+"='"+areainfo+"'";
-
-                    ResultSet res2 = stmt2.executeQuery(strSelect2);
-
-                    //Extract the info from the current record in the ResultSet
-
-                    while (res2.next())
-                    {
-                        long pop=res2.getLong(1);
-                        System.out.format("%1$-20s %2$-25s \n",areainfo,pop);
-                    }
+                    area = rset.getString(1);
+                    countryPop = rset.getLong(2);
+                    System.out.format("%1$-20s %2$-25s \n",area,countryPop);
                 }
             }
         }
@@ -481,57 +464,7 @@ public class App {
 
         }
     }
-    public  void getLanguageInfo()
-    {
-        try
-        {
-            ArrayList<String> langInfo = new ArrayList<String>();
 
-            String strSelect=null;
-            String strSelect2=null;
-            String area="";
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-
-            strSelect="SELECT sum(Population) FROM `country`";
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            System.out.println(String.format("%-30s %-40s %-40s",
-                    "Language","Number of Speaker ","Percentage"));
-            while(rset.next())
-            {
-                String  li =rset.getString(1);
-                langInfo.add(li);
-            }
-            for(String sss : langInfo)
-            {
-                Statement stmt2 = con.createStatement();
-                strSelect2 = "SELECT countrylanguage.Percentage, sum(country.Population) \n" +
-                    "FROM `countrylanguage` \n" +
-                    "LEFT JOIN `country` ON `countrylanguage`.`CountryCode` = `country`.`Code`";
-                ResultSet rset2 = stmt2.executeQuery(strSelect2);
-                
-                //Extract the info from the current record in the ResultSet
-                while (rset2.next())
-                {
-                    long p1=rset2.getLong(1);
-                    long p2=rset2.getLong(2);
-                    long p3=p2/p1;
-                    String pcu_string =
-                            String.format("%-30s %-40s %-40s", sss,p3,p2);
-                    System.out.println(pcu_string);
-                }
-            }
-
-        }
-        catch (Exception e)
-        {
-
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get population of the people");
-
-        }
-    }
 
     public void displayCountries(ArrayList<Country> countries) {
 
@@ -729,7 +662,7 @@ public class App {
                             a.getPopulationofthePeople("Region");
                             break;
                         case 3:
-                            a.getPopulationofthePeople("Country.Name");
+                            a.getPopulationofthePeople("country.Name");
                             break;
                         default: //if user enter other number instead of 1,2,3,4,5
                             System.out.println("This is not a valid Menu Option! Please Select Another");
@@ -773,16 +706,13 @@ public class App {
                     }
                     break;
                 case 6:
-                    a.getLanguageInfo();
-                    break;
-                case 7:
                     System.out.println("Exiting Program..."); //terminate program if user enter 4
                     break;
                 default: //if user enter other number instead of 1,2,3,4,5
                     System.out.println("This is not a valid Menu Option! Please Select Another");
                     continue;
             }
-        }while (choice!=7);
+        }while (choice!=6);
 
 
             // Disconnect from database
