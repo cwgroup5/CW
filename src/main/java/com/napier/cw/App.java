@@ -21,45 +21,26 @@ public class App
     {
         try
         {
-            ArrayList<String> conrecoun = new ArrayList<String>();
-
-            String strSelect=null;
-            String strSelect2=null;
+            long counpop=0;
+            long ctypop=0;
             String area="";
+
             // Create an SQL statement
             Statement stmt = con.createStatement();
-            if(name.equals("Country"))
-            {
-                name= "Name";
-            }
-            System.out.println(name);
-            strSelect="SELECT DISTINCT "+name+" FROM `country` ORDER BY '"+name+"' ASC";
+
+            String strSelect="SELECT "+name+",sum(DISTINCT country.Population), sum(city.Population) FROM city,country "
+                    + "WHERE city.CountryCode=country.Code GROUP BY "+name;
             ResultSet rset = stmt.executeQuery(strSelect);
-            
-            System.out.println(String.format("%-30s %-40s %-40s %-40s",
+            System.out.println(String.format("%-30s %-30s %-40s %-40s",
                     "Area","Total Population of People ","Total Population Living in Cities","Not living"));
             while(rset.next())
             {
-                String  a =rset.getString(1);
-                conrecoun.add(a);
-            }
-            for(String sss : conrecoun)
-            {
-                Statement stmt2 = con.createStatement();
-                strSelect2 = "SELECT sum(country.Population),sum(city.Population) " +
-                        "FROM city LEFT JOIN country ON city.CountryCode = country.Code WHERE country."+name+"='"+sss+"'";
-                ResultSet rset2 = stmt2.executeQuery(strSelect2);
-
-                //Extract the info from the current record in the ResultSet
-                while (rset2.next())
-                {
-                    long p1=rset2.getLong(1);
-                    long p2=rset2.getLong(2);
-                    long p3=p1-p2;
-                    String pcu_string =
-                            String.format("%-30s %-40s %-40s %-40s", sss,p1,p2,p3);
-                    System.out.println(pcu_string);
-                }
+                area = rset.getString(1);
+                counpop = rset.getLong(2);
+                ctypop = rset.getLong(3);
+                String pcu_string =
+                        String.format("%-30s %-30s %-40s %-40s", area,counpop,ctypop,counpop-ctypop);
+                System.out.println(pcu_string);
             }
 
         }
