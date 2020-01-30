@@ -128,6 +128,11 @@ public class App {
             } else if (selection == 7) {
                 System.exit(0);
             }
+            else
+            {
+                System.out.println("This is not a valid Option!");
+                System.exit(0);
+            }
 
             // Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
@@ -251,6 +256,11 @@ public class App {
             else if (selection == 11) {
                 System.exit(0);
             }
+            else
+            {
+                System.out.println("This is not a valid Option!");
+                System.exit(0);
+            }
 
 //      Execute SQL statement
             ResultSet res = stmt.executeQuery(strSelect);
@@ -346,6 +356,11 @@ public class App {
             }
             else if (selection == 7)
             {
+                System.exit(0);
+            }
+            else
+            {
+                System.out.println("This is not a valid Option!");
                 System.exit(0);
             }
 
