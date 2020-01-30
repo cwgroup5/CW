@@ -385,30 +385,31 @@ public class App {
         }
         return null;
     }
-    public  void getPopulationofthePeople(String name)
+    public  void getPopulation(String name)
     {
         try
         {
             long counpop=0;
             long ctypop=0;
             String area="";
-
             // Create an SQL statement
             Statement stmt = con.createStatement();
+
 
             String strSelect="SELECT "+name+",sum(DISTINCT country.Population), sum(city.Population) FROM city,country "
                     + "WHERE city.CountryCode=country.Code GROUP BY "+name;
             ResultSet rset = stmt.executeQuery(strSelect);
-            System.out.println(String.format("%-30s %-30s %-40s %-40s",
-                    "Area","Total Population of People ","Total Population Living in Cities","Not living"));
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println(String.format("%1$-30s %2$-35s %3$-30s %4$-20s %5$-40s %6$-20s \n","Area","Total Population ","Living in Cities","Living in Cities in %","Not living in Cities","Not Living in Cities in %"));
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             while(rset.next())
             {
+
                 area = rset.getString(1);
                 counpop = rset.getLong(2);
                 ctypop = rset.getLong(3);
-                String pcu_string =
-                        String.format("%-30s %-30s %-40s %-40s", area,counpop,ctypop,counpop-ctypop);
-                System.out.println(pcu_string);
+                long nlc = counpop - ctypop;
+                System.out.format("%1$-30s %2$-35s %3$-40s %4$-20s %5$-40s %6$-20s \n", area,counpop,ctypop,ctypop*100 / counpop,nlc,nlc*100 / counpop);
             }
 
         }
@@ -443,16 +444,18 @@ public class App {
 
             }
             else{
-                String strSelect="SELECT "+pinfo+",sum(DISTINCT country.Population), sum(city.Population) FROM city,country "
+                String strSelect="SELECT "+pinfo+",sum(DISTINCT country.Population)FROM city,country "
                         + "WHERE city.CountryCode=country.Code GROUP BY "+pinfo;
                 ResultSet rset = stmt.executeQuery(strSelect);
-                System.out.println(String.format("%1$-20s %2$-25s ",
-                        "Area","Total Population of People"));
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println(String.format("%1$-20s %2$-25s ","Area","Total Population"));
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                 while(rset.next())
                 {
                     area = rset.getString(1);
                     countryPop = rset.getLong(2);
                     System.out.format("%1$-20s %2$-25s \n",area,countryPop);
+                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                 }
             }
         }
@@ -478,6 +481,7 @@ public class App {
         for (Country country : countries) {
             //display country report
             System.out.format(format, country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         }
 
@@ -656,13 +660,13 @@ public class App {
 
                     switch (condition) {
                         case 1:
-                            a.getPopulationofthePeople("Continent");
+                            a.getPopulation("Continent");
                             break;
                         case 2:
-                            a.getPopulationofthePeople("Region");
+                            a.getPopulation("Region");
                             break;
                         case 3:
-                            a.getPopulationofthePeople("country.Name");
+                            a.getPopulation("country.Name");
                             break;
                         default: //if user enter other number instead of 1,2,3,4,5
                             System.out.println("This is not a valid Menu Option! Please Select Another");
