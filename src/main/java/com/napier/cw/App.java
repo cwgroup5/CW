@@ -409,7 +409,7 @@ public class App {
                 counpop = rset.getLong(2);
                 ctypop = rset.getLong(3);
                 long nlc = counpop - ctypop;
-                System.out.format("%1$-30s %2$-35s %3$-40s %4$-20s %5$-40s %6$-20s \n", area,counpop,ctypop,ctypop*100 / counpop,nlc,nlc*100 / counpop);
+                System.out.format("%1$-30s %2$-35s %3$-40s %4$-20s %5$-40s %6$-20s \n", area,counpop,ctypop,ctypop*100 / counpop + " %",nlc,nlc*100 / counpop +" %");
             }
 
         }
@@ -447,15 +447,15 @@ public class App {
                 String strSelect="SELECT "+pinfo+",sum(DISTINCT country.Population)FROM city,country "
                         + "WHERE city.CountryCode=country.Code GROUP BY "+pinfo;
                 ResultSet rset = stmt.executeQuery(strSelect);
-                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("-----------------------------------------------------------------------------------------------------------------");
                 System.out.println(String.format("%1$-20s %2$-25s ","Area","Total Population"));
-                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("------------------------------------------------------------------------------------------------------------------");
                 while(rset.next())
                 {
                     area = rset.getString(1);
                     countryPop = rset.getLong(2);
                     System.out.format("%1$-20s %2$-25s \n",area,countryPop);
-                    System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.println("--------------------------------------------------------------------------------------------------------------");
                 }
             }
         }
