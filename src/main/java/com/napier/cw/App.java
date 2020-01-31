@@ -7,7 +7,9 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 
+
 public class App {
+
     int no = 0;
     String area = null;
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -491,7 +493,9 @@ public class App {
 
         for (Country country : countries) {
             if (country == null)
+            {
                 continue;
+            }
             System.out.format(format, country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
 
 
@@ -516,7 +520,9 @@ public class App {
         System.out.println("------------------------------------------------------------------------------------------------------------------------------");
         for (City city : cities) {
             if (city == null)
+            {
                 continue;
+            }
             System.out.format(format, city.getCname(), city.getCccode(), city.getCd(), city.getCpop());
 
         }
@@ -539,7 +545,9 @@ public class App {
         for (City capital : capitals)
         {
             if (capital == null)
+            {
                 continue;
+            }
             System.out.format(format,capital.getCname(),capital.getCccode(),capital.getCpop());
         }
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
