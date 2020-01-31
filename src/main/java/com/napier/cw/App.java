@@ -467,7 +467,40 @@ public class App {
 
         }
     }
+    public  void getLanguage()
+    {
+        try
+        {
+            String lang="";
+            long total=0;
 
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+
+            String strSelect="SELECT countrylanguage.Language,SUM(100*(country.Population * (countrylanguage.Percentage / 100)/ 6078749450 )) " +
+                    "FROM country,countrylanguage WHERE country.Code=countrylanguage.CountryCode " +
+                    "GROUP BY countrylanguage.Language ORDER BY (SUM(100*(country.Population * (countrylanguage.Percentage / 100)/ 6078749450 ))) DESC LIMIT 5";
+            ResultSet rset = stmt.executeQuery(strSelect);
+            System.out.println("-----------------------------------------------------");
+            System.out.println(String.format("%-30s %-30s \n", "Language", "Number of Speakers"));
+            System.out.println("-----------------------------------------------------");
+            while(rset.next())
+            {
+                lang= rset.getString(1);
+                total = rset.getLong(2);
+                System.out.format("%1$-30s %2$-30s \n",lang,total +" %");
+                System.out.println("-----------------------------------------------------");
+            }
+
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get language details");
+
+        }
+    }
 
     public void displayCountries(ArrayList<Country> countries) {
 
@@ -560,6 +593,7 @@ public class App {
             System.out.print("3.) Capital City Report.\n");
             System.out.print("4.) Population of the People.\n");
             System.out.print("5.) Population.\n");
+            System.out.print("6.) Language .\n");
             System.out.print("6.) Exit\n");
             System.out.println("===============================================");
             System.out.print("\nEnter Your Menu Choice: ");
@@ -633,7 +667,7 @@ public class App {
                     System.out.print("4.) Top populated capital cities in the World \n");
                     System.out.print("5.) Top populated capital cities in a Continent\n");
                     System.out.print("6.) Top populated capital cities in a Region\n");
-                    System.out.print("7.) Exit\n");
+                    System.out.print("7.) Exit the System\n");
                     System.out.print("\nEnter Your Sub-menu Choice: ");
 
                     selection = Integer.parseInt(br3.readLine());
@@ -710,13 +744,17 @@ public class App {
                     }
                     break;
                 case 6:
+                    a.getLanguage();
+                    break;
+
+                case 7:
                     System.out.println("Exiting Program..."); //terminate program if user enter 4
                     break;
                 default: //if user enter other number instead of 1,2,3,4,5
                     System.out.println("This is not a valid Menu Option! Please Select Another");
                     continue;
             }
-        }while (choice!=6);
+        }while (choice!=7);
 
 
             // Disconnect from database
