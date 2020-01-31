@@ -21,25 +21,24 @@ public class App
     {
         try
         {
-            long counpop=0;
-            long ctypop=0;
-            String area="";
+            String couname="";
+            String lang="";
+            long total=0;
 
             // Create an SQL statement
             Statement stmt = con.createStatement();
 
-            String strSelect="SELECT "+name+",sum(DISTINCT country.Population), sum(city.Population) FROM city,country "
-                    + "WHERE city.CountryCode=country.Code GROUP BY "+name;
+            String strSelect="SELECT countrylanguage.Language,SUM(100*(country.Population * (countrylanguage.Percentage / 100)/ 6078749450 )) " +
+                    "FROM country,countrylanguage WHERE country.Code=countrylanguage.CountryCode " +
+                    "GROUP BY countrylanguage.Language ORDER BY (SUM(100*(country.Population * (countrylanguage.Percentage / 100)/ 6078749450 ))) DESC LIMIT 5";
             ResultSet rset = stmt.executeQuery(strSelect);
-            System.out.println(String.format("%-30s %-30s %-40s %-40s",
-                    "Area","Total Population of People ","Total Population Living in Cities","Not living"));
+            System.out.println(String.format("%-30s %-30s \n", "Language", "Number of Speakers"));
             while(rset.next())
             {
-                area = rset.getString(1);
-                counpop = rset.getLong(2);
-                ctypop = rset.getLong(3);
+                lang= rset.getString(1);
+                total = rset.getLong(2);
                 String pcu_string =
-                        String.format("%-30s %-30s %-40s %-40s", area,counpop,ctypop,counpop-ctypop);
+                        String.format("%-30s %-30s", lang,total +" %");
                 System.out.println(pcu_string);
             }
 
@@ -48,7 +47,7 @@ public class App
         {
 
             System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
+            System.out.println("Failed to get language details");
 
         }
     }
