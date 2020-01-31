@@ -14,7 +14,10 @@ public class App {
     String area = null;
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     String strSelect = null;
-
+    /**
+     * Connection to MySQL database.
+     */
+    private Connection con = null;
     public void connect(String location)
     {
         try
@@ -35,7 +38,7 @@ public class App {
             try
             {
                 // Wait a bit for db to start
-                Thread.sleep(30000);
+                Thread.sleep( 30000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
@@ -553,10 +556,7 @@ public class App {
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
 
-    /**
-     * Connection to MySQL database.
-     */
-    private Connection con = null;
+
 
     /**
      * Connect to the MySQL database.

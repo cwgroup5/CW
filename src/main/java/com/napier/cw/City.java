@@ -5,6 +5,27 @@ package com.napier.cw;
  */
 public class City
 {
+    /**
+     * City int;
+     */
+    private int cityid;
+    /**
+     * City's Name
+     */
+    private String cname;
+    /**
+     * City's Country Code
+     */
+
+    private String cccode;
+    /**
+     * City's District
+     */
+    private String cd;
+    /**
+     * City's Population
+     */
+    private int cpop;
     @Override
     public String toString() {
         return "City{" +
@@ -15,10 +36,7 @@ public class City
                 ", cpop=" + cpop +
                 '}';
     }
-    /**
-     * City int;
-     */
-    private int cityid;
+
     public int getCityid() {
         return cityid;
     }
@@ -26,10 +44,7 @@ public class City
     public void setCityid(int cityid) {
         this.cityid = cityid;
     }
-    /**
-     * City's Name
-     */
-    private String cname;
+
     public String getCname() {
         return cname;
     }
@@ -37,10 +52,7 @@ public class City
     public void setCname(String cname) {
         this.cname = cname;
     }
-    /**
-     * City's Country Code
-     */
-    private String cccode;
+
     public String getCccode() {
         return cccode;
     }
@@ -48,10 +60,7 @@ public class City
     public void setCccode(String cccode) {
         this.cccode = cccode;
     }
-    /**
-     * City's District
-     */
-    private String cd;
+
     public String getCd() {
         return cd;
     }
@@ -68,8 +77,5 @@ public class City
         this.cpop = cpop;
     }
 
-    /**
-     * City's Population
-     */
-    private int cpop;
+
 }

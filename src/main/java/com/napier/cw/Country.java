@@ -3,12 +3,19 @@ package com.napier.cw;
 // represents on Country
 
 public class Country {
-
-
-
     /** Code Number for Country **/
     private String Code; // private = restricted access
+    /** Name for Country **/
+    private String Name; // private = restricted access
+    /** Continent for Country **/
+    private String Continent; // private = restricted access
+    /**  Region of Country **/
+    private String Region;// private = restricted access
+    /** Population of the Country **/
+    private int Population;// private = restricted access
+    /** Capital City Country **/
 
+    private String Capital;// private = restricted access
     @Override
     public String toString() {
         return "Country{" +
@@ -30,8 +37,7 @@ public class Country {
         Code = code;
     }
 
-    /** Name for Country **/
-    private String Name; // private = restricted access
+
 
     //Getter
     public String getName() {
@@ -43,9 +49,7 @@ public class Country {
         Name = name;
     }
 
-    /** Continent for Country **/
 
-    private String Continent; // private = restricted access
     //Getter
     public String getContinent() {
         return Continent;
@@ -56,8 +60,7 @@ public class Country {
         Continent = continent;
     }
 
-    /**  Region of Country **/
-    private String Region;// private = restricted access
+
 
     //Getter
     public String getRegion() {
@@ -68,8 +71,7 @@ public class Country {
         Region = region;
     }
 
-    /** Population of the Country **/
-    private int Population;// private = restricted access
+
 
 
     //Getter
@@ -81,9 +83,7 @@ public class Country {
         Population = population;
     }
 
-    /** Capital City Country **/
 
-    private String Capital;// private = restricted access
     //Getter
     public String getCapital() {
         return Capital;
