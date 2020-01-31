@@ -574,8 +574,7 @@ public class App {
         }
         BufferedReader m = new BufferedReader(new InputStreamReader(System.in));
 //        System.out.print("Main Menu \n Enter Number \n 1. Country Report \n 2. City Report \n 3. Capital City Report \n");
-        boolean mainLoop = false;
-//        mm = Integer.parseInt(m.readLine());
+        //        mm = Integer.parseInt(m.readLine());
         int choice;
         do {
 
