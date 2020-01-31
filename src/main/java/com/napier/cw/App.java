@@ -399,9 +399,9 @@ public class App {
             String strSelect="SELECT "+name+",sum(DISTINCT country.Population), sum(city.Population) FROM city,country "
                     + "WHERE city.CountryCode=country.Code GROUP BY "+name;
             ResultSet rset = stmt.executeQuery(strSelect);
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-            System.out.println(String.format("%1$-30s %2$-35s %3$-30s %4$-20s %5$-40s %6$-20s \n","Area","Total Population ","Living in Cities","Living in Cities in %","Not living in Cities","Not Living in Cities in %"));
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println(String.format("%1$-30s %2$-35s %3$-30s %4$-20s %5$-40s %6$-20s ","Area","Total Population ","Living in Cities","Living in Cities in %","Not living in Cities","Not Living in Cities in %"));
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             while(rset.next())
             {
 
@@ -411,7 +411,7 @@ public class App {
                 long nlc = counpop - ctypop;
                 System.out.format("%1$-30s %2$-35s %3$-40s %4$-20s %5$-40s %6$-20s \n", area,counpop,ctypop,ctypop*100 / counpop + " %",nlc,nlc*100 / counpop +" %");
             }
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         }
         catch (Exception e)
