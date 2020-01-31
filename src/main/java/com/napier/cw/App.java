@@ -411,6 +411,7 @@ public class App {
                 long nlc = counpop - ctypop;
                 System.out.format("%1$-30s %2$-35s %3$-40s %4$-20s %5$-40s %6$-20s \n", area,counpop,ctypop,ctypop*100 / counpop + " %",nlc,nlc*100 / counpop +" %");
             }
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         }
         catch (Exception e)
@@ -455,8 +456,9 @@ public class App {
                     area = rset.getString(1);
                     countryPop = rset.getLong(2);
                     System.out.format("%1$-20s %2$-25s \n",area,countryPop);
-                    System.out.println("--------------------------------------------------------------------------------------------------------------");
+
                 }
+                System.out.println("--------------------------------------------------------------------------------------------------------------");
             }
         }
         catch (Exception e)
@@ -473,24 +475,32 @@ public class App {
         {
             String lang="";
             long total=0;
-
-            // Create an SQL statement
             Statement stmt = con.createStatement();
 
-            String strSelect="SELECT countrylanguage.Language,SUM(100*(country.Population * (countrylanguage.Percentage / 100)/ 6078749450 )) " +
-                    "FROM country,countrylanguage WHERE country.Code=countrylanguage.CountryCode " +
-                    "GROUP BY countrylanguage.Language ORDER BY (SUM(100*(country.Population * (countrylanguage.Percentage / 100)/ 6078749450 ))) DESC LIMIT 5";
-            ResultSet rset = stmt.executeQuery(strSelect);
-            System.out.println("-----------------------------------------------------");
-            System.out.println(String.format("%-30s %-30s \n", "Language", "Number of Speakers"));
-            System.out.println("-----------------------------------------------------");
-            while(rset.next())
+            strSelect="SELECT sum(country.Population) FROM country";
+            ResultSet res = stmt.executeQuery(strSelect);
+            if (res.next())
             {
-                lang= rset.getString(1);
-                total = rset.getLong(2);
-                System.out.format("%1$-30s %2$-30s \n",lang,total +" %");
-                System.out.println("-----------------------------------------------------");
+                long pop =res.getLong(1);
+
+                String strSelect="SELECT countrylanguage.Language,SUM(100*(country.Population * (countrylanguage.Percentage / 100)/"+pop+"))" +
+                        "FROM country,countrylanguage WHERE country.Code=countrylanguage.CountryCode " +
+                        "GROUP BY countrylanguage.Language ORDER BY (SUM(100*(country.Population * (countrylanguage.Percentage / 100)/"+pop+"))) DESC LIMIT 5";
+                ResultSet rset = stmt.executeQuery(strSelect);
+                System.out.println("=================================================");
+                System.out.println(String.format("%-20s %-30s \n", "Language", "Number of Speakers"));
+                System.out.println("=================================================");
+                while(rset.next())
+                {
+                    lang= rset.getString(1);
+                    total = rset.getLong(2);
+                    System.out.format("%1$-20s %2$-30s \n",lang,total +" %");
+
+                }
+                System.out.println("=================================================");
+
             }
+            // Create an SQL statement
 
         }
         catch (Exception e)
@@ -514,7 +524,7 @@ public class App {
         for (Country country : countries) {
             //display country report
             System.out.format(format, country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
-            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
 
         }
 
@@ -591,8 +601,8 @@ public class App {
             System.out.print("1.) Country Report \n");
             System.out.print("2.) City Report.\n");
             System.out.print("3.) Capital City Report.\n");
-            System.out.print("4.) Population of the People.\n");
-            System.out.print("5.) Population.\n");
+            System.out.print("4.) Population Report\n");
+            System.out.print("5.) Total Population.\n");
             System.out.print("6.) Language .\n");
             System.out.print("6.) Exit\n");
             System.out.println("===============================================");

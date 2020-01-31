@@ -23,6 +23,16 @@ public class Language {
 
     private Boolean IsOfficial;
 
+    @Override
+    public String toString() {
+        return "Language{" +
+                "CountyCode='" + CountyCode + '\'' +
+                ", Language='" + Language + '\'' +
+                ", IsOfficial=" + IsOfficial +
+                ", Percentage=" + Percentage +
+                '}';
+    }
+
     public Boolean getOfficial() {
         return IsOfficial;
     }
@@ -40,7 +50,6 @@ public class Language {
     public void setPercentage(float percentage) {
         Percentage = percentage;
     }
-
 
 
 
