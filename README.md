@@ -6,9 +6,15 @@
   - Requirement
   - License and Badges
 # Installation
-  - Firstly, clone this repo to your local machine using ***https://github.com/cwgroup5/CW.git***
+  - Firstly, download ***IntelliJ IDEA*** from ***https://www.jetbrains.com/idea/download/#section=windows*** and install it into your       local machine.
+  - Open ***IntelliJ IDEA*** and click on ***Get from Version Control***.
+  - In URL, enter our git url (***https://github.com/cwgroup5/CW.git***) and press on ***"Clone"*** button.
+  - In IntelliJ open the Maven Panel on the right hand side
+  - Open the Lifecycle collapsed menu, and select ***Compile***.
+  - When ***Complie*** is done, select ***Package***
+  - After that you will see this in the target folder in the Project Structure
   - Open ***Cmd*** as an administrator and change working directory to directory where git clone file is located.
-  - Open download git folder, open target folder and run ***cw.jar*** file with ***java -jar cw.jar*** command 
+  - Open download git folder, find  **target folder*** and open it then run ***cw.jar*** file with ***java -jar cw.jar*** command 
   
 > ### ***32 requirements of 32 have been implemented, which is 100%.***
 
