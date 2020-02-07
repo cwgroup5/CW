@@ -13,7 +13,7 @@
 > ### ***32 requirements of 32 have been implemented, which is 100%.***
 
 # Requirement
-  | ID      | Name   | Met    | Screenshot
+  |  ID | Name   | Met    | Screenshot
   | :-----: | :----------------------------------| :------- |:----------
   | 1  | All the countries in the world organised by largest population to smallest.  | Yes   | [image](images/tick.png)|
   | 2  | All the countries in a continent organised by largest population to smallest. | Yes   | image |
@@ -55,8 +55,13 @@
   | 31  | The population of a city.  | Yes   | image |
   |   |   |   |  | 
   | 32  | The number of people who speak five languages from greatest number to smallest  | Yes   | image |
- [1]: http://slashdot.org
-# License and Badges
+  
+  # Final Individual Contribution Spreadsheet
+  |    | Code Review 1  | Code Review 2 |Code Review 3 | Code Review 4 | Final Deliverable 
+  | :--| :--------------| :-------------|:-------------|:--------------|:-------------
+  | 434 | 24  | 24   | 24 | 25 | 23 
+  
+  # License and Badges
 
 - Master Build Status [![Build Status](https://travis-ci.org/cwgroup5/CW.svg?branch=master)](https://travis-ci.org/cwgroup5/CW)
 - Develop Build Status [![Build Status](https://travis-ci.org/cwgroup5/CW.svg?branch=master)](https://travis-ci.org/cwgroup5/CW)
