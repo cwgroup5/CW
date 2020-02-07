@@ -38,9 +38,10 @@ public class App {
             try
             {
                 // Wait a bit for db to start
-                Thread.sleep( 30000);
+//                Thread.sleep( 30000);
+                String url="jdbc:mysql://"+location+"/world?allowPublicKeyRetrieval=true&useSSL=false";
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
+                con = DriverManager.getConnection(url, "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
@@ -49,10 +50,10 @@ public class App {
                 System.out.println("Failed to connect to database attempt " + Integer.toString(i));
                 System.out.println(sqle.getMessage());
             }
-            catch (InterruptedException ie)
-            {
-                System.out.println("Thread interrupted? Should not happen.");
-            }
+//            catch (InterruptedException ie)
+//            {
+//                System.out.println("Thread interrupted? Should not happen.");
+//            }
         }
     }
 
@@ -482,38 +483,37 @@ public class App {
 
     public void displayCountries(ArrayList<Country> countries) {
         // Check country is not null
-        if (countries == null)
-        {
+        if (countries == null) {
             System.out.println("No country");
             return;
-        }
-        //display in table format
+        } else {
+            //display in table format
 
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-        String format = "%1$-10s %2$-60s %3$-20s %4$-40s  %5$-15s  %6$-10s \n";
-        System.out.format(format, "Code", "Country", "Continent", "Region", "Population", "Capital");
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            String format = "%1$-10s %2$-60s %3$-20s %4$-40s  %5$-15s  %6$-10s \n";
+            System.out.format(format, "Code", "Country", "Continent", "Region", "Population", "Capital");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-        for (Country country : countries) {
-            if (country == null)
-            {
-                continue;
+            for (Country country : countries) {
+                if (country == null) {
+                    continue;
+                }
+                System.out.format(format, country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
+
+
             }
-            System.out.format(format, country.getCode(), country.getName(), country.getContinent(), country.getRegion(), country.getPopulation(), country.getCapital());
 
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         }
-
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
     }
-
     public void displayCities(ArrayList<City> cities) {
         if (cities == null)
         {
             System.out.println("No city");
             return;
         }
+
         //display in table format
 
         System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
@@ -574,7 +574,7 @@ public class App {
         // Connect to database
         if (args.length < 1)
         {
-            a.connect("localhost:3306");
+            a.connect("localhost:33050");
         }
         else
         {
