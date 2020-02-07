@@ -1,3 +1,12 @@
+# Team 5 Coursework
+
+# Table of Contents
+  - Installation
+  - Requirement
+  - License and Badges
+# Installation
+  - Firstly, clone this repo to your local machine using https://github.com/cwgroup5/CW.git
+
 # Software Engineering Methods
 
 - Master Build Status [![Build Status](https://travis-ci.org/cwgroup5/CW.svg?branch=master)](https://travis-ci.org/cwgroup5/CW)
