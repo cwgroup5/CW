@@ -58,7 +58,7 @@
  
  
  
-# Software Engineering Methods
+# License and Badges
 
 - Master Build Status [![Build Status](https://travis-ci.org/cwgroup5/CW.svg?branch=master)](https://travis-ci.org/cwgroup5/CW)
 - Develop Build Status [![Build Status](https://travis-ci.org/cwgroup5/CW.svg?branch=master)](https://travis-ci.org/cwgroup5/CW)
