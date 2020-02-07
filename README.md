@@ -9,7 +9,7 @@
   - Open ***Cmd*** as an administrator and change working directory to directory where git clone file is located.
   - Open download git folder, open target folder and run ***cp.jar*** file with ***java -jar cp.jar*** command 
   
-> ***32 requirements of 32 have been implemented, which is 100%.***
+> ### ***32 requirements of 32 have been implemented, which is 100%.***
 
 # Requirement
   | ID      | Name   | Met    | Screenshot
