@@ -1,5 +1,6 @@
 # Population Report System
-
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The system allows easy access to population information which are organzied by largest to smallest according to the vairous areas - ***world, continent, region, distinct, country city***. In addition, the system allow to search popluation based user input as well.
+  
 # Table of Contents
   - Installation
   - Requirement
@@ -7,7 +8,7 @@
 # Installation
   - Firstly, clone this repo to your local machine using ***https://github.com/cwgroup5/CW.git***
   - Open ***Cmd*** as an administrator and change working directory to directory where git clone file is located.
-  - Open download git folder, open target folder and run ***cp.jar*** file with ***java -jar cp.jar*** command 
+  - Open download git folder, open target folder and run ***cw.jar*** file with ***java -jar cw.jar*** command 
   
 > ### ***32 requirements of 32 have been implemented, which is 100%.***
 
