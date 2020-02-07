@@ -57,13 +57,13 @@
   | 32  | The number of people who speak five languages from greatest number to smallest  | Yes   | [image](images/language/01.PNG)|
   
   # Final Individual Contribution Spreadsheet
-  |    | Code Review 1  | Code Review 2 |Code Review 3 | Code Review 4 | Final Deliverable 
-  | :--| :--------------| :-------------|:-------------|:--------------|:-------------
-  | 40437516 | 25  | 23   | 25 | 25 | 
-  | 40437513 | 25  | 27   | 25 | 26 | 
-  | 40437530 | 25  | 24   | 25 | 24 | 
-  | 40437531 | 25  | 26   | 25 | 25 |
-  | Total    | 100 |100   |100 |100 |
+  |    | **Code Review 1**  | **Code Review 2** |**Code Review 3** | **Code Review 4** | **Final Deliverable** 
+  | :--| :--------------:| :-------------:|:-------------:|:--------------:|:-------------:
+  | **40437516** | 25  | 23   | 25 | 25 | 
+  | **40437513** | 25  | 27   | 25 | 26 | 
+  | **40437530** | 25  | 24   | 25 | 24 | 
+  | **40437531** | 25  | 26   | 25 | 25 |
+  | **Total**    | 100 |100   |100 |100 |
   
   # License and Badges
 
