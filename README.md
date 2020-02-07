@@ -15,7 +15,7 @@
 # Requirement
   | ID      | Name   | Met    | Screenshot
   | :-----: | :----------------------------------| :------- |:----------
-  | 1  | All the countries in the world organised by largest population to smallest.  | Yes   |[arbitrary case-insensitive reference text]: https://www.mozilla.org |
+  | 1  | All the countries in the world organised by largest population to smallest.  | Yes   | [image](images/tick.png)|
   | 2  | All the countries in a continent organised by largest population to smallest. | Yes   | image |
   | 3  | All the countries in a region organised by largest population to smallest.  | Yes   | image | 
   |   |   |   |  | 
@@ -55,7 +55,7 @@
   | 31  | The population of a city.  | Yes   | image |
   |   |   |   |  | 
   | 32  | The number of people who speak five languages from greatest number to smallest  | Yes   | image |
- 
+ [1]: http://slashdot.org
 # License and Badges
 
 - Master Build Status [![Build Status](https://travis-ci.org/cwgroup5/CW.svg?branch=master)](https://travis-ci.org/cwgroup5/CW)
