@@ -1,11 +1,16 @@
-# Team 5 Coursework
+# Population Report System
 
 # Table of Contents
   - Installation
   - Requirement
   - License and Badges
 # Installation
-  - Firstly, clone this repo to your local machine using https://github.com/cwgroup5/CW.git
+  - Firstly, clone this repo to your local machine using ***https://github.com/cwgroup5/CW.git***
+  - Open ***Cmd*** as an administrator and change working directory to directory where git clone file is located.
+  - Open download git folder, open target folder and run ***cp.jar*** file with ***java -jar cp.jar*** command 
+  
+> ***32 requirements of 32 have been implemented, which is 100%.***
+
 # Requirement
   | ID      | Name   | Met    | Screenshot
   | :-----: | :----------------------------------| :------- |:----------
@@ -37,10 +42,18 @@
   | 21  | The top N populated capital cities in a continent where N is provided by the user. |Yes   | image |
   | 22  | The top N populated capital cities in a region where N is provided by the user.  | Yes   | image |   
   |   |   |   |  | 
-  | 23  |The population of people, people living in cities, and people not living in cities in each continent. | Yes   | image |
+  | 23  | The population of people, people living in cities, and people not living in cities in each continent. | Yes   | image |
   | 24  | The population of people, people living in cities, and people not living in cities in each region. | Yes   | image |
   | 25  | The population of people, people living in cities, and people not living in cities in each country.  | Yes   | image |
   |   |   |   |  | 
+  | 26  | The population of the world. | Yes   | image |
+  | 27  | The population of a continent. | Yes   | image |
+  | 28  | The population of a region.  | Yes   | image |
+  | 29  | The population of a country. | Yes   | image |
+  | 30  | The population of a district. | Yes   | image |
+  | 31  | The population of a city.  | Yes   | image |
+  |   |   |   |  | 
+  | 32  | The number of people who speak five languages from greatest number to smallest  | Yes   | image |
  
  
  
